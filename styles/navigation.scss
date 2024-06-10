@@ -1,0 +1,90 @@
+@import "satoshi";
+
+// Navigation Bar
+
+.logo {
+  height: 4em;
+  width: auto;
+  display: inline-flex;
+}
+
+.nav-bar {
+  position: fixed;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.nav-bar-links {
+  display: none;
+
+  @media (min-width: 50rem) {
+    padding: 0 0.8em;
+    display: flex;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      font-family: Satoshi-Bold;
+      font-size: 1.5rem;
+      display: inline;
+      padding: 0 1em;
+    }
+  }
+}
+
+.menu-toggle {
+  all: unset;
+  width: 2.5rem;
+  padding: 0 0.8em;
+
+  @media (min-width: 50rem) {
+    display: none;
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+// Navigation Menu
+
+.nav-menu {
+  display: none;
+
+  &.open {
+    display: flex;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+
+    ul {
+      list-style-type: none;
+      text-align: left;
+
+      li {
+        font-family: Satoshi-Bold;
+        font-size: 1.5rem;
+        padding: 1em;
+      }
+    }
+
+    @media (min-width: 50rem) {
+      display: none;
+    }
+  }
+}
