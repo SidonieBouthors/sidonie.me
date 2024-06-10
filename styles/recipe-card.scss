@@ -1,0 +1,34 @@
+.rec-card {
+  position: relative;
+  margin: 0;
+
+  img {
+    display: block;
+  }
+
+  .rec-desc {
+    position: absolute;
+    z-index: 10;
+    bottom: 0em;
+    left: 0em;
+    right: 0em;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding-bottom: 2em;
+
+    p {
+      margin: 1em;
+    }
+
+    @media (min-width: 60rem) {
+      transform: translateY(150%);
+    }
+  }
+
+  @media (min-width: 60rem) {
+    overflow: hidden;
+    &:hover .rec-desc {
+      transform: translateY(0%);
+    }
+  }
+}

@@ -9,7 +9,7 @@
 }
 
 .nav-bar {
-  position: fixed;
+  position: sticky;
   width: 100%;
   background-color: #333;
   color: #fff;
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 100;
 }
 
 .nav-bar-links {
@@ -61,6 +61,7 @@
 
 .nav-menu {
   display: none;
+  z-index: 99;
 
   &.open {
     display: flex;

@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@styles/globals.scss";
+import "@modules/react-grid-layout/css/styles.css";
+import "@modules/react-resizable/css/styles.css";
 
 import Navigation from "@components/Navigation";
 import { useState } from "react";
@@ -29,7 +31,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} ${menuOpen ? "no-scroll" : ""}`}>
         <Navigation isOpen={menuOpen} toggleMenu={toggleMenu} />
-        {children}
+        <main className="content">{children}</main>
         <Footer />
       </body>
     </html>
