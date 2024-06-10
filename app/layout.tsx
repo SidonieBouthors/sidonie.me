@@ -5,6 +5,7 @@ import "@styles/globals.scss";
 
 import Navigation from "@components/Navigation";
 import { useState } from "react";
+import favicon from "@public/favicon.ico";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,8 @@ export default function RootLayout({
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="shortcut icon" href={favicon.src} />
       </head>
       <body className={`${inter.className} ${menuOpen ? "no-scroll" : ""}`}>
         <Navigation isOpen={menuOpen} toggleMenu={toggleMenu} />
