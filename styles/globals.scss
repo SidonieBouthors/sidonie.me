@@ -88,6 +88,7 @@ body {
 }
 
 body {
+  font-family: "Satoshi-Regular";
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -112,6 +113,24 @@ img, svg {
   height: auto;
 }
 
+h1 {
+  margin: 1em 0;
+  font-size: 2.5em;
+  font-family: Satoshi-Black;
+}
+
+h2 {
+  margin: .8em 0;
+  font-size: 2em;
+  font-family: Satoshi-Bold;
+}
+
+h3 {
+  margin: .5em 0;
+  font-size: 1.5em;
+  font-family: Satoshi-Bold;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -120,5 +139,5 @@ img, svg {
 
 .testHuge {
   background:rgba(1, 65, 255, 0.3);
-  height: 10000px;
+  height: 100px;
 }

@@ -6,6 +6,7 @@ import "@styles/globals.scss";
 import Navigation from "@components/Navigation";
 import { useState } from "react";
 import favicon from "@public/favicon.ico";
+import Footer from "@components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${menuOpen ? "no-scroll" : ""}`}>
         <Navigation isOpen={menuOpen} toggleMenu={toggleMenu} />
         {children}
+        <Footer />
       </body>
     </html>
   );
