@@ -1,20 +1,28 @@
-"use client";
-
 import CardGrid from "@components/CardGrid";
 import RecipeCard from "@components/RecipeCard";
-import image from "@public/recipes/illus-chickpea-curry.jpg";
-import { useState } from "react";
-import { Layouts, Responsive, WidthProvider } from "react-grid-layout";
+import { promises as fs } from "fs";
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+type Recipe = {
+  name: string;
+  slug: string;
+  imageURL: string;
+  pageContentPath: string;
+};
 
-export default function Recipes() {
+export default async function Recipes() {
+  const file = await fs.readFile(process.cwd() + "/data/recipes.json", "utf8");
+  const recipes = JSON.parse(file);
+
   return (
     <div>
       <h1>Recipes</h1>
       <CardGrid>
-        {(Array.from({ length: 20 })).map((_, index) => (
-          <RecipeCard key={index} title="Test Card" imageUrl={image.src} altText="" />
+        {recipes.map((recipe: Recipe) => (
+          <RecipeCard
+            title={recipe.name}
+            imageUrl={"/recipes/" + recipe.imageURL}
+            altText={recipe.name}
+          />
         ))}
       </CardGrid>
     </div>

@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Chickpea Curry",
+        "slug": "chickpea-curry",
+        "imageURL": "illus-chickpea-curry.jpg",
+        "pageContentPath": "chickpea.md"
+    },
+    {
+        "name": "Broccoli and Cheese",
+        "slug": "broccoli-and-cheese",
+        "imageURL": "illus-chickpea-curry.jpg",
+        "pageContentPath": "broccoli.md"
+    }
+]
