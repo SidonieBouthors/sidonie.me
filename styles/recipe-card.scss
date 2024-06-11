@@ -14,10 +14,42 @@
     right: 0em;
     color: white;
     background: rgba(0, 0, 0, 0.6);
-    padding-bottom: 2em;
+    padding-bottom: 1em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     p {
-      margin: 1em;
+      margin: .5em 1em;
+      text-align: center;
+      font-family: Satoshi-Bold;
+      font-size: 1rem;
+
+      @media (min-width: 60rem) {
+        font-size: 1.25rem;
+      }
+    }
+
+    .rec-button {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-family: Satoshi-Bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-width: 2px;
+      border-style: solid;
+      color: var(--highlight);
+      border-color: var(--highlight);
+      padding: 0.5em 1.75em;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        background: var(--highlight);
+        color: var(--darkgrey);
+      }
     }
 
     @media (min-width: 60rem) {

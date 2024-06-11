@@ -6,22 +6,32 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 /**
  * CardGrid component that displays a grid of cards with a responsive layout
+ * @param gridFormat Grid format that defines the breakpoints and the number of columns for each breakpoint
+ * @param margin Margin between the cards
+ * @param containerPadding Padding of the container
+ * @param children Children components to be displayed in the grid
  */
 export default function CardGrid({
+  gridFormat,
+  margin,
+  containerPadding,
   children,
 }: {
+  gridFormat: [string, number, number][];
+  margin: [number, number];
+  containerPadding: [number, number];
   children: React.ReactElement[];
 }) {
   // Grid format that defines the breakpoints and the number of columns for each breakpoint
   // [breakpointName, breakPointSize, col]
-  const gridFormat: [string, number, number][] = [
-    ["xl", 1200, 4],
-    ["l", 1000, 3],
-    ["m", 400, 2],
-    ["s", 200, 1],
-  ];
-  const margin: [number, number] = [15, 15];
-  const containerPadding: [number, number] = [30, 30];
+  // const gridFormat: [string, number, number][] = [
+  //   ["xl", 1200, 4],
+  //   ["l", 1000, 3],
+  //   ["m", 400, 2],
+  //   ["s", 200, 1],
+  // ];
+  // const margin: [number, number] = [15, 15];
+  // const containerPadding: [number, number] = [30, 30];
 
   var items = children == undefined || children == null ? [] : children;
   var [rowHeight, setRowHeight] = useState(0);

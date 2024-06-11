@@ -13,16 +13,16 @@ export default function NavMenu({
     <div className={`nav-menu ${isOpen ? "open" : ""}`}>
       <ul>
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/" onClick={toggleMenu}>Home</Link>
         </li>
         <li>
-          <Link href="/share">Share</Link>
+          <Link href="/share" onClick={toggleMenu}>Share</Link>
         </li>
         <li>
-          <Link href="/recipes">Recipes</Link>
+          <Link href="/recipes" onClick={toggleMenu}>Recipes</Link>
         </li>
         <li>
-          <Link href="/about">About</Link>
+          <Link href="/about" onClick={toggleMenu}>About</Link>
         </li>
       </ul>
     </div>

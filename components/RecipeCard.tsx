@@ -1,5 +1,6 @@
 import React from "react";
 import "@styles/recipe-card.scss";
+import Link from "next/link";
 
 interface RecipeCardProps {
   title: string;
@@ -8,22 +9,22 @@ interface RecipeCardProps {
 }
 
 export default function RecipeCard({
-  title,
-  imageUrl,
-  altText,
-}: RecipeCardProps) {
+  recipe
+}: {recipe : Recipe}) {
+  const imageUrl= "/recipes/" + recipe.imageURL
+  const link = "/recipes/" + recipe.slug
   return (
     <>
       <figure className="rec-card" id="shoyu ramen">
-        <img src={imageUrl} alt={altText} />
+        <img src={imageUrl} alt={recipe.name} />
         <figcaption className="rec-desc">
-          <p className="rec-name">{title}</p>
-          <a
-            href="recipe/shoyu-ramen"
-            className="button button-accent button-small"
+          <p className="rec-name">{recipe.name}</p>
+          <Link
+            href={link}
+            className="rec-button"
           >
             Recipe
-          </a>
+          </Link>
         </figcaption>
       </figure>
     </>
