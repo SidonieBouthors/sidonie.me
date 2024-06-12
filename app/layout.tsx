@@ -1,6 +1,5 @@
 "use client";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@styles/globals.scss";
 import "@modules/react-grid-layout/css/styles.css";
 import "@modules/react-resizable/css/styles.css";
@@ -9,8 +8,6 @@ import Navigation from "@components/Navigation";
 import { useState } from "react";
 import favicon from "@public/favicon.ico";
 import Footer from "@components/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -29,7 +26,7 @@ export default function RootLayout({
 
         <link rel="shortcut icon" href={favicon.src} />
       </head>
-      <body className={`${inter.className} ${menuOpen ? "no-scroll" : ""}`}>
+      <body className={`${menuOpen ? "no-scroll" : ""}`}>
         <Navigation isOpen={menuOpen} toggleMenu={toggleMenu} />
         <main className="content">{children}</main>
         <Footer />
