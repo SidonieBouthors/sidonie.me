@@ -1,10 +1,4 @@
 export {};
 
-declare global {
-  type Recipe = {
-    name: string;
-    slug: string;
-    imageURL: string;
-    pageContentPath: string;
-  };
-}
+// Declare global types here
+declare global {}

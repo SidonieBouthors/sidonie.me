@@ -1,24 +1,41 @@
-import { promises as fs } from "fs";
+import { MDXContent } from "@/components/MDXContent";
+import { recipes, Recipe } from "@content";
+import { notFound } from "next/navigation";
 
-export default async function Recipe({ params }: { params: { recipeId: string } }) {
-  const file = await fs.readFile(process.cwd() + "/data/recipes.json", "utf8");
-  const recipes = JSON.parse(file);
+interface RecipeProps {
+  params: {
+    recipeId: string;
+  };
+}
+
+export default async function RecipePage({ params }: RecipeProps) {
+  // const file = await fs.readFile(
+  //   process.cwd() + "/content/recipes.json",
+  //   "utf8"
+  // );
+  // const recipes = JSON.parse(file);
   const recipe = recipes.find(
-    (recipe: Recipe) => recipe.slug === params.recipeId
+    (recipe: Recipe) => recipe.id === params.recipeId
   );
-  return <div>{recipe.name}</div>;
+
+  if (!recipe || !recipe.published) {
+    notFound();
+  }
+
+  return (
+    <>
+      <h1>{recipe.name}</h1>
+      <p>{recipe.description}</p>
+      <MDXContent code={recipe.body} />
+    </>
+  );
 }
 
 export async function generateStaticParams() {
-  const file = await fs.readFile(process.cwd() + "/data/recipes.json", "utf8");
-  const recipes = JSON.parse(file);
-
-  const paths: { recipeId: string }[] = recipes.map((recipe: Recipe) => {
-    const slug = recipe.slug;
+  return recipes.map((recipe: Recipe) => {
+    const id = recipe.id;
     return {
-      recipeId: slug,
+      recipeId: id,
     };
   });
-
-  return paths;
 }

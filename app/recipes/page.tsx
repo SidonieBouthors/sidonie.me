@@ -1,10 +1,9 @@
 import CardGrid from "@components/CardGrid";
-import RecipeCard from "@components/RecipeCard";
-import { promises as fs } from "fs";
+import Card from "@components/Card";
+import { Recipe, recipes } from "@content";
 
 export default async function Recipes() {
-  const file = await fs.readFile(process.cwd() + "/data/recipes.json", "utf8");
-  const recipes = JSON.parse(file);
+  const displayRecipes = recipes.filter((recipe: Recipe) => recipe.published);
 
   const gridFormat: [string, number, number][] = [
     ["xl", 1200, 4],
@@ -23,9 +22,11 @@ export default async function Recipes() {
         margin={margin}
         containerPadding={containerPadding}
       >
-        {recipes.map((recipe: Recipe) => (
-          <RecipeCard
-            recipe={recipe}
+        {displayRecipes.map((recipe: Recipe) => (
+          <Card
+            slug={recipe.slug}
+            title={recipe.name}
+            imageUrl={recipe.coverImage.src}
           />
         ))}
       </CardGrid>
