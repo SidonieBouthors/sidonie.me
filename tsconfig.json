@@ -19,11 +19,12 @@
     ],
     "baseUrl": "./",
     "paths": {
+      "@/*": ["./*"],
       "@modules/*": ["node_modules/*"],
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
-      "@/*": ["./*"]
+      "@content": [".velite"]
     }
   },
   "include": [

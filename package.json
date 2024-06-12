@@ -23,6 +23,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "sass": "^1.77.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "velite": "^0.1.0-rc.3"
   }
 }
