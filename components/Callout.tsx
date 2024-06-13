@@ -17,7 +17,7 @@ export default function Callout({
     actualType += " content-only";
   }
   return (
-    <div className={`callout ${type}`} {...props}>
+    <div className={`callout ${actualType}`} {...props}>
       {children}
     </div>
   );
