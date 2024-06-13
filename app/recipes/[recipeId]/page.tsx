@@ -23,11 +23,11 @@ export default async function RecipePage({ params }: RecipeProps) {
   }
 
   return (
-    <>
+    <main>
       <h1>{recipe.name}</h1>
       <p>{recipe.description}</p>
       <MDXContent code={recipe.body} />
-    </>
+    </main>
   );
 }
 

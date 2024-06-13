@@ -28,7 +28,7 @@ export default function RootLayout({
       </head>
       <body className={`${menuOpen ? "no-scroll" : ""}`}>
         <Navigation isOpen={menuOpen} toggleMenu={toggleMenu} />
-        <main className="content">{children}</main>
+        {children}
         <Footer />
       </body>
     </html>

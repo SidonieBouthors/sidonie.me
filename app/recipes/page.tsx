@@ -15,7 +15,7 @@ export default async function Recipes() {
   const containerPadding: [number, number] = [30, 30];
 
   return (
-    <div>
+    <main>
       <h1>Recipes</h1>
       <CardGrid
         gridFormat={gridFormat}
@@ -30,6 +30,6 @@ export default async function Recipes() {
           />
         ))}
       </CardGrid>
-    </div>
+    </main>
   );
 }

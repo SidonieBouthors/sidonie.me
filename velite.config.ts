@@ -2,11 +2,16 @@ import { defineConfig, defineCollection, s } from "velite";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeToc, {
+  HeadingNode,
+  HtmlElementNode,
+  TextNode,
+} from "@jsdevtools/rehype-toc";
 
 const computedFields = <T extends { slug: string }>(data: T) => ({
   ...data,
-  // Extract the slug from the path and remove the leading slash
-  id: data.slug.split("/").slice(1).join("/"),
+  // Extract the slug from the path
+  extractedSlug: data.slug.split("/").slice(1).join("/"),
 });
 
 const recipes = defineCollection({
@@ -29,7 +34,7 @@ const recipes = defineCollection({
 
 const posts = defineCollection({
   name: "Post",
-  pattern: "posts/**/*.mdx",
+  pattern: "share/**/*.mdx",
   schema: s
     .object({
       slug: s.path(),
@@ -56,7 +61,12 @@ export default defineConfig({
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      [rehypePrettyCode, { theme: "github-dark" }],
+      [rehypePrettyCode, { 
+        theme: {
+          dark: "github-dark-dimmed",
+          light: "github-light",
+        },
+      }],
       [
         rehypeAutolinkHeadings,
         {
@@ -65,6 +75,12 @@ export default defineConfig({
             className: ["subheading-anchor"],
             ariaLabel: "Link to section",
           },
+        },
+      ],
+      [
+        rehypeToc,
+        {
+          headings: ["h2", "h3", "h4", "h5", "h6"],
         },
       ],
     ],

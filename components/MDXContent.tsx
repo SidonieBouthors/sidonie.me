@@ -1,6 +1,7 @@
 import * as runtime from "react/jsx-runtime";
 import RecipeInfoBox from "@components/RecipeInfoBox";
 import Callout from "@components/Callout";
+import Collapse from "@components/Collapse";
 
 const useMDXComponent = (code: string) => {
   const fn = new Function(code);
@@ -10,7 +11,8 @@ const useMDXComponent = (code: string) => {
 // Components to be used in MDX
 const components = {
   RecipeInfoBox,
-  Callout
+  Callout,
+  Collapse
 };
 
 interface MdxProps {

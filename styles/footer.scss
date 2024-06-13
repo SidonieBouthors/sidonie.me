@@ -1,13 +1,16 @@
+@import "globals";
+
 footer {
   flex-shrink: 0;
   background: #333;
   color: #fff;
   text-align: left;
   padding: 0;
-  font-size: 1.2rem;
+  font-family: $font-medium;
+  font-size: 1.3rem;
 
   .footer-container {
-    padding: 1.5em;
+    padding: 1em;
     padding-bottom: 2em;
     display: flex;
     flex-direction: column;
@@ -27,17 +30,23 @@ footer {
       }
 
       .footer-icon {
-        color: #fff;
         height: 2em;
         width: 100%;
         margin: 0.2em;
         margin-right: 1em;
       }
 
+      h3 {
+        margin: 1em 0;
+        font-family: $font-bold;
+      }
+
+      a {
+        color: inherit;
+      }
+
       p {
         padding: 0.5em 0;
-        font-size: 1.2rem;
-        color: #fff;
         @media (min-width: 50rem) {
           padding: 0.5em 1.5em;
         }
