@@ -1,6 +1,6 @@
 "use client";
 import type { Metadata } from "next";
-import "@styles/globals.scss";
+import "@styles/style.scss";
 import "@modules/react-grid-layout/css/styles.css";
 import "@modules/react-resizable/css/styles.css";
 

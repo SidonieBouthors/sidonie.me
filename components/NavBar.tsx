@@ -2,7 +2,6 @@ import Link from "next/link";
 import logo from "@public/logo.svg";
 import CloseIcon from "@components/icons/CloseIcon";
 import MenuIcon from "@components/icons/MenuIcon";
-import "@styles/navigation.scss";
 
 export default function NavBar({
   isOpen,

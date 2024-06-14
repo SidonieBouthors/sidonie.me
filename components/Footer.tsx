@@ -4,7 +4,6 @@ import LinkedinIcon from "./icons/LinkedinIcon";
 import TelegramIcon from "./icons/TelegramIcon";
 import MailIcon from "./icons/MailIcon";
 import GithubIcon from "./icons/GithubIcon";
-import "@styles/footer.scss";
 
 function SocialMediaLink({
   name,

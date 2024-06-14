@@ -1,10 +1,8 @@
 import { MDXContent } from "@components/MDXContent";
 import { posts, Post } from "@content";
 import { notFound } from "next/navigation";
-import "@styles/share.scss";
-import Link from "next/link";
 import LastUpdated from "@components/LastUpdated";
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "@components/Breadcrumb";
 
 interface PostProps {
   params: {

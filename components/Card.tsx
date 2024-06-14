@@ -1,7 +1,5 @@
 import React from "react";
-import "@styles/recipe-card.scss";
 import Link from "next/link";
-import { Recipe } from "@content";
 
 interface CardProps {
   slug: string;

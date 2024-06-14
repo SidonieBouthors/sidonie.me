@@ -1,6 +1,4 @@
-import { useState } from "react";
 import Link from "next/link";
-import "@styles/navigation.scss";
 
 export default function NavMenu({
   isOpen,
