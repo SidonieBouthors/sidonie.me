@@ -8,10 +8,20 @@ import rehypeToc, {
   TextNode,
 } from "@jsdevtools/rehype-toc";
 
-const computedFields = <T extends { slug: string }>(data: T) => ({
+const recipeComputedFields = <
+  T extends {
+    slug: string;
+    prepTime?: number;
+    cookTime?: number;
+    waitTime?: number;
+  }
+>(
+  data: T
+) => ({
   ...data,
   // Extract the slug from the path
   extractedSlug: data.slug.split("/").slice(1).join("/"),
+  totalTime: (data.prepTime || 0) + (data.cookTime || 0) + (data.waitTime || 0),
 });
 
 const recipes = defineCollection({
@@ -27,9 +37,19 @@ const recipes = defineCollection({
       date: s.isodate(),
       published: s.boolean().default(true),
       tags: s.array(s.string()).optional(),
+      yield: s.number(), // number of servings
+      prepTime: s.number().optional(), // in minutes
+      cookTime: s.number().optional(), // in minutes
+      waitTime: s.number().optional(), // in minutes
       body: s.mdx(),
     })
-    .transform(computedFields),
+    .transform(recipeComputedFields),
+});
+
+const postComputedFields = <T extends { slug: string }>(data: T) => ({
+  ...data,
+  // Extract the slug from the path
+  extractedSlug: data.slug.split("/").slice(1).join("/"),
 });
 
 const posts = defineCollection({
@@ -45,7 +65,7 @@ const posts = defineCollection({
       tags: s.array(s.string()).optional(),
       body: s.mdx(),
     })
-    .transform(computedFields),
+    .transform(postComputedFields),
 });
 
 export default defineConfig({
@@ -61,12 +81,15 @@ export default defineConfig({
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      [rehypePrettyCode, { 
-        theme: {
-          dark: "github-dark-dimmed",
-          light: "github-light",
+      [
+        rehypePrettyCode,
+        {
+          theme: {
+            dark: "github-dark-dimmed",
+            light: "github-light",
+          },
         },
-      }],
+      ],
       [
         rehypeAutolinkHeadings,
         {
