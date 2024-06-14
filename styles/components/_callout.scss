@@ -1,0 +1,64 @@
+@use "../abstracts" as *;
+
+// Callouts
+.callout {
+  --callout-bg-color: rgba(175, 184, 193, 0.14);
+  --callout-content: "";
+
+  margin: 1rem 0;
+  padding: 1.5rem;
+  padding-top: 1.2rem;
+  border-radius: $border-radius;
+  background-color: var(--callout-bg-color);
+  > *:last-child {
+    margin-bottom: 0;
+  }
+  &::before {
+    content: var(--callout-content);
+    font-family: $font-bold;
+    font-size: 0.8em;
+    text-transform: uppercase;
+  }
+
+  // Callout styles
+  &.note {
+    --callout-bg-color: rgba(100, 108, 255, 0.14);
+    --callout-content: "Note";
+  }
+  &.warning {
+    --callout-bg-color: rgba(234, 179, 8, 0.14);
+    --callout-content: "Warning";
+  }
+  &.hint {
+    --callout-bg-color: rgba(234, 8, 196, 0.14);
+    --callout-content: "Hint";
+  }
+  &.tip {
+    --callout-bg-color: rgba(57, 234, 8, 0.14);
+    --callout-content: "Tip";
+  }
+  &.error {
+    --callout-bg-color: rgba(234, 76, 8, 0.14);
+    --callout-content: "Error";
+  }
+  &.example {
+    --callout-bg-color: rgba(0, 94, 157, 0.14);
+    --callout-content: "Example";
+  }
+
+  @media screen and (max-width: 75rem) {
+    padding: 1rem;
+  }
+
+  // Content-only collapse (especially for details)
+  &.content-only {
+    --callout-content: "";
+    padding: 0;
+    details {
+      background-color: transparent;
+      summary {
+        background-color: transparent;
+      }
+    }
+  }
+}

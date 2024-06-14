@@ -1,0 +1,76 @@
+@use "../abstracts" as *;
+
+//*** Code ***
+
+code {
+  font-size: 0.9em;
+  font-family: $font-mono;
+  padding: 0em 0.3em 0.06em 0.3em;
+  border-radius: $border-radius;
+  word-wrap: break-word;
+  strong {
+    font-weight: 400;
+  }
+}
+
+pre {
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  border-radius: $border-radius;
+  break-inside: avoid;
+
+  code {
+    text-align: left;
+    white-space: pre !important;
+    background: none !important;
+    padding: 0 !important;
+
+    &[data-line-numbers] {
+      counter-reset: line;
+      [data-line]::before {
+        counter-increment: line;
+        content: counter(line);
+        display: inline-block;
+        margin-right: 1em;
+        width: 1.5em;
+        text-align: right;
+      }
+    }
+
+    span[data-highlighted-line],
+    [data-highlighted-line] span {
+      background-color: var(--code-highlight-line-bg);
+    }
+
+    [data-highlighted-chars],
+    [data-highlighted-chars] span {
+      border-radius: $code-highlight-border-radius;
+      background-color: var(--code-highlight-bg);
+      color: var(--code-highlight-text);
+    }
+
+    // possibility to highlight in id specified colors
+    // [data-chars-id],
+    // [data-chars-id] span {
+
+    // }
+  }
+}
+
+// Highlight
+code[data-theme*=" "],
+code[data-theme*=" "] span,
+pre[data-theme*=" "] {
+  color: var(--shiki-light);
+  background-color: var(--pre-bg-color);
+  // background-color: var(--shiki-light-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span,
+  pre[data-theme*=" "] {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+}

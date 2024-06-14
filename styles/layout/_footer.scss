@@ -1,4 +1,4 @@
-@import "globals";
+@use "../abstracts" as *;
 
 footer {
   flex-shrink: 0;

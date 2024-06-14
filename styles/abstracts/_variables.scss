@@ -1,0 +1,13 @@
+@use "fonts" as *;
+
+$font-variable: "Satoshi-Variable", sans-serif;
+$font: "Satoshi-Regular", sans-serif;
+$font-light: "Satoshi-Light", sans-serif;
+$font-medium: "Satoshi-Medium", sans-serif;
+$font-bold: "Satoshi-Bold", sans-serif;
+$font-black: "Satoshi-Black", sans-serif;
+$font-mono: "IBM Plex Mono", Consolas, Menlo, monospace;
+
+$code-highlight-border-radius: 0.2rem;
+$border-radius: 0.5rem;
+$max-width: 38rem;

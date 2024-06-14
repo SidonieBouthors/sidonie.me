@@ -1,20 +1,3 @@
-@import "fonts";
-
-$font-variable: "Satoshi-Variable", sans-serif;
-$font: "Satoshi-Regular", sans-serif;
-$font-light: "Satoshi-Light", sans-serif;
-$font-medium: "Satoshi-Medium", sans-serif;
-$font-bold: "Satoshi-Bold", sans-serif;
-$font-black: "Satoshi-Black", sans-serif;
-$font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-  "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-  "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-
-$code-highlight-border-radius: 0.2rem;
-
-$border-radius: 0.5rem;
-$max-width: 38rem;
-
 // *** Light Theme ***
 :root {
   --highlight: #39acff;
