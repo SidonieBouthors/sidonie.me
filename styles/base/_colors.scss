@@ -1,7 +1,10 @@
 // *** Light Theme ***
 :root {
   --highlight: #39acff;
+  --dark-highlight: #036fbd;
+
   --text-color: #16191d;
+  --secondary-text-color: #16191d;
   --bg-color: #fefefe;
   --border-color: #ccc;
 
@@ -27,6 +30,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #dddddd;
+    --secondary-text-color: #aeaeae;
     --bg-color: #16191d;
 
     --link-color: #62a0e2;

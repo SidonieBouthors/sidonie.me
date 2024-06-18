@@ -14,19 +14,17 @@ export default async function PostPage({ params }: PostProps) {
   const slug = params?.postSlug?.join("/");
   const post = posts.find((post: Post) => post.extractedSlug === slug);
 
-
-
   if (!post || !post.published) {
     notFound();
   }
 
   return (
-    <div id="left-container">
-      <main>
+    <div className="post-page">
+      <div className="content">
         <Breadcrumb title={post.title} slug={post.slug.split("/")}></Breadcrumb>
         <LastUpdated date={post.date}></LastUpdated>
         <MDXContent code={post.body} />
-      </main>
+      </div>
     </div>
   );
 }

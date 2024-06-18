@@ -1,0 +1,27 @@
+@use "../abstracts" as *;
+
+.article-block {
+    margin:  2em 1em;
+  h2 {
+    font-family: $font-bold;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  p {
+    margin: 0.5em 0;
+    color: var(--secondary-text-color);
+  }
+
+  .art-date {
+    display: flex;
+    align-items: center;
+    font-family: $font-medium;
+    font-size: 0.9em;
+    margin: 0.8em 0;
+
+    svg {
+        margin-right: 0.5rem;
+    }
+  }
+}

@@ -1,4 +1,6 @@
-import { MDXContent } from "@/components/MDXContent";
+import Breadcrumb from "@components/Breadcrumb";
+import LastUpdated from "@components/LastUpdated";
+import { MDXContent } from "@components/MDXContent";
 import RecipeInfo from "@components/RecipeInfo";
 import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
@@ -24,16 +26,30 @@ export default async function RecipePage({ params }: RecipeProps) {
   }
 
   return (
-    <main>
-      <RecipeInfo
-        recYield={recipe.yield}
-        prepTime={recipe.prepTime || 0}
-        cookTime={recipe.cookTime || 0}
-        waitTime={recipe.waitTime || 0}
-        totalTime={recipe.totalTime}
-      ></RecipeInfo>
-      <MDXContent code={recipe.body} />
-    </main>
+    <div className="recipe-page">
+      <div className="content">
+        <Breadcrumb
+          title={recipe.name}
+          slug={recipe.slug.split("/")}
+        ></Breadcrumb>
+        <LastUpdated date={recipe.date}></LastUpdated>
+        <div className="recipe-pin-right">
+          <RecipeInfo
+            recYield={recipe.yield}
+            prepTime={recipe.prepTime || 0}
+            cookTime={recipe.cookTime || 0}
+            waitTime={recipe.waitTime || 0}
+            totalTime={recipe.totalTime}
+          ></RecipeInfo>
+          <img
+            className="recipe-image"
+            src={recipe.contentImage?.src}
+            alt={recipe.name}
+          />
+        </div>
+        <MDXContent code={recipe.body} />
+      </div>
+    </div>
   );
 }
 

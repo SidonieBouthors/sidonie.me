@@ -17,54 +17,39 @@
   }
 }
 
-
 //*** Table of Contents ***
 
 .toc {
-    position: fixed;
-    top: 12rem;
-    right: 2rem;
-    width: 20rem;
-    max-height: calc(100vh - 10rem);
-    overflow-y: auto;
+  @include pin-right;
+
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  border-left: 1px solid var(--border-color);
+  font-size: 1rem;
+  color: var(--toc-text);
+
+  &::before {
+    content: "On this page";
+    display: inline;
+    font-family: $font-medium;
+    font-size: 1.2rem;
+    color: var(--toc-title);
+  }
+
+  h2 {
     margin: 0;
-    padding: 0.5rem 1.5rem;
-    border-left: 1px solid var(--border-color);
-    font-size: 1rem;
-    color: var(--toc-text);
-  
-    &::before {
-      content: "On this page";
-      display: inline;
-      font-family: $font-medium;
-      font-size: 1.2rem;
-      color: var(--toc-title);
-    }
-  
-    h2 {
-      margin: 0;
-      font-size: 1.1rem;
-    }
-    ol {
-      list-style: none;
-      padding-left: 1.5rem;
-      font-size: 0.9em;
-    }
-    > ol {
-      padding: 0;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    font-size: 1.1rem;
   }
-  
-  @media screen and (max-width: 75rem) {
-    .toc {
-      display: none;
-  
-      /* FIXME: properly display the TOC on mobile */
-    }
+  ol {
+    list-style: none;
+    padding-left: 1.5rem;
+    font-size: 0.9em;
   }
-  
-  
+  > ol {
+    padding: 0;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,52 @@
+@use "../abstracts" as *;
+
+.recipe-page {
+
+  @include left-align;
+
+  .content {
+    @include article-content;
+  }
+
+  .toc {
+    display: none;
+  }
+
+  .recipe-pin-right {
+    @include pin-right;
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    .recipe-info {
+        display: flex;
+    }
+  }
+
+
+  // Ingredients
+  .ingredients {
+  table {
+    width: 100%;
+    margin: 1em 0;
+
+    td:first-child {
+      padding: 0.3em 0.5em;
+      padding-left: 0;
+    }
+  }}
+
+  // Instructions
+  .instructions {
+    ol {
+    width: 100%;
+    margin: 1.5em 0;
+    li {
+      padding-left: 0.5em;
+      margin: 0.5em 0;
+    }
+  }
+  }
+  
+}

@@ -113,7 +113,7 @@ h4 {
   }
 }
 
-p {
+p, ul {
   margin: 0.7em 0;
 }
 
@@ -140,6 +140,10 @@ svg {
   &.align-left {
     margin: 1em 0;
   }
+}
+
+hr {
+  border-color: var(--secondary-text-color);
 }
 
 // img,

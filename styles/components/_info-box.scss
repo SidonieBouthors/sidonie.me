@@ -1,0 +1,19 @@
+.info-box {
+  margin: 2em 0;
+  padding: 1.5em;
+  outline: 3.5px solid var(--dark-highlight);
+  position: relative;
+
+  outline-offset: -3.5px; // border just inside element
+  
+  .info-box-title {
+    color: var(--dark-highlight);
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -1.5em);
+    background: var(--bg-color);
+    padding: 0 0.5em;
+  }
+}

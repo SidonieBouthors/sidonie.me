@@ -1,0 +1,38 @@
+@mixin pin-right {
+  position: fixed;
+  top: 10rem;
+  left: calc(100vw - 25rem);
+  max-width: 20rem;
+  max-height: calc(100vh - 10rem);
+  overflow-y: auto;
+
+  @media screen and (max-width: 75rem) {
+    display: none;
+    /* FIXME: properly display the TOC & pinned on mobile */
+  }
+}
+
+@mixin left-align {
+  margin-right: 22rem;
+  @media screen and (max-width: 75rem) {
+    margin-right: 0;
+  }
+}
+
+@mixin article-content {
+  max-width: 38rem;
+  margin: 5rem auto;
+  @media screen and (max-width: 75rem) {
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+}
+
+@mixin wide-content {
+  max-width: 80rem;
+  margin: 5rem;
+  @media screen and (max-width: 75rem) {
+    margin: 0 1em;
+    padding: .5em;
+  }
+}

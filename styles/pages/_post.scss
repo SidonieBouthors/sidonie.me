@@ -1,0 +1,9 @@
+@use "../abstracts" as *;
+
+.post-page {
+  @include left-align;
+
+  .content {
+    @include article-content;
+  }
+}
