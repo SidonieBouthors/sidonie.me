@@ -1,17 +1,21 @@
+import ArticleBlock from "@components/ArticleBlock";
 import { posts, Post } from "@content";
 
 export default function Share() {
   const displayPosts = posts.filter((post: Post) => post.published);
+
   return (
-    <main>
+    <div className="share-page">
       <h1>Share</h1>
       <ul>
         {displayPosts.map((post: Post) => (
-          <li key={post.extractedSlug}>
-            <a href={`/share/${post.extractedSlug}`}>{post.title}</a>
+          <li key={post.slug}>
+            <hr />
+            <ArticleBlock article={post}></ArticleBlock>
+            <hr />
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   );
 }

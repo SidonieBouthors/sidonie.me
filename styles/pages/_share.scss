@@ -1,0 +1,9 @@
+@use "../abstracts" as *;
+
+.share-page {
+    @include article-content;
+
+    ul {
+        list-style: none;
+    }
+}

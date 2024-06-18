@@ -12,10 +12,10 @@ export default async function Recipes() {
     ["s", 200, 1],
   ];
   const margin: [number, number] = [15, 15];
-  const containerPadding: [number, number] = [30, 30];
+  const containerPadding: [number, number] = [15, 15];
 
   return (
-    <main>
+    <div className="recipes-page">
       <h1>Recipes</h1>
       <CardGrid
         gridFormat={gridFormat}
@@ -27,9 +27,10 @@ export default async function Recipes() {
             slug={recipe.slug}
             title={recipe.name}
             imageUrl={recipe.coverImage.src}
+            key={recipe.slug}
           />
         ))}
       </CardGrid>
-    </main>
+    </div>
   );
 }

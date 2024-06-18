@@ -1,0 +1,24 @@
+@use "../abstracts" as *;
+.home-hero {
+  background-image: url(/home-hero.jpg);
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  padding: 10em 0;
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+
+  h1 {
+    font-family: $font-black;
+    font-size: 5rem;
+
+    .subtitle {
+        font-family: $font-bold;
+        font-size: 3rem;
+        color: var(--secondary-text-color);
+    }
+  }
+}
+.home-page {
+  @include article-content;
+}
