@@ -15,7 +15,7 @@ export default function Breadcrumb({ slug, title }: BreadcrumbProps) {
             ref += "/" + str;
             console.log(str);
             return (
-              <li>
+              <li key={ref}>
                 <Link href={ref}>
                   {str.charAt(0).toUpperCase() + str.slice(1)}
                 </Link>

@@ -30,7 +30,7 @@ export default function Footer() {
         <div className="footer-col">
           <p>
             Hope you found what you were looking for! <br />
-            Don't hesitate to reach out for any enquiry.
+            Don{"'"}t hesitate to reach out for any enquiry.
           </p>
           <p>ⓒ Sidonie Bouthors 2024. All rights reserved</p>
         </div>

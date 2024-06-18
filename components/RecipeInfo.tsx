@@ -1,4 +1,4 @@
-import { format, interval } from "date-fns";
+import InfoBox from "@components/InfoBox";
 
 interface RecipeInfoProps {
   recYield: number;
@@ -36,14 +36,14 @@ export default function RecipeInfo({
   const formattedWaitTime = formatTime(waitTime);
   const formattedTotalTime = formatTime(totalTime);
   return (
-    <div className="recipe-info">
+    <InfoBox className="recipe-info">
       <ul>
-        <li>Yield: {recYield} people</li>
-        {formattedPrepTime? <li>Prep Time: {formattedPrepTime}</li> : null}
-        {formattedWaitTime? <li>Wait Time: {formattedWaitTime}</li> : null}
-        {formattedCookTime? <li>Cooking Time: {formattedCookTime}</li> : null}
-        <li>Total Time: {formattedTotalTime}</li>
+        <li><b>Yield:</b> {recYield} people</li>
+        {formattedPrepTime? <li><b>Prep Time:</b> {formattedPrepTime}</li> : null}
+        {formattedWaitTime? <li><b>Wait Time:</b> {formattedWaitTime}</li> : null}
+        {formattedCookTime? <li><b>Cooking Time:</b> {formattedCookTime}</li> : null}
+        <li><b>Total Time:</b> {formattedTotalTime}</li>
       </ul>
-    </div>
+    </InfoBox>
   );
 }

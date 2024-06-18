@@ -1,7 +1,7 @@
 import React from "react";
 import type { SVGProps } from "react";
 
-export default function CloseIcon(props: SVGProps<SVGSVGElement>) {
+export function CalendarIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,14 +10,15 @@ export default function CloseIcon(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       {...props}
     >
-      <path
+      <g
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        d="M18 6L6 18M6 6l12 12"
-      ></path>
+      >
+        <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm12-4v4M8 3v4m-4 4h16"></path>
+      </g>
     </svg>
   );
 }

@@ -16,7 +16,7 @@ export default function NavBar({
   return (
     <header className="nav-bar">
       <div className="logo">
-        <img src={logo.src}></img>
+        <img src={logo.src} alt="logo"></img>
       </div>
       <nav className="nav-bar-links">
         <ul>
