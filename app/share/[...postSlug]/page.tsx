@@ -20,11 +20,9 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <div className="post-page">
-      <div className="content">
         <Breadcrumb title={post.title} slug={post.slug.split("/")}></Breadcrumb>
         <LastUpdated date={post.date}></LastUpdated>
         <MDXContent code={post.body} />
-      </div>
     </div>
   );
 }

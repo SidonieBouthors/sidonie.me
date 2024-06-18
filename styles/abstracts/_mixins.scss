@@ -1,7 +1,7 @@
 @mixin pin-right {
-  position: fixed;
-  top: 10rem;
-  left: calc(100vw - 25rem);
+  position: sticky;
+  top: 9rem;
+  float: right;
   max-width: 20rem;
   max-height: calc(100vh - 10rem);
   overflow-y: auto;
@@ -12,19 +12,26 @@
   }
 }
 
-@mixin left-align {
-  margin-right: 22rem;
-  @media screen and (max-width: 75rem) {
-    margin-right: 0;
-  }
-}
-
 @mixin article-content {
-  max-width: 38rem;
+  max-width: 38rem; 
   margin: 5rem auto;
   @media screen and (max-width: 75rem) {
     margin: 0 auto;
     padding: 1.5rem;
+  }
+}
+
+@mixin article-shifted-content {
+  max-width: 80rem; 
+  margin: 5rem 5rem ;
+  margin-left: 15rem;
+  @media screen and (max-width: 75rem) {
+    max-width: 38rem; 
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  > * {
+    max-width: 38rem;
   }
 }
 

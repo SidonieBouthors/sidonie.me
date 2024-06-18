@@ -1,12 +1,7 @@
 @use "../abstracts" as *;
 
 .recipe-page {
-
-  @include left-align;
-
-  .content {
-    @include article-content;
-  }
+  @include article-shifted-content;
 
   .toc {
     display: none;
@@ -14,7 +9,6 @@
 
   .recipe-pin-right {
     @include pin-right;
-    position: absolute;
 
     display: flex;
     flex-direction: column;

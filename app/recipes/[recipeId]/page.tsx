@@ -27,7 +27,6 @@ export default async function RecipePage({ params }: RecipeProps) {
 
   return (
     <div className="recipe-page">
-      <div className="content">
         <Breadcrumb
           title={recipe.name}
           slug={recipe.slug.split("/")}
@@ -48,7 +47,6 @@ export default async function RecipePage({ params }: RecipeProps) {
           />
         </div>
         <MDXContent code={recipe.body} />
-      </div>
     </div>
   );
 }

@@ -8,9 +8,9 @@ export default function Share() {
     <div className="share-page">
       <h1>Share</h1>
       <ul>
+        <hr />
         {displayPosts.map((post: Post) => (
           <li key={post.slug}>
-            <hr />
             <ArticleBlock article={post}></ArticleBlock>
             <hr />
           </li>
