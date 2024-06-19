@@ -3,14 +3,20 @@
 .post-page {
   @include article-shifted-content;
 
-  
   img {
-    padding: 0.5em 6em;
+    // white bg for transparent images
+    background-color: var(--img-bg-color);
+    border-radius: $border-radius;
+    max-width: 70%;
+    min-width: 5em;
+    margin: 0.4em auto;
     @media screen and (max-width: 75rem) {
-      padding: 0.5em 1.5em;
+      max-width: 100%;
     }
   }
 
-  
-
+  // hide toc scrollbar if any
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 }
