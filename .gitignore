@@ -38,3 +38,6 @@ next-env.d.ts
 # velite
 .velite
 public/velite
+
+# VSCode
+.vscode
