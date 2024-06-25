@@ -4,6 +4,11 @@
   height: 4em;
   width: auto;
   display: inline-flex;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 }
 
 .nav-bar {
@@ -65,6 +70,15 @@
 
   &.theme-toggle {
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg:hover {
+      cursor: pointer;
+      transition: transform 400ms ease;
+      transform: rotate(1turn);
+    }
   }
 }
 
