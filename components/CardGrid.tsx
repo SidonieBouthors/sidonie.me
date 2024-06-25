@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { on } from "events";
+import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -35,6 +36,28 @@ export default function CardGrid({
 
   var items = children == undefined || children == null ? [] : children;
   var [rowHeight, setRowHeight] = useState(0);
+
+  const gridRef = useRef(null);
+  useEffect(() => {
+    const current = (gridRef.current as any | null);
+    const width = current?.elementRef.current.offsetWidth;
+    const cols = findColNum(width);
+    onWidthChange(width, margin, cols, containerPadding);
+  }, []); 
+
+  /**
+   * Finds the number of columns based on the container width
+   * @param width
+   */
+  function findColNum(width: number) {
+    for (let i = 0; i < gridFormat.length; i++) {
+      var [breakpointName, breakPointSize, col] = gridFormat[i];
+      if (width > breakPointSize) {
+        return col;
+      }
+    }
+    return gridFormat[gridFormat.length - 1][2];
+  }
 
   /**
    * Calculates the row height based on
@@ -112,6 +135,7 @@ export default function CardGrid({
 
   return (
     <ResponsiveGridLayout
+      ref={gridRef}
       className="layout"
       layouts={makeLayout()}
       margin={margin}
