@@ -31,6 +31,8 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
 
     li {
       font-family: Satoshi-Bold;
@@ -45,18 +47,24 @@
   }
 }
 
-.menu-toggle {
+.icon-toggle {
   all: unset;
   width: 2.5rem;
   padding: 0 0.8em;
 
-  @media (min-width: 50rem) {
-    display: none;
-  }
-
   svg {
     height: 100%;
     width: 100%;
+  }
+
+  &.menu-toggle {
+    @media (min-width: 50rem) {
+      display: none;
+    }
+  }
+
+  &.theme-toggle {
+    padding: 0;
   }
 }
 
@@ -69,8 +77,10 @@
   &.open {
     display: flex;
     position: fixed;
-    height: 100vh;
-    width: 100vw;
+    bottom: 0;
+    top: 0;
+    margin-top: 4em;
+    width: 100%;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -78,12 +88,18 @@
 
     ul {
       list-style-type: none;
-      text-align: left;
+      padding: 0;
 
       li {
         font-family: Satoshi-Bold;
         font-size: 1.5rem;
         padding: 1em;
+        display: flex;
+        justify-content: center;
+
+        a {
+          color: inherit;
+        }
       }
     }
 

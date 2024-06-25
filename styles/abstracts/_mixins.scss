@@ -1,3 +1,9 @@
+@mixin make-theme($map: ()) {
+  @each $key, $value in $map {
+    --#{$key}: #{$value};
+  }
+}
+
 @mixin pin-right {
   position: sticky;
   top: 9rem;
@@ -13,7 +19,7 @@
 }
 
 @mixin article-content {
-  max-width: 38rem; 
+  max-width: 38rem;
   margin: 5rem auto;
   @media screen and (max-width: 75rem) {
     margin: 0 auto;
@@ -22,11 +28,11 @@
 }
 
 @mixin article-shifted-content {
-  max-width: 80rem; 
-  margin: 5rem 5rem ;
+  max-width: 80rem;
+  margin: 5rem 5rem;
   margin-left: 15rem;
   @media screen and (max-width: 75rem) {
-    max-width: 38rem; 
+    max-width: 38rem;
     margin: 0 auto;
     padding: 1.5rem;
   }
@@ -40,6 +46,6 @@
   margin: 5rem;
   @media screen and (max-width: 75rem) {
     margin: 0 1em;
-    padding: .5em;
+    padding: 0.5em;
   }
 }

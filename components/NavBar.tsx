@@ -2,16 +2,24 @@ import Link from "next/link";
 import logo from "@public/logo.svg";
 import CloseIcon from "@components/icons/CloseIcon";
 import MenuIcon from "@components/icons/MenuIcon";
+import { SunIcon } from "@components/icons/SunIcon";
+import { MoonIcon } from "@components/icons/MoonIcon";
 
 export default function NavBar({
   isOpen,
   toggleMenu,
+  darkTheme,
+  switchTheme,
 }: {
   isOpen: boolean;
   toggleMenu: () => void;
+  darkTheme: boolean;
+  switchTheme: () => void;
 }) {
-  var Icon = isOpen ? CloseIcon : MenuIcon;
+  var MenuSwitchIcon = isOpen ? CloseIcon : MenuIcon;
   var alt = isOpen ? "Close" : "Menu";
+
+  var ThemeSwitchIcon = darkTheme ? MoonIcon : SunIcon;
 
   return (
     <header className="nav-bar">
@@ -32,13 +40,18 @@ export default function NavBar({
           <li>
             <Link href="/about">About</Link>
           </li>
+          <li>
+            <button className="icon-toggle theme-toggle" onClick={switchTheme}>
+              <ThemeSwitchIcon />
+            </button>
+          </li>
         </ul>
       </nav>
       <button
-        className={`menu-toggle ${isOpen ? "open" : ""}`}
+        className={`icon-toggle menu-toggle ${isOpen ? "open" : ""}`}
         onClick={toggleMenu}
       >
-        <Icon />
+        <MenuSwitchIcon />
       </button>
     </header>
   );

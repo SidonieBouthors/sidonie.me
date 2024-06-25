@@ -58,15 +58,17 @@ pre {
 }
 
 // Highlight
-code[data-theme*=" "],
-code[data-theme*=" "] span,
-pre[data-theme*=" "] {
-  color: var(--shiki-light);
-  background-color: var(--pre-bg-color);
-  // background-color: var(--shiki-light-bg);
+.light-theme {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span,
+  pre[data-theme*=" "] {
+    color: var(--shiki-light);
+    background-color: var(--pre-bg-color);
+    // background-color: var(--shiki-light-bg);
+  }
 }
 
-@media (prefers-color-scheme: dark) {
+.dark-theme {
   code[data-theme*=" "],
   code[data-theme*=" "] span,
   pre[data-theme*=" "] {

@@ -1,54 +1,29 @@
-// *** Light Theme ***
+@use "../abstracts" as *;
+
+// Overall Theme
 :root {
-
-  --img-bg-color: #fefefe;
-
-  
   --highlight: #39acff;
   --dark-highlight: #036fbd;
 
-  --text-color: #16191d;
-  --secondary-text-color: #16191d;
-  --bg-color: #fefefe;
+  // For transparent backgrounds
+  --img-bg-color: #fefefe;
+
   --border-color: #ccc;
 
   --section-sign-color: #767684;
-  --link-color: #0b529d;
   --last-updated-color: #999;
-
-  // ToC
-  --toc-title: #333;
-  --toc-text: #888;
-
-  // Code
-  --code-highlight-bg: #c1e4ff;
-  --code-highlight-text: #082c50;
-  --code-highlight-line-bg: #e2f3fd;
 
   // Used to overwrite the default bg color of code blocks in light theme
   // in order to contrast with the bg color of the page.
   --pre-bg-color: #f6f8fa;
 }
 
+// *** Light Theme ***
+.light-theme {
+  @include make-theme($light-theme-map);
+}
+
 // *** Dark Theme ***
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #dddddd;
-    --secondary-text-color: #aeaeae;
-    --bg-color: #16191d;
-
-    --link-color: #62a0e2;
-
-    // ToC
-    --toc-title: #d8d8d8;
-    --toc-text: #a1a1a1;
-
-    // Code
-    --code-highlight-bg: #13304f;
-    --code-highlight-text: #5ba7dd;
-    --code-highlight-line-bg: #2d3c54;
-  }
-  html {
-    color-scheme: dark;
-  }
+.dark-theme {
+  @include make-theme($dark-theme-map);
 }
