@@ -1,9 +1,11 @@
 @use "../abstracts" as *;
 
 * {
-  transition: all ease-in-out 250ms;
+  // transition: all ease-in-out 250ms;
   box-sizing: border-box;
   margin: 0;
+  
+  transition: transform ease-in-out 250ms, text-decoration-color ease-in-out 250ms;
 }
 
 html {
@@ -53,8 +55,8 @@ h4 {
   page-break-after: avoid;
 
   a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
   }
 }
 
@@ -119,9 +121,10 @@ p, ul {
 
 a {
   color: var(--link-color);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
   &:hover {
-    text-decoration: underline;
+    text-decoration-color: inherit;
   }
 }
 
