@@ -1,21 +1,51 @@
 @use "../abstracts" as *;
+@use "sass:map";
+
 .home-hero {
   background-image: url(/home-hero.jpg);
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: overlay;
-  padding: 10em 0;
   background-size: cover;
   background-position: center;
+  padding: 0.5em;
   height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   h1 {
     font-family: $font-black;
-    font-size: 5rem;
+    font-size: 3rem;
+    padding: 0 1.5rem 6rem;
+    // Use the text-color from the dark theme
+    color: map.get($dark-theme-map, "text-color");
 
     .subtitle {
-        font-family: $font-bold;
+      font-family: $font-bold;
+      font-size: 2rem;
+      color: map.get($dark-theme-map, "secondary-text-color");
+    }
+  }
+
+  @media screen and (min-width: 40rem) {
+    h1 {
+      font-size: 4rem;
+
+      .subtitle {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  @media screen and (min-width: 60rem) {
+    h1 {
+      font-size: 5rem;
+
+      .subtitle {
         font-size: 3rem;
-        color: var(--secondary-text-color);
+      }
     }
   }
 }

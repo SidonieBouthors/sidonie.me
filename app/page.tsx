@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <div className="home-hero">
         <h1>
-          Welcome to my website !
+          Welcome to my website!
           <div className="subtitle">Recipes, projects & more</div>
         </h1>
       </div>
