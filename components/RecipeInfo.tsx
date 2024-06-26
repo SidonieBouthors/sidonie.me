@@ -1,6 +1,7 @@
 import InfoBox from "@components/InfoBox";
 
 interface RecipeInfoProps {
+  recYieldUnit: string;
   recYield: number;
   prepTime: number;
   cookTime: number;
@@ -25,6 +26,7 @@ function formatTime(time: number): string | undefined {
 }
 
 export default function RecipeInfo({
+  recYieldUnit,
   recYield,
   prepTime,
   cookTime,
@@ -38,7 +40,7 @@ export default function RecipeInfo({
   return (
     <InfoBox className="recipe-info">
       <ul>
-        <li><b>Yield:</b> {recYield} people</li>
+        <li><b>Yield:</b> {recYield} {recYieldUnit}</li>
         {formattedPrepTime? <li><b>Prep Time:</b> {formattedPrepTime}</li> : null}
         {formattedWaitTime? <li><b>Wait Time:</b> {formattedWaitTime}</li> : null}
         {formattedCookTime? <li><b>Cooking Time:</b> {formattedCookTime}</li> : null}

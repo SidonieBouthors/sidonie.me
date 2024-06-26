@@ -34,6 +34,7 @@ export default async function RecipePage({ params }: RecipeProps) {
         <LastUpdated date={recipe.date}></LastUpdated>
         <div className="recipe-pin-right">
           <RecipeInfo
+            recYieldUnit={recipe.yieldUnit || "servings"}
             recYield={recipe.yield}
             prepTime={recipe.prepTime || 0}
             cookTime={recipe.cookTime || 0}
@@ -46,6 +47,7 @@ export default async function RecipePage({ params }: RecipeProps) {
             alt={recipe.name}
           />
         </div>
+        <h1>{recipe.name}</h1>
         <MDXContent code={recipe.body} />
     </div>
   );

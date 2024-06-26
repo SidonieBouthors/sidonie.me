@@ -30,14 +30,15 @@ const recipes = defineCollection({
   schema: s
     .object({
       slug: s.path(),
-      name: s.string().max(20),
-      description: s.string().max(100).optional(),
+      name: s.string().max(50),
+      description: s.string().max(200).optional(),
       coverImage: s.image(),
       contentImage: s.image().optional(),
       date: s.isodate(),
       published: s.boolean().default(true),
       tags: s.array(s.string()).optional(),
       yield: s.number(), // number of servings
+      yieldUnit: s.string().optional(), // unit of the yield
       prepTime: s.number().optional(), // in minutes
       cookTime: s.number().optional(), // in minutes
       waitTime: s.number().optional(), // in minutes
@@ -68,6 +69,19 @@ const posts = defineCollection({
     .transform(postComputedFields),
 });
 
+const aboutSnippets = defineCollection({
+  name: "AboutSnippet",
+  pattern: "about/**/*.mdx",
+  schema: s.object({
+    slug: s.path(),
+    title: s.string().max(40).optional(),
+    icon: s.image().optional(),
+    width: s.number().default(1),
+    height: s.number().default(1),
+    body: s.mdx(),
+  }),
+});
+
 export default defineConfig({
   root: "content",
   output: {
@@ -77,7 +91,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { recipes, posts },
+  collections: { recipes, posts, aboutSnippets },
   mdx: {
     rehypePlugins: [
       rehypeSlug,

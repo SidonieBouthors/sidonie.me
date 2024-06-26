@@ -3,6 +3,11 @@
 .recipe-page {
   @include article-shifted-content;
 
+  strong,
+  b {
+    color: var(--secondary-text-color);
+  }
+
   .toc {
     display: none;
   }
@@ -14,6 +19,10 @@
     flex-direction: column;
 
     .recipe-info {
+      strong,
+      b {
+        color: inherit;
+      }
       display: flex;
     }
   }
