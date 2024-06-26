@@ -17,11 +17,13 @@ export default function CardGrid({
   margin,
   containerPadding,
   children,
+  sizes,
 }: {
   gridFormat: [string, number, number][];
   margin: [number, number];
   containerPadding: [number, number];
   children: React.ReactElement[];
+  sizes?: [number, number][];
 }) {
   // Grid format that defines the breakpoints and the number of columns for each breakpoint
   // [breakpointName, breakPointSize, col]
@@ -39,11 +41,11 @@ export default function CardGrid({
 
   const gridRef = useRef(null);
   useEffect(() => {
-    const current = (gridRef.current as any | null);
+    const current = gridRef.current as any | null;
     const width = current?.elementRef.current.offsetWidth;
     const cols = findColNum(width);
     onWidthChange(width, margin, cols, containerPadding);
-  }, []); 
+  }, []);
 
   /**
    * Finds the number of columns based on the container width
@@ -93,18 +95,49 @@ export default function CardGrid({
    * @returns layouts for each breakpoint
    */
   function makeLayout() {
-    var layouts: Layouts = {};
-    for (let j = 0; j < gridFormat.length; j++) {
-      var [breakpointName, breakPointSize, col] = gridFormat[j];
-      var layout: Layout[] = [];
-      for (let i = 0; i < items.length; i++) {
-        var x = i % col;
-        var y = Math.floor(i / col);
-        layout.push({ i: i.toString(), x: x, y: y, w: 1, h: 1, static: true });
+    if (sizes == undefined) {
+      var layouts: Layouts = {};
+      for (let j = 0; j < gridFormat.length; j++) {
+        var [breakpointName, breakPointSize, col] = gridFormat[j];
+        var layout: Layout[] = [];
+        for (let i = 0; i < items.length; i++) {
+          var x = i % col;
+          var y = Math.floor(i / col);
+          layout.push({
+            i: i.toString(),
+            x: x,
+            y: y,
+            w: 1,
+            h: 1,
+            static: true,
+          });
+        }
+        layouts[breakpointName] = layout;
       }
-      layouts[breakpointName] = layout;
+      return layouts;
+    } else {
+      // special case of cards with various sizes
+      var layouts: Layouts = {};
+      for (let j = 0; j < gridFormat.length; j++) {
+        var [breakpointName, breakPointSize, col] = gridFormat[j];
+        var layout: Layout[] = [];
+        for (let i = 0; i < items.length; i++) {
+          var x = i % col;
+          var y = Math.floor(i / col);
+
+          layout.push({
+            i: i.toString(),
+            x: x,
+            y: y,
+            w: sizes[i][0],
+            h: sizes[i][1],
+            static: true,
+          });
+        }
+        layouts[breakpointName] = layout;
+      }
+      return layouts;
     }
-    return layouts;
   }
 
   /**

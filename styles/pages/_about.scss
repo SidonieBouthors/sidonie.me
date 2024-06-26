@@ -1,5 +1,38 @@
 @use "../abstracts" as *;
 
 .about-page {
-    @include wide-content;
+  @include wide-content;
+
+  .about-snippet {
+    background-color: #061fff;
+    height: 100%;
+    width: 100%;
+  }
+
+  .about-hero {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+
+    height: 60vh;
+    margin: 0 10em;
+
+    .about-text {
+      vertical-align: middle;
+    }
+
+    .about-portrait {
+      display: none;
+    }
+
+    @media (min-width: 60rem) {
+      .about-text {
+        max-width: 50%;
+      }
+      .about-portrait {
+        display: block;
+        max-width: 28%;
+      }
+    }
+  }
 }
