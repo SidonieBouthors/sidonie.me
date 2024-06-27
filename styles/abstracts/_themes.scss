@@ -14,6 +14,10 @@ $light-theme-map: (
   code-highlight-bg: #c1e4ff,
   code-highlight-text: #082c50,
   code-highlight-line-bg: #e2f3fd,
+
+  // Collapsible
+  collapsible-bg: #e8edf6,
+  collapsible-summary-bg: #d5dce5,
 );
 
 $dark-theme-map: (
@@ -30,5 +34,9 @@ $dark-theme-map: (
   // Code
   code-highlight-bg: #13304f,
   code-highlight-text: #5ba7dd,
-  code-highlight-line-bg: #2d3c54
+  code-highlight-line-bg: #2d3c54,
+
+  // Collapsible
+  collapsible-bg: #22272d,
+  collapsible-summary-bg: #2d3846,
 );
