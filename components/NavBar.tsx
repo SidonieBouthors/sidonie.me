@@ -23,7 +23,7 @@ export default function NavBar({
 
   return (
     <header className="nav-bar">
-      <Link href="/">
+      <Link href="/" onClick={isOpen ? toggleMenu : () => {}}>
         <img src={logo.src} className="logo" alt="logo"/>
       </Link>
       <nav className="nav-bar-links">
