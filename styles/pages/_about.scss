@@ -3,6 +3,11 @@
 .about-page {
   @include wide-content;
 
+  padding-bottom: 1em;
+  @media screen and (max-width: 75rem) {
+    padding-bottom: 1em;
+  }
+
   .toc {
     display: none;
   }

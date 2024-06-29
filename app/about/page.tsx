@@ -17,7 +17,7 @@ export default function About() {
     ["s", 200, 1],
   ];
   const margin: [number, number] = [15, 15];
-  const containerPadding: [number, number] = [15, 15];
+  const containerPadding: [number, number] = [0, 0];
   const sizes: [number, number][] = sortedSnippets
   .map((snippet) => [
     snippet.width,
