@@ -3,10 +3,39 @@
 .about-page {
   @include wide-content;
 
+  .toc {
+    display: none;
+  }
+
   .about-snippet {
-    background-color: #061fff;
+    @include retheme;
+    // colors are set in the component
     height: 100%;
     width: 100%;
+    padding: 1.5em;
+    overflow-y: hidden;
+
+    h2 {
+      margin: 0;
+      margin-top: 0.4em;
+      font-family: $font-bold;
+    }
+
+    h3 {
+      margin: 0;
+      margin-top: 0.3em;
+      font-family: $font-bold;
+    }
+
+    a {
+      display: contents;
+    }
+
+    .about-snippet-icon {
+      max-width: max(60%, 12em);
+      max-height: 4em;
+      pointer-events: visible;
+    }
   }
 
   .about-hero {
@@ -14,8 +43,8 @@
     justify-content: space-between;
     vertical-align: middle;
 
-    height: 60vh;
-    margin: 0 10em;
+    min-height: 60vh;
+    margin-bottom: 2em;
 
     .about-text {
       vertical-align: middle;
@@ -25,6 +54,11 @@
       display: none;
     }
 
+    @media (min-width: 40rem) {
+      margin: 0 10em;
+      margin-bottom: 2em;
+    }
+
     @media (min-width: 60rem) {
       .about-text {
         max-width: 50%;
@@ -32,6 +66,11 @@
       .about-portrait {
         display: block;
         max-width: 28%;
+        filter: 
+          drop-shadow(-8px 0px 2px var(--img-bg-color))
+          drop-shadow(8px 0px 2px var(--img-bg-color)) 
+          drop-shadow(0px 8px 2px var(--img-bg-color))
+          drop-shadow(0px -8px 2px var(--img-bg-color));
       }
     }
   }

@@ -4,6 +4,25 @@
   }
 }
 
+@mixin retheme {
+  color: var(--text-color);
+  background: var(--bg-color);
+  a {
+    color: var(--link-color);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    a {
+      color: inherit;
+    }
+  }
+  hr {
+    border-color: var(--secondary-text-color);
+  }
+}
+
 @mixin pin-right {
   position: sticky;
   top: 9rem;
@@ -43,7 +62,7 @@
 
 @mixin wide-content {
   max-width: 80rem;
-  margin: 5rem;
+  margin: auto;
   @media screen and (max-width: 75rem) {
     margin: 0 1em;
     padding: 0.5em;
