@@ -45,7 +45,7 @@ export default function CardGrid({
     const width = current?.elementRef.current.offsetWidth;
     const cols = findColNum(width);
     onWidthChange(width, margin, cols, containerPadding);
-  }, []);
+  });
 
   /**
    * Finds the number of columns based on the container width
@@ -121,19 +121,74 @@ export default function CardGrid({
       for (let j = 0; j < gridFormat.length; j++) {
         var [breakpointName, breakPointSize, col] = gridFormat[j];
         var layout: Layout[] = [];
+
+        var positions: boolean[][] = [new Array(col).fill(false)];
+
         for (let i = 0; i < items.length; i++) {
-          var x = i % col;
-          var y = Math.floor(i / col);
+
+          var width = sizes[i][0];
+          var height = sizes[i][1];
+
+          if (sizes[i][0] > col) {
+            // if too large, resize the card
+            width = col;
+            height = (sizes[i][0] * sizes[i][1]) / col;
+          }
+
+          var x = 0;
+          var y = 0;
+          var found = false;
+
+          // find first free position for the card
+          while (!found) {
+            found = true;
+
+            for (let j = 0; j < width; j++) {
+              for (let k = 0; k < height; k++) {
+                while (y + k >= positions.length) {
+                  positions.push(new Array(col).fill(false));
+                }
+                if (x + j >= col) {
+                  found = false;
+                  break;
+                }
+                if (positions[y + k][x + j]) {
+                  found = false;
+                  break;
+                }
+              }
+            }
+
+            if (found) {
+              // mark the positions as taken
+              for (let j = 0; j < width; j++) {
+                for (let k = 0; k < height; k++) {
+                  positions[y + k][x + j] = true;
+                }
+              }
+            } else {
+              // move to the next position
+              x++;
+              if (x + width > col) {
+                x = 0;
+                y++;
+                if (y + height > positions.length) {
+                  positions.push(new Array(col).fill(false));
+                }
+              }
+            }
+          }
 
           layout.push({
             i: i.toString(),
             x: x,
             y: y,
-            w: sizes[i][0],
-            h: sizes[i][1],
+            w: width,
+            h: height,
             static: true,
           });
         }
+
         layouts[breakpointName] = layout;
       }
       return layouts;
