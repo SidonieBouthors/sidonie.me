@@ -98,7 +98,7 @@
     overflow: hidden;
     justify-content: center;
     align-items: center;
-    background: #000;
+    background: var(--bg-color);
 
     ul {
       list-style-type: none;
