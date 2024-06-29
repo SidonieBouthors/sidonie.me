@@ -40,6 +40,7 @@
 @mixin article-content {
   max-width: 38rem;
   margin: 5rem auto;
+  margin-top: 0;
   @media screen and (max-width: 75rem) {
     margin: 0 auto;
     padding: 1.5rem;
@@ -62,7 +63,7 @@
 
 @mixin wide-content {
   max-width: 80rem;
-  margin: auto;
+  margin: 0 auto;
   @media screen and (max-width: 75rem) {
     margin: 0 1em;
     padding: 0em;

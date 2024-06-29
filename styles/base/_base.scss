@@ -4,8 +4,9 @@
   // transition: all ease-in-out 250ms;
   box-sizing: border-box;
   margin: 0;
-  
-  transition: transform ease-in-out 250ms, text-decoration-color ease-in-out 250ms;
+
+  transition: transform ease-in-out 250ms,
+    text-decoration-color ease-in-out 250ms;
 }
 
 html {
@@ -114,7 +115,8 @@ h4 {
   }
 }
 
-p, ul {
+p,
+ul {
   margin: 0.7em 0;
 }
 
@@ -154,5 +156,27 @@ table {
 
   th {
     text-align: left;
+  }
+}
+
+.button {
+  margin: 1em;
+
+  display: inline-block;
+  font-size: 1.2rem;
+  font-family: $font-bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-width: 2px;
+  border-style: solid;
+  color: var(--dark-highlight);
+  border-color: var(--dark-highlight);
+  padding: 0.5em 1.75em;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background: var(--dark-highlight);
+    color: #fff;
   }
 }
