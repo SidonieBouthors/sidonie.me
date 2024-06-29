@@ -7,6 +7,7 @@ import rehypeToc, {
   HtmlElementNode,
   TextNode,
 } from "@jsdevtools/rehype-toc";
+import rehypeExternalLinks from "rehype-external-links";
 
 const recipeComputedFields = <
   T extends {
@@ -76,8 +77,15 @@ const aboutSnippets = defineCollection({
     slug: s.path(),
     title: s.string().max(40).optional(),
     icon: s.image().optional(),
+    link: s.string().optional(),
     width: s.number().default(1),
     height: s.number().default(1),
+    color: s.coerce
+      .string()
+      .transform((s) => s.padStart(6, "0"))
+      .optional(),
+    theme: s.string().optional(),
+    priority: s.number().default(0),
     body: s.mdx(),
   }),
 });
@@ -94,6 +102,12 @@ export default defineConfig({
   collections: { recipes, posts, aboutSnippets },
   mdx: {
     rehypePlugins: [
+      [rehypeExternalLinks,
+        {
+          rel: ["noopener", "noreferrer"],
+          target: "_blank"
+        }
+      ],
       rehypeSlug,
       [
         rehypePrettyCode,
