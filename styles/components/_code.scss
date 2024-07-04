@@ -14,8 +14,9 @@ code {
 }
 
 pre {
-  padding: 0.8rem 1rem;
   overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.8rem 1rem;
   border-radius: $border-radius;
   break-inside: avoid;
 
