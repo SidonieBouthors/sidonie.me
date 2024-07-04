@@ -3,7 +3,13 @@ import Card from "@components/Card";
 import { Recipe, recipes } from "@content";
 
 export default async function Recipes() {
-  const displayRecipes = recipes.filter((recipe: Recipe) => recipe.published);
+  const displayRecipes = recipes
+  .filter((recipe: Recipe) => recipe.published)
+  .sort((a: Recipe, b: Recipe) => {
+    var dateA = new Date(a.date).getTime()
+    var dateB = new Date(b.date).getTime()
+    return dateB - dateA;
+  });
 
   const gridFormat: [string, number, number][] = [
     ["xl", 1200, 4],
