@@ -18,7 +18,7 @@ Download the `execute.sh` file from Moodle into your assignment directory
 
 Modify the following
 
-```bash /<username>/ /1G/ /1/3  /<commands>/
+```bash /<username>/ /1G/ /1/3  /<commands>/ caption="execute.sh"
 #!/bin/bash
 #SBATCH --chdir /scratch/<username>
 #SBATCH --nodes 1
@@ -197,7 +197,7 @@ The name of this file should be exactly **config**, with no extension
 
 Open the config file in a text editor and write the following, then save.
 
-```bash
+```bash caption="~/.ssh/config"
 Host <host name>
     HostName helvetios.epfl.ch
     User <username>
