@@ -25,6 +25,7 @@ pre {
     background: none !important;
     padding: 0 !important;
 
+    // Line Numbers
     &[data-line-numbers] {
       counter-reset: line;
       [data-line]::before {
@@ -32,7 +33,16 @@ pre {
         content: counter(line);
         display: inline-block;
         margin-right: 1em;
-        width: 1.5em;
+        width: 1rem;
+      }
+
+      &[data-line-numbers-max-digits="2"] > [data-line]::before {
+        width: 2rem;
+        text-align: right;
+      }
+
+      &[data-line-numbers-max-digits="3"] > [data-line]::before {
+        width: 3rem;
         text-align: right;
       }
     }
@@ -55,6 +65,21 @@ pre {
 
     // }
   }
+}
+
+// Code Block Title
+[data-rehype-pretty-code-title] {
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+  padding: 0.2em 0.5em;
+}
+
+// Code Block Caption
+[data-rehype-pretty-code-caption] {
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+  padding: 0.2em 0.5em;
+  text-align: right;
 }
 
 // Highlight

@@ -102,11 +102,12 @@ export default defineConfig({
   collections: { recipes, posts, aboutSnippets },
   mdx: {
     rehypePlugins: [
-      [rehypeExternalLinks,
+      [
+        rehypeExternalLinks,
         {
           rel: ["noopener", "noreferrer"],
-          target: "_blank"
-        }
+          target: "_blank",
+        },
       ],
       rehypeSlug,
       [
@@ -115,6 +116,10 @@ export default defineConfig({
           theme: {
             dark: "github-dark-dimmed",
             light: "github-light",
+          },
+          defaultLang: {
+            block: "plaintext",
+            inline: "plaintext",
           },
         },
       ],
