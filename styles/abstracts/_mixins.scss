@@ -30,11 +30,6 @@
   max-width: 20rem;
   max-height: calc(100vh - 10rem);
   overflow-y: auto;
-
-  @media screen and (max-width: 75rem) {
-    display: none;
-    /* FIXME: properly display the TOC & pinned on mobile */
-  }
 }
 
 @mixin article-content {

@@ -20,7 +20,14 @@
 //*** Table of Contents ***
 
 .toc {
-  @include pin-right;
+
+  display: none;
+  /* FIX ME: Display the table of contents on small screen */
+
+  @media screen and (min-width: 75rem) {
+    display: block;
+    @include pin-right;
+  }
 
   padding: 0.5rem 1.5rem;
   border-left: 1px solid var(--border-color);

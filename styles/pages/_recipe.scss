@@ -13,10 +13,30 @@
   }
 
   .recipe-pin-right {
-    @include pin-right;
-
     display: flex;
     flex-direction: column;
+
+    > * {
+      margin: 1em 0;
+    }
+
+    @media screen and (min-width: 60rem) {
+      flex-direction: row;
+      justify-content: space-between;
+      > * {
+        max-width: 50%;
+      }
+    }
+
+    @media screen and (min-width: 80rem) {
+      @include pin-right;
+      margin-top: -8em;
+      flex-direction: column;
+      justify-content: flex-start;
+      > * {
+        max-width: none;
+      }
+    }
 
     .recipe-info {
       strong,
@@ -24,6 +44,7 @@
         color: inherit;
       }
       display: flex;
+      align-items: center;
     }
   }
 
