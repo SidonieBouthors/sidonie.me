@@ -1,6 +1,12 @@
 import CardGrid from "@components/CardGrid";
 import Card from "@components/Card";
 import { Recipe, recipes } from "@content";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Recipes",
+  description: "My collection of recipes",
+};
 
 export default async function Recipes() {
   const displayRecipes = recipes

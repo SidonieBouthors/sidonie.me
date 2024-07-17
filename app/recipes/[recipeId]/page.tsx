@@ -4,6 +4,18 @@ import { MDXContent } from "@components/MDXContent";
 import RecipeInfo from "@components/RecipeInfo";
 import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
+import { describe } from "node:test";
+
+export async function generateMetadata({ params }: RecipeProps) {
+  const foundRecipe = recipes.find(
+    (recipe: Recipe) => recipe.extractedSlug === params.recipeId
+  );
+
+  return {
+    title: foundRecipe ? foundRecipe.name : "",
+    description: foundRecipe ? foundRecipe.description : "",
+  };
+}
 
 interface RecipeProps {
   params: {

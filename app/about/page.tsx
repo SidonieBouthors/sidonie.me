@@ -6,6 +6,11 @@ import { MDXContent } from "@components/MDXContent";
 import Link from "next/link";
 import { Fragment } from "react";
 
+export const metadata = {
+  title: "About",
+  description: "Learn more about Sidonie Bouthors",
+};
+
 export default function About() {
   var sortedSnippets = aboutSnippets.slice().sort((a: AboutSnippet, b: AboutSnippet) => b.priority - a.priority)
 
