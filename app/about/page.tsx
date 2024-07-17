@@ -5,6 +5,7 @@ import CardGrid from "@components/CardGrid";
 import { MDXContent } from "@components/MDXContent";
 import Link from "next/link";
 import { Fragment } from "react";
+import ExportedImage from "next-image-export-optimizer";
 
 export const metadata = {
   title: "About",
@@ -12,8 +13,9 @@ export const metadata = {
 };
 
 export default function About() {
-  var sortedSnippets = aboutSnippets.slice().sort((a: AboutSnippet, b: AboutSnippet) => b.priority - a.priority)
-
+  var sortedSnippets = aboutSnippets
+    .slice()
+    .sort((a: AboutSnippet, b: AboutSnippet) => b.priority - a.priority);
 
   const gridFormat: [string, number, number][] = [
     ["xl", 1200, 4],
@@ -23,13 +25,11 @@ export default function About() {
   ];
   const margin: [number, number] = [15, 15];
   const containerPadding: [number, number] = [0, 0];
-  const sizes: [number, number][] = sortedSnippets
-  .map((snippet) => [
+  const sizes: [number, number][] = sortedSnippets.map((snippet) => [
     snippet.width,
     snippet.height,
   ]);
 
-  
   return (
     <div className="about-page">
       <h1>About</h1>
@@ -37,12 +37,12 @@ export default function About() {
         <div className="about-text">
           <h2>Hello there!</h2>
           <p>
-            I{"'"}m <strong>Sidonie Bouthors</strong>, a Computer Science student at EPFL in
-            Switzerland.
+            I{"'"}m <strong>Sidonie Bouthors</strong>, a Computer Science
+            student at EPFL in Switzerland.
             <br />
             On this website, I bring together two of my passions: cooking and
-            programming. So, whether you{"'"}re here to whip up a delicious meal,
-            dive into coding adventures, or simply connect with a fellow
+            programming. So, whether you{"'"}re here to whip up a delicious
+            meal, dive into coding adventures, or simply connect with a fellow
             enthusiast, I hope you find something that sparks your curiosity and
             brings a smile to your face.
             <br />
@@ -50,7 +50,11 @@ export default function About() {
             Thank you for visiting!
           </p>
         </div>
-        <img className="about-portrait" src={portrait.src} alt="author portrait"/>
+        <ExportedImage
+          className="about-portrait"
+          src={portrait.src}
+          alt="author portrait"
+        />
       </div>
       <CardGrid
         gridFormat={gridFormat}
@@ -60,21 +64,36 @@ export default function About() {
       >
         {sortedSnippets.map((snippet: AboutSnippet) => {
           var WrappedLogo = snippet.link ? (
-            <Link
-              href={snippet.link!}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img className="about-snippet-icon" src={snippet.icon?.src} alt={snippet.title}/>
-            </Link>
+            snippet.icon ? (
+              <Link
+                href={snippet.link!}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExportedImage
+                  className="about-snippet-icon"
+                  src={snippet.icon?.src}
+                  alt={snippet.title ? snippet.title : ""}
+                />
+              </Link>
+            ) : (
+              <Fragment />
+            )
           ) : snippet.icon ? (
-            <img className="about-snippet-icon" src={snippet.icon!.src} alt={snippet.title}/>
+            <ExportedImage
+              className="about-snippet-icon"
+              src={snippet.icon!.src}
+              alt={snippet.title ? snippet.title : ""}
+            />
           ) : (
             <Fragment />
           );
           return (
             <div
-              className={"about-snippet " + (snippet.theme ? `${snippet.theme}-theme` : "")}
+              className={
+                "about-snippet " +
+                (snippet.theme ? `${snippet.theme}-theme` : "")
+              }
               style={{
                 backgroundColor: snippet.color
                   ? `#${snippet.color}`

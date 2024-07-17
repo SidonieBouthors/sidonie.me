@@ -4,7 +4,8 @@ import { MDXContent } from "@components/MDXContent";
 import RecipeInfo from "@components/RecipeInfo";
 import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
-import { describe } from "node:test";
+
+import ExportedImage from "next-image-export-optimizer";
 
 export async function generateMetadata({ params }: RecipeProps) {
   const foundRecipe = recipes.find(
@@ -24,11 +25,6 @@ interface RecipeProps {
 }
 
 export default async function RecipePage({ params }: RecipeProps) {
-  // const file = await fs.readFile(
-  //   process.cwd() + "/content/recipes.json",
-  //   "utf8"
-  // );
-  // const recipes = JSON.parse(file);
   const recipe = recipes.find(
     (recipe: Recipe) => recipe.extractedSlug === params.recipeId
   );
@@ -55,9 +51,9 @@ export default async function RecipePage({ params }: RecipeProps) {
           waitTime={recipe.waitTime || 0}
           totalTime={recipe.totalTime}
         ></RecipeInfo>
-        <img
+        <ExportedImage
           className="recipe-image"
-          src={recipe.contentImage?.src}
+          src={recipe.contentImage?.src ?? ""}
           alt={recipe.name}
         />
       </div>
