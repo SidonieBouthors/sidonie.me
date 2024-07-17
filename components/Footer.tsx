@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-col">
-          <h3>Contact Me</h3>
+          <h2>Contact Me</h2>
           <ul className="unstyled-list">
             <SocialMediaLink
               name="Linkedin"
