@@ -38,7 +38,7 @@ export default function NavMenu({
           </Link>
         </li>
         <li>
-          <button className="icon-toggle theme-toggle" onClick={switchTheme}>
+          <button aria-label="Switch Theme" className="icon-toggle theme-toggle" onClick={switchTheme}>
             <ThemeSwitchIcon />
           </button>
         </li>

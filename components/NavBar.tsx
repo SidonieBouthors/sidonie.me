@@ -41,13 +41,13 @@ export default function NavBar({
             <Link href="/about">About</Link>
           </li>
           <li>
-            <button className="icon-toggle theme-toggle" onClick={switchTheme}>
+            <button aria-label="Switch Theme" className="icon-toggle theme-toggle" onClick={switchTheme}>
               <ThemeSwitchIcon />
             </button>
           </li>
         </ul>
       </nav>
-      <button
+      <button aria-label="Toggle Menu"
         className={`icon-toggle menu-toggle ${isOpen ? "open" : ""}`}
         onClick={toggleMenu}
       >
