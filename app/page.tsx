@@ -1,5 +1,4 @@
 import InfoBox from "@/components/InfoBox";
-import { Metadata } from "next";
 
 export default function Home() {
   return (
