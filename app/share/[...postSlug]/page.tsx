@@ -3,6 +3,7 @@ import { posts, Post } from "@content";
 import { notFound } from "next/navigation";
 import LastUpdated from "@components/LastUpdated";
 import Breadcrumb from "@components/Breadcrumb";
+import TocCollapse from "@components/TocCollapse";
 
 interface PostProps {
   params: {
@@ -20,9 +21,11 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <div className="post-page">
-        <Breadcrumb title={post.title} slug={post.slug.split("/")}></Breadcrumb>
-        <LastUpdated date={post.date}></LastUpdated>
-        <MDXContent code={post.body} />
+      <Breadcrumb title={post.title} slug={post.slug.split("/")}></Breadcrumb>
+      <LastUpdated date={post.date}></LastUpdated>
+      <TocCollapse />
+
+      <MDXContent code={post.body} />
     </div>
   );
 }
