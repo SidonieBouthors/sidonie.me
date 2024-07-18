@@ -50,7 +50,7 @@ export default function About() {
             Thank you for visiting!
           </p>
         </div>
-        <ExportedImage
+        <img
           className="about-portrait"
           src={portrait.src}
           alt="author portrait"
@@ -72,8 +72,10 @@ export default function About() {
               >
                 <ExportedImage
                   className="about-snippet-icon"
-                  src={snippet.icon?.src}
+                  src={snippet.icon!.src}
                   alt={snippet.title ? snippet.title : ""}
+                  width={snippet.icon!.width}
+                  height={snippet.icon!.height}
                 />
               </Link>
             ) : (
@@ -84,6 +86,8 @@ export default function About() {
               className="about-snippet-icon"
               src={snippet.icon!.src}
               alt={snippet.title ? snippet.title : ""}
+              width={snippet.icon!.width}
+              height={snippet.icon!.height}
             />
           ) : (
             <Fragment />

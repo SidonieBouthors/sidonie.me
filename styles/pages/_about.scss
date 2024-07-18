@@ -39,6 +39,8 @@
     .about-snippet-icon {
       max-width: max(60%, 12em);
       max-height: 4em;
+      width: auto;
+      height: auto;
       pointer-events: visible;
     }
   }
