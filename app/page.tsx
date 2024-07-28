@@ -4,10 +4,8 @@ export default function Home() {
   return (
     <>
       <div className="home-hero">
-        <h1>
-          Welcome to my website!
-          <div className="subtitle">Recipes, projects & more</div>
-        </h1>
+        <h1>Welcome to my website!</h1>
+        <div className="subtitle">Recipes, projects & more</div>
       </div>
       <div className="home-page">
         <InfoBox title="Note">
