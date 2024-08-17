@@ -3,6 +3,8 @@
 .share-page {
   @include article-content;
 
+  min-height: 75vh;
+
   ul {
     list-style: none;
     padding: 0;
