@@ -4,11 +4,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 
   .selected-tag {
     background-color: var(--collapsible-summary-bg);
-    border: 2px solid var(--secondary-text-color);
+    border-color: var(--secondary-text-color);
   }
 }
 
@@ -23,8 +23,8 @@
   font-family: $font-bold;
   font-size: 0.8rem;
   display: inline-block;
-  padding: 0.25em 0.8em;
-  border: 2px solid transparent;
+  padding: 0.15em 0.6em;
+  border: 1.6px solid transparent;
   border-radius: 0.7em;
   background-color: var(--collapsible-bg);
   color: inherit;
