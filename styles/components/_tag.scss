@@ -1,5 +1,17 @@
 @use "../abstracts" as *;
 
+.tag-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  .selected-tag {
+    background-color: var(--collapsible-summary-bg);
+    border: 2px solid var(--secondary-text-color);
+  }
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -8,13 +20,14 @@
 
 .tag {
   cursor: pointer;
-  border: none;
   font-family: $font-bold;
   font-size: 0.8rem;
   display: inline-block;
   padding: 0.25em 0.8em;
+  border: 2px solid transparent;
   border-radius: 0.7em;
   background-color: var(--collapsible-bg);
+  color: inherit;
 
   &:hover {
     background-color: var(--collapsible-summary-bg);

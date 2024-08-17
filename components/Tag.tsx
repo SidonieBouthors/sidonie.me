@@ -17,9 +17,10 @@ export function Tag({ tag, children }: TagProps) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function selectTag() {
-    console.log("Tag selected:", tag);
+  const selected =
+    searchParams.has("tags") && searchParams.get("tags")?.includes(tag);
 
+  function selectTag() {
     const params = new URLSearchParams(searchParams);
 
     const currentTags = params.get("tags");
@@ -40,13 +41,12 @@ export function Tag({ tag, children }: TagProps) {
     replace(`${pathname}?${params.toString()}`);
   }
 
-  return children ? (
-    <button onClick={selectTag} className="tag">
-      {children}
-    </button>
-  ) : (
-    <button onClick={selectTag} className="tag">
-      {tag}
+  return (
+    <button
+      onClick={selectTag}
+      className={`tag ${selected ? "selected-tag" : ""}`}
+    >
+      {children || tag}
     </button>
   );
 }
