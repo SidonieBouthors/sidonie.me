@@ -14,14 +14,18 @@ interface TagFilteredListProps {
 }
 
 function SuspenseTagFilteredList({ children }: TagFilteredListProps) {
-  const selectedTags = useSearchParams().get("tags")?.split(",") || [];
+  const selectedTags =
+    useSearchParams()
+      .get("tags")
+      ?.split(" ")
+      .filter((tag) => tag !== "") || [];
 
-  let filteredItems = children;
-  if (selectedTags.length > 0) {
-    filteredItems = children.filter((child: TaggedItem) =>
-      child.tags.some((tag) => selectedTags.includes(tag))
-    );
-  }
+  let filteredItems =
+    selectedTags.length > 0
+      ? children.filter((child) =>
+          child.tags.some((tag) => selectedTags.includes(tag))
+        )
+      : children;
 
   return (
     <ul>
