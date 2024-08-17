@@ -1,6 +1,7 @@
 import ArticleBlock from "@components/ArticleBlock";
 import { posts, Post } from "@content";
 import { Metadata } from "next";
+import TagFilteredList from "@/components/TagFilteredList";
 
 export const metadata: Metadata = {
   title: "Share",
@@ -19,15 +20,13 @@ export default function Share() {
   return (
     <div className="share-page">
       <h1>Share</h1>
-      <ul>
-        <hr />
-        {displayPosts.map((post: Post) => (
-          <li key={post.slug}>
-            <ArticleBlock article={post}></ArticleBlock>
-            <hr />
-          </li>
-        ))}
-      </ul>
+      <TagFilteredList>
+        {displayPosts.map((post: Post) => ({
+          content: <ArticleBlock article={post} />,
+          tags: post.tags,
+          slug: post.slug,
+        }))}
+      </TagFilteredList>
     </div>
   );
 }
