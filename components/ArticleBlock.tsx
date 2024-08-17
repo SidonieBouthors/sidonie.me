@@ -2,7 +2,7 @@ import React from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import { CalendarIcon } from "./icons/CalendarIcon";
-import { Tag } from "@components/Tag";
+import Tag from "@components/Tag";
 
 interface ArticleBlockProps {
   slug: string;

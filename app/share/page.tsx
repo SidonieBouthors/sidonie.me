@@ -1,8 +1,8 @@
 import ArticleBlock from "@components/ArticleBlock";
 import { posts, Post } from "@content";
 import { Metadata } from "next";
-import TagFilteredList from "@/components/TagFilteredList";
-import { Tag } from "@components/Tag";
+import TagFilteredList from "@components/TagFilteredList";
+import Tag from "@components/Tag";
 
 export const metadata: Metadata = {
   title: "Share",

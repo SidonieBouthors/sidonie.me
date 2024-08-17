@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface TagProps {
   tag: string;
@@ -12,7 +12,7 @@ interface TagProps {
  * A tag component that can be used to filter content by tag.
  * If no children are provided, the tag string will be displayed.
  */
-export function Tag({ tag, children }: TagProps) {
+function SuspenseTag({ tag, children }: TagProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -48,5 +48,13 @@ export function Tag({ tag, children }: TagProps) {
     >
       {children || tag}
     </button>
+  );
+}
+
+export default function Tag({ tag, children }: TagProps) {
+  return (
+    <Suspense>
+      <SuspenseTag tag={tag}>{children}</SuspenseTag>
+    </Suspense>
   );
 }
