@@ -29,7 +29,7 @@ export default function ArticleBlock({
       {tags.length != 0 ? (
         <div className="tags">
           {tags?.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
+            <Tag key={tag} tag={tag} />
           ))}
         </div>
       ) : null}
