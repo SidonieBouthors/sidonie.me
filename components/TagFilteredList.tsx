@@ -1,8 +1,7 @@
 "use client";
 
-import { Post } from "@content";
 import { useSearchParams } from "next/navigation";
-import ArticleBlock from "@components/ArticleBlock";
+import { Suspense } from "react";
 
 interface TaggedItem {
   content: React.ReactNode;
@@ -14,11 +13,7 @@ interface TagFilteredListProps {
   children: TaggedItem[];
 }
 
-/**
- * Displays a list of items, filtering them based on the tags in the URL query.
- * @param children The items to display, each with a `content`, `tags`, and `slug` property.
- */
-export default function TagFilteredList({ children }: TagFilteredListProps) {
+function SuspenseTagFilteredList({ children }: TagFilteredListProps) {
   const selectedTags = useSearchParams().get("tags")?.split(",") || [];
 
   let filteredItems = children;
@@ -38,5 +33,17 @@ export default function TagFilteredList({ children }: TagFilteredListProps) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * Displays a list of items, filtering them based on the tags in the URL query.
+ * @param children The items to display, each with a `content`, `tags`, and `slug` property.
+ */
+export default function TagFilteredList({ children }: TagFilteredListProps) {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <SuspenseTagFilteredList>{children}</SuspenseTagFilteredList>
+    </Suspense>
   );
 }
