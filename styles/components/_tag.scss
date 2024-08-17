@@ -1,0 +1,21 @@
+@use "../abstracts" as *;
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  cursor: pointer;
+  font-family: $font-bold;
+  font-size: 0.8rem;
+  display: inline-block;
+  padding: 0.25em 0.8em;
+  border-radius: 0.7em;
+  background-color: var(--collapsible-bg);
+
+  &:hover {
+    background-color: var(--collapsible-summary-bg);
+  }
+}

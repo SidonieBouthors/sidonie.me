@@ -2,13 +2,14 @@ import React from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import { CalendarIcon } from "./icons/CalendarIcon";
+import { Tag } from "@components/Tag";
 
 interface ArticleBlockProps {
   slug: string;
   title: string;
   description?: string;
   date: string;
-  tags?: string[];
+  tags: string[];
 }
 
 export default function ArticleBlock({
@@ -25,8 +26,17 @@ export default function ArticleBlock({
         <h2>{title}</h2>
       </Link>
       <p>{description}</p>
-      <span className="art-date"><CalendarIcon/>{formattedDate}</span>
-      
+      {tags.length != 0 ? (
+        <div className="tags">
+          {tags?.map((tag) => (
+            <Tag>{tag}</Tag>
+          ))}
+        </div>
+      ) : null}
+      <span className="art-date">
+        <CalendarIcon />
+        {formattedDate}
+      </span>
     </article>
   );
 }

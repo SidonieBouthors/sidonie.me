@@ -64,7 +64,7 @@ const posts = defineCollection({
       description: s.string().max(200).optional(),
       date: s.isodate(),
       published: s.boolean().default(true),
-      tags: s.array(s.string()).optional(),
+      tags: s.array(s.string()).default([]),
       body: s.mdx(),
     })
     .transform(postComputedFields),
