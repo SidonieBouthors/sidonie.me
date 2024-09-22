@@ -12,6 +12,17 @@
     display: none;
   }
 
+  .recipe-image-container {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+
+    .recipe-image {
+      position: relative !important;
+      object-fit: contain;
+    }
+  }
+
   .recipe-pin-right {
     display: flex;
     flex-direction: column;

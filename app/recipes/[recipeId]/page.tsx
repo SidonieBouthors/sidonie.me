@@ -51,11 +51,14 @@ export default async function RecipePage({ params }: RecipeProps) {
           waitTime={recipe.waitTime || 0}
           totalTime={recipe.totalTime}
         ></RecipeInfo>
+        <div className="recipe-image-container">
         <ExportedImage
           className="recipe-image"
           src={recipe.contentImage?.src ?? ""}
           alt={recipe.name}
+          fill={true}
         />
+        </div>
       </div>
       <MDXContent code={recipe.body} />
     </div>
