@@ -2,7 +2,6 @@
 @use "sass:map";
 
 .home-hero {
-  background-image: url(/home-hero.jpg);
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: overlay;
   background-size: cover;
@@ -10,10 +9,18 @@
   padding: 0.5em;
   height: 90vh;
 
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .home-hero-image {
+    object-fit: cover;
+    pointer-events: none;
+    z-index: -1;
+  }
 
   h1 {
     font-family: $font-black;

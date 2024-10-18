@@ -1,9 +1,16 @@
 import InfoBox from "@/components/InfoBox";
+import ExportedImage from "next-image-export-optimizer";
 
 export default function Home() {
   return (
     <>
       <div className="home-hero">
+        <ExportedImage
+          className="home-hero-image"
+          src="/home-hero.jpg"
+          alt="Hero image"
+          fill={true}
+        />
         <h1>Welcome to my website!</h1>
         <div className="subtitle">Recipes, projects & more</div>
       </div>
