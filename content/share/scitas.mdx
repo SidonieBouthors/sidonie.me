@@ -50,7 +50,7 @@ Check out the [More Advanced Script](#more-advanced-script) section for more opt
 Copy all your files into SCITAS:
 
 ```bash
-scp -r <assignment path> <username>@helvetios.epfl.ch:~/
+scp -r <assignment path> <username>@helvetios.hpc.epfl.ch:~/
 ```
 
 <Callout type="error" contentOnly="true">
@@ -63,7 +63,7 @@ scp -r <assignment path> <username>@helvetios.epfl.ch:~/
 SSH into SCITAS:
 
 ```bash
-ssh <username>@helvetios.epfl.ch
+ssh <username>@helvetios.hpc.epfl.ch
 ```
 
 Use `ls` & `cd` to navigate into your assignment directory in SCITAS
@@ -199,19 +199,19 @@ Open the config file in a text editor and write the following, then save.
 
 ```bash caption="~/.ssh/config"
 Host <host name>
-    HostName helvetios.epfl.ch
+    HostName helvetios.hpc.epfl.ch
     User <username>
 ```
 
 - Host : any name for this host (for example SCITAS)
-- HostName : `helvetios.epfl.ch`
+- HostName : `helvetios.hpc.epfl.ch`
 - User : your GASPAR username
 
 You have succesfully created an alias for this remote connection !
 
 With the config file set up, you can also now SSH into SCITAS from any terminal on your host machine using just the host name you have set previously !
 
-You can now write `ssh <host name>` instead of `ssh <username>@helvetios.epfl.ch`
+You can now write `ssh <host name>` instead of `ssh <username>@helvetios.hpc.epfl.ch`
 
 ### Connecting through VS Code
 
