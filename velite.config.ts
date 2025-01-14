@@ -8,6 +8,8 @@ import rehypeToc, {
   TextNode,
 } from "@jsdevtools/rehype-toc";
 import rehypeExternalLinks from "rehype-external-links";
+import remarkMath from "remark-math";
+import rehypeMathJaxSvg from "rehype-mathjax";
 
 const recipeComputedFields = <
   T extends {
@@ -139,7 +141,15 @@ export default defineConfig({
           headings: ["h2", "h3", "h4", "h5", "h6"],
         },
       ],
+      [rehypeMathJaxSvg],
     ],
-    remarkPlugins: [],
+    remarkPlugins: [
+      [
+        remarkMath,
+        {
+          singleDollarTextMath: true,
+        },
+      ],
+    ],
   },
 });
