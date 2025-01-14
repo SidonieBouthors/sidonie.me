@@ -1,0 +1,238 @@
+---
+title: Maxwell's Equations
+description: A quick cheatsheet on Maxwell's Equations. Written as part of my notes for the PHYS-114 Course @ EPFL
+date: 2023-01-05
+tags: [epfl, electromagnetism]
+published: true
+---
+
+# Maxwell's Equations
+
+<Callout type="note">
+  This document is a quick cheatsheet on Maxwell's Equations.
+  It is not meant to be a comprehensive guide, but rather a quick reference, based on my notes from the EPFL's [PHYS-114 Course](https://edu.epfl.ch/coursebook/fr/physique-generale-electromagnetisme-PHYS-114) on Electromagnetism.
+</Callout>
+
+## Deriving the Equations
+
+### First Equation
+
+Gauss's Law (Electric flux through a closed surface) 
+
+$$
+\Phi_E = \frac{Q}{\varepsilon_0}
+$$
+
+$$
+\iint_{\partial \Omega} \mathbf E \cdot d \mathbf s =   \frac{Q}{\varepsilon_0} = 4 \pi k_e Q
+$$
+
+$$
+\iint_{\partial \Omega} \mathbf E \cdot d \mathbf s = 4\pi k_e \iiint_{\Omega} \rho \; dV
+$$
+
+Using the Divergence Theorem :
+
+$$
+\iiint_{\Omega} \nabla \cdot \mathbf E \; dV = 4\pi k_e \iiint_{\Omega} \rho \; dV
+$$
+$$
+\nabla \cdot \mathbf E = 4\pi k_e \rho
+$$
+$$
+\nabla \cdot \mathbf E = \frac{\rho}{\varepsilon_0}
+$$
+
+### Second Equation
+
+Gauss's Law for Magnetism (Magnetic flux through a closed surface)
+$$
+\Phi_B = \iint_{\partial \Omega} \mathbf B \cdot d \mathbf s
+$$
+$$
+\iint_{\partial \Omega} \mathbf B \cdot d \mathbf s = 0
+$$
+Using the Divergence Theorem :
+$$
+\iiint_{\Omega} \nabla \cdot \mathbf B \; dV = 0
+$$
+$$
+\nabla \cdot \mathbf B = 0
+$$
+
+This is equivalent to saying :
+- Magnetic monopoles / charges do not exist (base entity is the dipole)
+- Magnetic field lines have neither a beginning nor an end
+
+### Third Equation
+
+Faraday's Law (electromotive force, emf)
+$$
+\mathcal{E} = - \partial_t \Phi_B
+$$
+$$
+\mathcal{E} = \int_{\partial\Sigma} \mathbf E \cdot d \mathbf l = - \partial_t \Phi_B = - \partial_t \iint_{\Sigma} \mathbf B \cdot d \mathbf s
+$$
+$$
+\int_{\partial\Sigma} \mathbf E \cdot d \mathbf l = - \partial_t \iint_{\Sigma} \mathbf B \cdot d \mathbf s
+$$
+
+Using Stokes Theorem :
+$$
+\iint_{\Sigma} \nabla \times \mathbf E \; d \mathbf s = - \partial_t \iint_{\Sigma} \mathbf B \cdot d \mathbf s
+$$
+$$
+\nabla \times \mathbf E = - \partial_t \mathbf B
+$$
+
+Faraday's Law :
+
+The electromotive force around a closed path is equal to the negative of the time rate of change of the magnetic flux enclosed by the path.
+
+### Fourth Equation
+
+Ampere's Law
+$$
+\int_{\partial \Sigma} \mathbf B \cdot d \mathbf l = \mu_0 I_{\text{encl}} = \mu_0 \iint_{\Sigma} \mathbf j \cdot d \mathbf s
+$$
+Maxwell's equation has the following component added to it :
+$$
+\mu_0 \varepsilon_0 \;\partial_t \iint_{\Sigma} \mathbf E \cdot d \mathbf s$$
+$$\int_{\partial \Sigma} \mathbf B \cdot d \mathbf l = \mu_0 \left( \iint_{\Sigma} \mathbf j \cdot d \mathbf s  + \varepsilon_0 \; \partial_t \iint_{\Sigma} \mathbf E \cdot d \mathbf s \right)
+$$
+
+Using Stoke's Theorem :
+$$
+\iint_{\Sigma} \nabla \times \mathbf B \; d \mathbf s = \mu_0 \left( \iint_{\Sigma} \mathbf j \cdot d \mathbf s  + \varepsilon_0 \;\partial_t \iint_{\Sigma} \mathbf E \cdot d \mathbf s \right)
+$$
+$$
+\nabla \times \mathbf B = \mu_0 \left( \mathbf j + \varepsilon_0 \; \partial_t \mathbf E\right)
+$$
+
+Ampère's Law :
+
+The original law states that magnetic fields relate to electric current, Maxwell's addition states that they also relate to changing electric fields
+
+Note :
+$\mu_0 = 4 \pi k_M$
+
+## Differential Forms
+
+$\nabla \cdot \mathbf E = \frac{\rho}{\varepsilon_0}$
+
+$\nabla \cdot \mathbf B = 0$
+
+$\nabla \times \mathbf E = - \partial_t \mathbf B$
+
+$\nabla \times \mathbf B = \mu_0 \left( \mathbf j + \varepsilon_0 \; \partial_t \mathbf E\right)$
+
+## Integral Forms
+
+**First Equation**
+$$
+\iint_{\partial \Omega} \mathbf E \cdot d \mathbf s  = \frac{1}{\varepsilon_0} \iiint_{\Omega} \rho \; dV = \frac{Q}{\varepsilon_0}
+$$
+**Second Equation**
+$$
+\iint_{\partial \Omega} \mathbf B \cdot d \mathbf s = 0
+$$
+**Third Equation**
+$$
+\int_{\partial\Sigma} \mathbf E \cdot d \mathbf l = - \partial_t \iint_{\Sigma} \mathbf B \cdot d \mathbf s
+$$
+**Fourth Equation**
+$$
+\int_{\partial \Sigma} \mathbf B \cdot d \mathbf l = \mu_0 \left( \iint_{\Sigma} \mathbf j \cdot d \mathbf s  + \varepsilon_0 \; \partial_t \iint_{\Sigma} \mathbf E \cdot d \mathbf s \right)
+$$
+
+## In Empty Space
+
+$\nabla \cdot \mathbf E = 0$
+
+$\nabla \cdot \mathbf B = 0$
+
+$\nabla \times \mathbf E = - \partial_t \mathbf B$
+
+$\nabla \times \mathbf B = \mu_0 \varepsilon_0 \; \partial_t \mathbf E$
+
+
+## Notation
+
+Here are some remarks on the notation used that may be useful :
+
+$\partial_t \mathbf F$ is $\frac{d\mathbf F}{dt}$
+
+$\nabla \cdot F$ is the divergence of $F$
+
+$\nabla \times F$ is the curl (rotationel) of $F$
+
+### Divergence Theorem
+In 2 dimensions (useless here)
+$$
+\iint_{\Sigma} \nabla \cdot F \; ds = \int_{\partial \Sigma} \langle F, \nu \rangle \; dl
+$$
+In 3 dimensions
+$$
+\iiint_{\Omega} \nabla \cdot F \; dV = \iint_{\partial \Omega} \langle F, \nu \rangle \; ds
+$$
+$\nu$ is the outwards pointing unit normal at each point on the boundary
+
+$\langle F, \nu \rangle \; ds = F \cdot (\nu \; ds) = F \cdot d\mathbf s$
+
+If we use a surface $S$ such that the normal to the surface is either perpendicular or parallel to $F$ :
+- The perpendicular parts have zero flux through the surface
+- The parallel parts have a flux through the surface simply equal to their value ($\mathbf F \cdot d\mathbf s$ becomes $F \; ds$)
+
+### Stoke's Theorem
+$$
+\iint_{\Sigma} \nabla \times F \; ds = \int_{\partial \Sigma} F \cdot dl
+$$
+
+### Constants and Variables
+
+$\mathbf E$ : electric field
+
+$\mathbf B$ : magnetic field
+
+$\rho$ : electric charge density (total charge per unit volume)
+
+$\mathbf j$ : current density (total current per unit area)
+
+
+$Q$ : total electric charge
+
+$$
+Q = \iiint_{\Omega} \rho \; dV
+$$
+
+$I$ : net electric current
+
+$\mathcal{E}$ : emf (electromotive force)
+
+$I_{\text{encl}}$ : total current through the loop
+
+$\varepsilon_0$ : permittivity of free space
+
+$\mu_0$ : permeability of free space
+
+$k_e$ : Coulomb constant
+
+$$
+k_e = \frac{1}{4 \pi \varepsilon_0}
+$$
+$k_M$ : Magic constant
+$$
+k_M = \frac{\mu_0}{4 \pi}
+$$
+$$
+\frac{k_M}{k_e} = \frac{1}{c^2} = \mu_0 \varepsilon_0
+$$
+
+$\Omega$ : any volume with closed boundary surface $\partial \Omega$
+
+$\Sigma$ : any surface with closed boundary curve $\partial \Sigma$
+
+<Callout type="note">
+  All integrals $\int_{\partial \Sigma}$ and $\iint_{\partial \Omega}$ could have been written using the loop notation $\oint$, which indicates a **closed** boundary (curve or surface). 
+  Indeed all boundaries of $\Omega$ and $\Sigma$ in this document are **closed** boundaries
+</Callout>
