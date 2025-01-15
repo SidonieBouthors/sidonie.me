@@ -1,6 +1,5 @@
 "use client";
-import { on } from "events";
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -18,12 +17,14 @@ export default function CardGrid({
   containerPadding,
   children,
   sizes,
+  flexInSingleColumn,
 }: {
   gridFormat: [string, number, number][];
   margin: [number, number];
   containerPadding: [number, number];
   children: React.ReactElement[];
   sizes?: [number, number][];
+  flexInSingleColumn?: boolean;
 }) {
   // Grid format that defines the breakpoints and the number of columns for each breakpoint
   // [breakpointName, breakPointSize, col]
@@ -38,6 +39,7 @@ export default function CardGrid({
 
   var items = children == undefined || children == null ? [] : children;
   var [rowHeight, setRowHeight] = useState(0);
+  var [isSingleColumn, setIsSingleColumn] = useState(false);
 
   const gridRef = useRef(null);
   useEffect(() => {
@@ -45,7 +47,27 @@ export default function CardGrid({
     const width = current?.elementRef.current.offsetWidth;
     const cols = findColNum(width);
     onWidthChange(width, margin, cols, containerPadding);
+    setIsSingleColumn(cols == 1);
   });
+
+  const divRef = useRef(null);
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0].contentRect.width;
+      if (width == 0) {
+        return;
+      }
+      const cols = findColNum(width);
+      onWidthChange(width, margin, cols, containerPadding);
+      setIsSingleColumn(cols == 1);
+    });
+    if (divRef.current) {
+      observer.observe(divRef.current);
+    }
+    return () => {
+      divRef.current && observer.unobserve(divRef.current);
+    };
+  }, [isSingleColumn]);
 
   /**
    * Finds the number of columns based on the container width
@@ -125,7 +147,6 @@ export default function CardGrid({
         var positions: boolean[][] = [new Array(col).fill(false)];
 
         for (let i = 0; i < items.length; i++) {
-
           var width = sizes[i][0];
           var height = sizes[i][1];
 
@@ -221,21 +242,35 @@ export default function CardGrid({
     return cols;
   }
 
-  return (
-    <ResponsiveGridLayout
-      ref={gridRef}
-      className="layout"
-      layouts={makeLayout()}
-      margin={margin}
-      containerPadding={containerPadding}
-      rowHeight={rowHeight}
-      breakpoints={makeBreakpoints()}
-      cols={makeCols()}
-      onWidthChange={onWidthChange}
-    >
-      {items.map((item, index) => (
-        <div key={index.toString()}>{item}</div>
-      ))}
-    </ResponsiveGridLayout>
-  );
+  if (flexInSingleColumn && isSingleColumn) {
+    return (
+      <div
+        className="layout"
+        style={{ display: "flex", flexDirection: "column", gap: margin[1] }}
+        ref={divRef}
+      >
+        {items.map((item, index) => (
+          <div key={index.toString()}>{item}</div>
+        ))}
+      </div>
+    );
+  } else {
+    return (
+      <ResponsiveGridLayout
+        ref={gridRef}
+        className="layout"
+        layouts={makeLayout()}
+        margin={margin}
+        containerPadding={containerPadding}
+        rowHeight={rowHeight}
+        breakpoints={makeBreakpoints()}
+        cols={makeCols()}
+        onWidthChange={onWidthChange}
+      >
+        {items.map((item, index) => (
+          <div key={index.toString()}>{item}</div>
+        ))}
+      </ResponsiveGridLayout>
+    );
+  }
 }
