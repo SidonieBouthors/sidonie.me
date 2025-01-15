@@ -19,8 +19,8 @@ export default function About() {
 
   const gridFormat: [string, number, number][] = [
     ["xl", 1200, 4],
-    ["l", 900, 3],
-    ["m", 600, 2],
+    ["l", 950, 3],
+    ["m", 650, 2],
     ["s", 200, 1],
   ];
   const margin: [number, number] = [15, 15];
@@ -61,6 +61,7 @@ export default function About() {
         margin={margin}
         containerPadding={containerPadding}
         sizes={sizes}
+        flexInSingleColumn={true}
       >
         {sortedSnippets.map((snippet: AboutSnippet) => {
           var WrappedLogo = snippet.link ? (
