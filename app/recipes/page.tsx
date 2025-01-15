@@ -20,11 +20,11 @@ export default async function Recipes() {
   const gridFormat: [string, number, number][] = [
     ["xl", 1200, 4],
     ["l", 1000, 3],
-    ["m", 400, 2],
+    ["m", 450, 2],
     ["s", 200, 1],
   ];
   const margin: [number, number] = [15, 15];
-  const containerPadding: [number, number] = [15, 15];
+  const containerPadding: [number, number] = [0, 0];
 
   return (
     <div className="recipes-page">
