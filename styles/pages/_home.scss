@@ -57,5 +57,20 @@
   }
 }
 .home-page {
-  @include article-content;
+  @include wide-content;
+
+  .force-article {
+    @include article-content;
+    margin-bottom: 0;
+    @media screen and (max-width: 75rem) {
+      margin-bottom: 0;
+    }
+  }
+
+  .article-block-card {
+    border: solid 2px var(--border-color);
+    border-radius: $border-radius;
+    padding: 1rem;
+    height: 100%;
+  }
 }

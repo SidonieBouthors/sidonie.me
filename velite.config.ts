@@ -39,6 +39,7 @@ const recipes = defineCollection({
       contentImage: s.image().optional(),
       date: s.isodate(),
       published: s.boolean().default(true),
+      featured: s.boolean().default(false),
       tags: s.array(s.string()).optional(),
       yield: s.number(), // number of servings
       yieldUnit: s.string().optional(), // unit of the yield
@@ -66,6 +67,7 @@ const posts = defineCollection({
       description: s.string().max(200).optional(),
       date: s.isodate(),
       published: s.boolean().default(true),
+      featured: s.boolean().default(false),
       tags: s.array(s.string()).default([]),
       body: s.mdx(),
     })
