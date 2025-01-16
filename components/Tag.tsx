@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 interface TagProps {
   tag: string;
+  disabled?: boolean;
   children?: string;
 }
 
@@ -12,7 +13,7 @@ interface TagProps {
  * A tag component that can be used to filter content by tag.
  * If no children are provided, the tag string will be displayed.
  */
-function SuspenseTag({ tag, children }: TagProps) {
+function SuspenseTag({ tag, disabled, children }: TagProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -21,6 +22,10 @@ function SuspenseTag({ tag, children }: TagProps) {
     searchParams.has("tags") && searchParams.get("tags")?.includes(tag);
 
   function selectTag() {
+    if (disabled) {
+      return;
+    }
+
     const params = new URLSearchParams(searchParams);
 
     const currentTags = params.get("tags");
@@ -44,17 +49,21 @@ function SuspenseTag({ tag, children }: TagProps) {
   return (
     <button
       onClick={selectTag}
-      className={`tag ${selected ? "selected-tag" : ""}`}
+      className={`tag ${selected ? "selected-tag" : ""} ${
+        disabled ? "" : "enabled-tag"
+      }`}
     >
       {children || tag}
     </button>
   );
 }
 
-export default function Tag({ tag, children }: TagProps) {
+export default function Tag({ tag, disabled, children }: TagProps) {
   return (
     <Suspense>
-      <SuspenseTag tag={tag}>{children}</SuspenseTag>
+      <SuspenseTag tag={tag} disabled={disabled}>
+        {children}
+      </SuspenseTag>
     </Suspense>
   );
 }

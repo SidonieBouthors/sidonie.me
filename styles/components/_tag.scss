@@ -19,7 +19,6 @@
 }
 
 .tag {
-  cursor: pointer;
   font-family: $font-bold;
   font-size: 0.8rem;
   display: inline-block;
@@ -29,7 +28,11 @@
   background-color: var(--collapsible-bg);
   color: inherit;
 
-  &:hover {
-    background-color: var(--collapsible-summary-bg);
+  &.enabled-tag {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--collapsible-summary-bg);
+    }
   }
 }
