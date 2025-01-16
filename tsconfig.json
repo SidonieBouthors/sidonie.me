@@ -24,7 +24,8 @@
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
-      "@content": [".velite"]
+      "@content": [".velite"],
+      "@utils/*": ["utils/*"],
     }
   },
   "include": [

@@ -6,6 +6,7 @@ import { MDXContent } from "@components/MDXContent";
 import Link from "next/link";
 import { Fragment } from "react";
 import ExportedImage from "next-image-export-optimizer";
+import { prioritySort } from "@/utils/utils";
 
 export const metadata = {
   title: "About",
@@ -13,15 +14,13 @@ export const metadata = {
 };
 
 export default function About() {
-  var sortedSnippets = aboutSnippets
-    .slice()
-    .sort((a: AboutSnippet, b: AboutSnippet) => b.priority - a.priority);
+  var sortedSnippets = aboutSnippets.slice().sort(prioritySort);
 
-  const gridFormat: [string, number, number][] = [
+  const gridFormat: [string, number, number, boolean?][] = [
     ["xl", 1200, 4],
     ["l", 950, 3],
     ["m", 650, 2],
-    ["s", 200, 1],
+    ["s", 200, 1, true],
   ];
   const margin: [number, number] = [15, 15];
   const containerPadding: [number, number] = [0, 0];
@@ -61,7 +60,6 @@ export default function About() {
         margin={margin}
         containerPadding={containerPadding}
         sizes={sizes}
-        flexInSingleColumn={true}
       >
         {sortedSnippets.map((snippet: AboutSnippet) => {
           var WrappedLogo = snippet.link ? (
