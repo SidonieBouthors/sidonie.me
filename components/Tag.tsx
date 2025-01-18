@@ -5,15 +5,15 @@ import { Suspense } from "react";
 
 interface TagProps {
   tag: string;
+  tagCount: number;
   disabled?: boolean;
-  children?: string;
 }
 
 /**
  * A tag component that can be used to filter content by tag.
  * If no children are provided, the tag string will be displayed.
  */
-function SuspenseTag({ tag, disabled, children }: TagProps) {
+function SuspenseTag({ tag, tagCount, disabled }: TagProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -53,17 +53,21 @@ function SuspenseTag({ tag, disabled, children }: TagProps) {
         disabled ? "" : "enabled-tag"
       }`}
     >
-      {children || tag}
+      <span>{tag}</span>
+      {tagCount > 1 ? (
+        <>
+          <span className="median-dot">·</span>
+          <span className="tag-count">{tagCount}</span>
+        </>
+      ) : null}
     </button>
   );
 }
 
-export default function Tag({ tag, disabled, children }: TagProps) {
+export default function Tag({ tag, tagCount, disabled }: TagProps) {
   return (
     <Suspense>
-      <SuspenseTag tag={tag} disabled={disabled}>
-        {children}
-      </SuspenseTag>
+      <SuspenseTag tag={tag} tagCount={tagCount} disabled={disabled} />
     </Suspense>
   );
 }

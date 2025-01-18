@@ -21,12 +21,22 @@
 .tag {
   font-family: $font-bold;
   font-size: 0.8rem;
-  display: inline-block;
   padding: 0.15em 0.6em;
   border: 1.6px solid transparent;
   border-radius: 0.7em;
   background-color: var(--collapsible-bg);
   color: inherit;
+
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+
+  .tag-count,
+  .median-dot {
+    font-size: 0.7rem;
+    font-family: $font-medium;
+    color: var(--secondary-text-color);
+  }
 
   &.enabled-tag {
     cursor: pointer;

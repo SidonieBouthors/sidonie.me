@@ -37,9 +37,7 @@ export default function Share() {
       <h1>Share</h1>
       <div className="tag-bar">
         {sortedTags.map((tagItem, index) => (
-          <Tag tag={tagItem.tag} key={index}>
-            {`${tagItem.tag} (${tagItem.frequency.toString()})`}
-          </Tag>
+          <Tag tag={tagItem.tag} tagCount={tagItem.frequency} key={index} />
         ))}
       </div>
       <TagFilteredList>
