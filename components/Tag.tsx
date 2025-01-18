@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 interface TagProps {
   tag: string;
-  tagCount: number;
+  tagCount?: number;
   disabled?: boolean;
 }
 
@@ -54,7 +54,7 @@ function SuspenseTag({ tag, tagCount, disabled }: TagProps) {
       }`}
     >
       <span>{tag}</span>
-      {tagCount > 1 ? (
+      {tagCount && tagCount > 1 ? (
         <>
           <span className="median-dot">·</span>
           <span className="tag-count">{tagCount}</span>
