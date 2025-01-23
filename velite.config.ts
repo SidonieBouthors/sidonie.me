@@ -67,6 +67,7 @@ const posts = defineCollection({
       description: s.string().max(200).optional(),
       date: s.isodate(),
       published: s.boolean().default(true),
+      publishedUnlisted: s.boolean().default(false),
       featured: s.boolean().default(false),
       tags: s.array(s.string()).default([]),
       body: s.mdx(),

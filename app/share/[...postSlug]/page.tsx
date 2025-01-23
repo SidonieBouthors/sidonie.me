@@ -27,7 +27,7 @@ export default async function PostPage({ params }: PostProps) {
   const slug = params?.postSlug?.join("/");
   const post = posts.find((post: Post) => post.extractedSlug === slug);
 
-  if (!post || !post.published) {
+  if (!post || (!post.published && !post.publishedUnlisted)) {
     notFound();
   }
 
