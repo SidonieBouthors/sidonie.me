@@ -1,0 +1,787 @@
+---
+title: Distributed Algorithms Recap
+description: A quick recap of Distributed Algorithms. Written as part of my notes for the CS-451 Course @ EPFL
+date: 2024-01-23
+tags: [epfl, distrib-algo]
+published: false
+publishedUnlisted: true
+---
+
+# Distributed Algorithms Recap
+
+## Reliable Broadcast
+
+- Request: $\langle$ $x$, Broadcast | $m$ $\rangle$ : Broadcasts a message $m$ to all processes
+- Indication: $\langle$ $x$, Deliver | $p$, $m$ $\rangle$ : Delivers a message $m$ broadcast by process $p$
+### Properties
+**Validity**
+If a correct process p broadcasts a message m, then p eventually delivers m.
+
+**No duplication**
+No message is delivered more than once.
+
+**No creation**
+If a process delivers a message m with sender s, then m was previously broadcast by process s.
+
+**Agreement**
+If a message m is delivered by some *correct* process, then m is eventually delivered by every *correct* process.
+
+**Uniform Agreement**
+If a message m is delivered by some process (whether
+correct or faulty), then m is eventually delivered by every correct process.
+
+**FIFO delivery**
+If some process broadcasts message m1 before it broadcasts message m2, then no correct process delivers m2 unless it has already delivered m1.
+
+**Causal delivery** 
+For any message m1 that potentially caused a message m2 (so m1 → m2), no process delivers m2 unless it has already delivered m1.
+
+**Total order**
+Let m1 and m2 be any two messages.
+If a *correct* process p delivers m1 without having delivered m2, no *correct* process will deliver m2 before m1.
+
+**Uniform Total Order**
+Let m1 and m2 be any two messages.
+If a process p delivers m1 without having delivered m2, no process will deliver m2 before m1.
+
+### Failure Detector
+
+**Strong accuracy**
+No correct process is ever suspected
+
+**Strong completeness** 
+Eventually, every faulty process is permanently suspected by every correct process
+### Best Effort Broadcast
+BEB1 : Validity
+BEB2 : No duplication
+BEB3 : No creation
+#### Algorithm
+
+Using
+- Perfect Links
+
+```
+upon event ⟨ beb, Broadcast | m ⟩ do
+  forall q ∈ Π do
+    trigger ⟨ pl, Send | q, m ⟩;
+
+upon event ⟨ pl, Deliver | p, m ⟩ do
+  trigger ⟨ beb, Deliver | p, m ⟩;
+```
+### Regular Reliable Broadcast
+RB1 : Validity
+RB2 : No duplication
+RB3 : No creation
+RB4 : Agreement
+#### Algorithm
+Using
+- Best Effort Broadcast
+- Perfect Failure Detector
+
+```
+upon event ⟨ rb, Init ⟩ do
+  correct := Π ;
+  from[p] := [∅]ᴺ;
+  
+upon event ⟨ rb, Broadcast | m ⟩ do
+  trigger ⟨ beb, Broadcast | [ DATA , self, m] ⟩;
+  
+upon event ⟨ beb, Deliver | p, [ DATA , s, m] ⟩ do
+  if m ∉ from[s] then
+    trigger ⟨ rb, Deliver | s, m ⟩;
+    from[s] := from[s] ∪ {m};
+    if s ∉ correct then
+      trigger ⟨ beb, Broadcast | [ DATA , s, m] ⟩;
+
+upon event ⟨ P , Crash | p ⟩ do
+  correct := correct \ {p};
+  forall m ∈ from[p] do
+    trigger ⟨ beb, Broadcast | [ DATA , p, m] ⟩;
+```
+
+### Uniform Reliable Broadcast
+URB1 : Validity
+URB2 : No duplication
+URB3 : No creation
+URB4 : Uniform Agreement
+
+#### Algorithm : URB
+
+Using
+- Best Effort Broadcast
+- Perfect Failure Detector
+
+```
+upon event ⟨ urb, Init ⟩ do
+  delivered := ∅;
+  pending := ∅;
+  correct := Π ;
+  forall m do ack[m] := ∅;
+  
+upon event ⟨ urb, Broadcast | m ⟩ do
+  pending := pending ∪ {(self, m)};
+  trigger ⟨ beb, Broadcast | [ DATA , self, m] ⟩;
+  
+upon event ⟨ beb, Deliver | p, [ DATA , s, m] ⟩ do
+  ack[m] := ack[m] ∪ {p};
+  if (s, m) ∉ pending then
+    pending := pending ∪ {(s, m)};
+    trigger ⟨ beb, Broadcast | [ DATA , s, m] ⟩;
+
+upon event ⟨ P , Crash | p ⟩ do
+  correct := correct \ {p};
+
+function candeliver(m) returns Boolean is
+  return (correct ⊆ ack[m]);
+
+upon exists (s, m) ∈ pending such that candeliver(m) ∧ m ∉ delivered do
+  delivered := delivered ∪ {m};
+  trigger ⟨ urb, Deliver | s, m ⟩;
+```
+### Causal Broadcast
+#### Reliable Causal Broadcast
+RB1 - RB4
+CO: Causal delivery
+
+**Causality**
+A message m1 causally precedes (may have potentially caused) another message m2, written m1 → m2, iff
+- FIFO order : some process p broadcasts m1 before it broadcasts m2
+- Local order : some process p delivers m1 and subsequently broadcasts m2
+- Transitivity : there exists some message m3 such that m1 → m3 and m3 → m2
+
+#### Uniform Causal Broadcast
+URB1 - URB4
+CO: Causal Delivery
+
+##### No-waiting Algorithm
+```
+upon event ⟨ crb, Init ⟩ do
+  delivered := ∅;
+  past := ∅;
+
+upon event ⟨ crb, Broadcast | m ⟩ do
+  trigger ⟨ rb, Broadcast | [ DATA, past, m] ⟩;
+  past := past ∪ {(self, m)};
+  
+upon event ⟨ rb, Deliver | p, [ DATA, mpast, m] ⟩ do
+  if m ∉ delivered then
+    forall (s, n) ∈ mpast do
+      if n ∉ delivered then
+        trigger ⟨ crb, Deliver | s, n ⟩;
+        delivered := delivered ∪ {n};
+        past := past ∪ {(s, n)};
+    trigger ⟨ crb, Deliver | p, m ⟩;
+    delivered := delivered ∪ {m};
+    past := past ∪ {(p, m)};
+```
+
+##### No-waiting Algorithm (Garbage collected)
+Uses a Perfect Failure Detector for garbage collection
+```
+upon event ⟨ crb, Init ⟩ do
+  delivered := ∅;
+  past := ∅;
+  correct := Π;
+  forall m do ack[m] := ∅;
+  
+upon event ⟨ crash | p ⟩ do
+  correct := correct \ {p};
+  
+upon exists m ∈ delivered such that self ∉ ack[m] do
+  ack[m] := ack[m] ∪ {self};
+  trigger ⟨ rb, Broadcast | [ACK, m] ⟩;
+  
+upon event ⟨ rb, Deliver | p, [ACK, m] ⟩ do
+  ack[m] := ack[m] ∪ {p};
+  
+upon correct ⊆ ack[m] do
+  forall (s', m') ∈ past such that m' = m do
+    past := past \ {[s', m]};
+```
+##### Waiting Algorithm
+Array `VC` is called a vector clock
+```
+upon event ⟨ crb, Init ⟩ do
+  VC := [0]ᴺ;
+  pending := ∅;
+
+upon event ⟨ crb, Broadcast | m ⟩ do
+  trigger ⟨ crb, Deliver | self, m ⟩
+  trigger ⟨ rb, Broadcast | [ DATA, VC, m] ⟩;
+  VC[rank(self)] := VC[rank(self)] + 1;
+  
+upon event ⟨ rb, Deliver | p, [ DATA, W, m] ⟩ do
+  if p ≠ self then
+    pending := pending ∪ {(p, W, m)};
+    while exists (p', W', m') ∈ pending 
+    such that W' ≤ V do
+      pending := pending \ {(p' , W' , m' )};
+      VC[rank(p')] := VC[rank(p')] + 1;
+      trigger ⟨ crb, Deliver | p', m' ⟩;
+```
+
+### Total Order Broadcast
+RB1 - RB4
+TO: Total order
+
+Similar to Causal Broadcast but the order is total and not partial. All processes must deliver all messages according to the same order (which does not necessarily need to respect causality or FIFO ordering).
+
+#### Algorithm
+
+Using
+- Reliable Broadcast
+- Consensus
+
+```
+upon event ⟨ Init ⟩ do 
+  unordered :=  ∅; ; 
+  delivered := ∅; 
+  wait := false; 
+  sn := 1;
+
+upon event ⟨ toBroadcast, m ⟩ do 
+  trigger ⟨ rbBroadcast, m ⟩; 
+  
+upon event ⟨ rb, Deliver | sm, m ⟩ and (m ∉ delivered) do 
+  unordered := unordered ∪ {(sm,m)}; 
+  
+upon (unordered ≠ ∅) and not(wait) do 
+  wait := true;
+  trigger ⟨ to, Propose | unordered⟩_sn;
+
+upon event ⟨ to, Decide | decided ⟩_sn do 
+  unordered := unordered \ decided; 
+  ordered := deterministicSort(decided); 
+  for all (sm, m) in ordered: 
+    trigger ⟨ toDeliver, sm, m ⟩; 
+    delivered := delivered ∪ {m}; 
+  sn : = sn + 1; 
+  wait := false;
+```
+
+#### Equivalence
+
+1. One can build consensus with total order broadcast 
+2. One can build total order broadcast with consensus and reliable broadcast 
+
+Therefore, consensus and total order broadcast are equivalent problems in a system with reliable channels
+
+## Consensus
+- Request: $\langle$ $x$, Propose | $v$ $\rangle$ : Proposes a value $v$ to all processes
+- Indication: $\langle$ $x$, Decide | $v$ $\rangle$ : Decides a value $v$
+### Properties
+**Validity**
+Any value decided is a value proposed
+
+**Agreement**
+No two correct processes decide differently
+
+**Termination**
+Every correct process eventually decides
+
+**Integrity**
+No process decides twice
+
+**Uniform Agreement**
+No two processes decide differently
+
+### Regular Consensus
+C1: Validity
+C2: Agreement
+C3: Termination
+C4: Integrity
+
+#### Hierarchical Algorithm
+Uses a Perfect Failure Detector and Best Effort Broadcast
+Incremental rounds where at each round, the corresponding process of that ID is the leader. The leader decides its current proposal and broadcasts. Other non-leader processes wait to either
+- deliver the proposal of the leader
+- suspect the leader
+
+```
+upon event ⟨ Init ⟩ do 
+  suspected := ∅;
+  round := 1; 
+  currentProposal := nil;
+  delivered[] := [false]ᴺ;
+  broadcast := false;
+
+upon event ⟨ crash, p ⟩ do 
+  suspected := suspected ∪ {p};
+
+upon event ⟨ c, Propose | v ⟩ do 
+  if currentProposal = nil then
+    currentProposal := v;
+
+upon event ⟨ beb, Deliver | p, value ⟩ do 
+  currentProposal := value;
+  delivered[round] := true;
+  
+upon event delivered[round] = true 
+or p_round ∈ suspected do 
+  round := round + 1;
+
+upon event p_round = self 
+and broadcast = false 
+and currentProposal ≠ nil do 
+  trigger ⟨ beb, Broadcast | currentProposal ⟩;
+  trigger ⟨ c, Decide | currentProposal ⟩;
+  broadcast := true;
+```
+### Uniform Consensus
+C1, C3, C4
+C2: Uniform Agreement
+
+#### Uniform Hierarchical Algorithm
+Using a P failure detector
+Similar to regular hierarchical consensus but only decide at the end of the last round
+
+```
+upon event ⟨ Init ⟩ do
+  suspected := ∅;
+  round := 1; 
+  currentProposal := nil;
+  delivered[] := [false]ᴺ;
+  broadcast := false;
+  decided := false;
+
+upon event ⟨ crash, p ⟩ do 
+  suspected := suspected ∪ {p};
+  
+upon event ⟨ uc, Propose | v ⟩ do 
+  if currentProposal = nil then 
+    currentProposal := v;
+
+upon event ⟨ beb, Deliver | p_round, value ⟩ do 
+  currentProposal := value; 
+  delivered[round] := true;
+
+upon event delivered[round] = true 
+or p_round ∈ suspected do 
+  if round = n and decided = false then 
+    trigger ⟨ uc , Decide | currentProposal ⟩;
+    decided = true;
+  else 
+    round := round + 1;
+
+upon event pround = self 
+and broadcast = false 
+and currentProposal ≠ nil do 
+  trigger ⟨ beb, Broadcast | currentProposal ⟩; 
+  broadcast := true;
+```
+
+#### Uniform Consensus Algorithm
+Assuming
+- a correct majority
+- a \<\>P failure detector
+
+##### Fail-Noisy failure detector \<\>P
+**Strong Completeness**
+Eventually every process that crashes is permanently suspected by all correct processes
+
+**Eventual strong accuracy**
+Eventually no correct process is suspected by any process.
+Strong accuracy holds only after finite time.
+Correct processes may be falsely suspected a finite number of times.
+
+##### Algorithm
+- Round based with infinite rounds (until decision is made)
+- Leader is index round mod N and tries to decide
+- Processes inform the leader and move to the next round if they suspect them
+- Leader selects among a majority the latest adopted value
+- Leader imposes the value. Any process in that majority adopts it. If leader is suspected, it fails
+- Leader decides and broadcasts the decision
+
+
+## Terminating Reliable Broadcast
+
+Similarities:
+- Like Reliable broadcast: correct processes in TRB agree on the set of messages they deliver
+- Like Uniform Reliable Broadcast: every correct process in TRB delivers every message delivered by any process 
+Difference
+- Unlike Reliable Broadcast: every correct process delivers a message, even if the broadcaster crashes
+### Properties
+**Integrity**
+If a process delivers a message m, then either m is φ or m was broadcast by src 
+
+**Validity**
+If the sender src is correct and broadcasts a message m, then src eventually delivers m 
+
+**Agreement**
+For any message m, if a correct process delivers m, then every correct process delivers m 
+
+**Uniform Agreement**
+For any message m, if a any process delivers m, then every correct process delivers m 
+
+**Termination**
+Every correct process eventually delivers exactly one message
+### Consensus-Based Uniform TRB
+TRB1: Integrity
+TRB2: Validity
+TRB3: Integrity
+TRB4: Uniform Agreement
+
+Using perfect failure detector
+
+```
+upon event ⟨ Init ⟩ do
+  prop := ⊥;
+  
+upon event ⟨ utrb, Broadcast | m ⟩ do
+  trigger ⟨ beb, Broadcast | m ⟩;
+  // only process src
+
+upon event ⟨ crash | src ⟩ do
+  if proposal = ⊥ then
+    proposal := φ;
+    trigger ⟨ uc, Propose | proposal ⟩;
+  
+upon event ⟨ beb, Deliver | src, m ⟩ do
+  if proposal = ⊥ then
+    proposal := m;
+    trigger ⟨ uc, Propose | proposal ⟩;
+
+upon event ⟨ uc, Decide | decision ⟩ do
+  trigger ⟨ utrb, Deliver | src, decision ⟩;
+```
+
+### P using TRB
+
+Consider every process can use an infinite number of instances of TRB where they are the sender (src).
+Every process keeps on TRB broadcasting messages infinitely.
+If any process delivers φ, it suspects the sender of φ.
+
+P is implementable using TRB, therefore P is necessary to implement TRB.
+## Non-Blocking Atomic Commit
+
+### Transaction
+
+Atomic program describing a sequence of accesses to shared and distributed information
+
+Can be terminated either by *committing* or *aborting*
+#### ACID Properties
+
+**Atomicity**
+A transaction either performs entirely or none at all 
+
+**Consistency**
+A transaction transforms a consistent state into another consistent state 
+
+**Isolation**
+A transaction appears to be executed in isolation 
+
+**Durability**
+The effects of a transaction that commits are permanent
+
+#### Consistency Contract
+
+System: Atomicity Isolation Durability
+Programmer: Consistency (local)
+
+$\implies$ Consistency (global)
+
+### Properties
+
+**Agreement**
+No two processes decide differently
+
+**Termination**
+Every correct process eventually decides 
+
+**Commit-Validity**
+1 can only be decided if all processes propose 1 
+
+**Abort-Validity**
+0 can only be decided if some process crashes or votes 0
+
+### Principle
+NBAC1: Agreement
+NBAC2: Termination
+NBAC3: Commit-Validity
+NBAC3: Abort-Validity
+
+As in consensus, every process has an initial value 0 (no) or 1 (yes) and must decide on a final value 0 (abort) or 1 (commit) 
+The proposition means the ability to commit the transaction 
+The decision reflects the contract with the user 
+Unlike consensus, the processes here seek to decide 1 but every process has a veto right
+
+### Algorithm
+Using BEB, Perfect Failure Detector and Uniform Consensus
+
+```
+upon event ⟨ Init ⟩ do 
+  prop := 1; 
+  delivered := ∅; 
+  correct := Π;
+  
+upon event ⟨ crash, p ⟩ do 
+  correct := correct \ {p} 
+
+upon event ⟨ nbac, Propose | v ⟩ do 
+  trigger ⟨ beb, Broadcast | v ⟩; 
+  
+upon event ⟨ beb, Deliver | p, v ⟩ do 
+  delivered := delivered ∪ {p}; 
+  prop := prop * v;
+  
+upon event correct \ delivered = empty do 
+  if correct ≠ Π 
+    prop := 0; 
+  trigger ⟨ uc, Propose | prop ⟩; 
+  
+upon event ⟨ uc, Decide | decision ⟩ do 
+  trigger ⟨ nbac, Decide | decision ⟩;
+```
+
+\<\>P is not enough
+## Group Membership
+
+Similarities
+- Like failure detectors: the processes are informed about failures; we say that the processes install views
+- Like perfect failure detector: the processes have accurate knowledge about failures
+Differences
+- Unlike perfect failure detectors: the information about failures is coordinated (the processes install the same sequence of views)
+
+### Properties
+
+**Local Monotonicity**
+If a process installs view (j,M) after installing (k,N), then j > k and M < N 
+
+**Agreement**
+No two processes install views (j,M) and (j,M') such that M ≠ M' 
+
+**Completeness**
+If a process p crashes, then there is an integer j such that every correct process eventually installs view (j,M) such that p ∉ M 
+
+**Accuracy**
+If some process installs a view (i,M) and p ∉ M, then p has crashed
+
+### Algorithm
+
+Using 
+- Perfect failure detector
+- Uniform Consensus
+
+```
+upon event ⟨ Init ⟩ do 
+  view := (0, Π); // (id, memb)
+  correct := Π; 
+  wait := true;
+
+upon event ⟨ crash, p ⟩ do 
+  correct := correct \ {p};
+  
+upon event (correct ⊊ view.memb) and (wait = false) do 
+  wait := true; 
+  trigger ⟨ uc, Propose | (view.id + 1, correct) ⟩;
+
+upon event ⟨ uc, Decided | (id, memb) ⟩ do 
+  view := (id, memb); 
+  wait := false; 
+  trigger ⟨ memb, View | view ⟩;
+```
+
+## View Synchronous Communication
+
+View synchronous broadcast is an abstraction that results from the combination of group membership and reliable broadcast. It ensures that the delivery of messages is coordinated with the installation of views
+
+### Events
+
+**Request**
+⟨vs, Broadcast | m⟩
+⟨vs, BlockOk⟩
+
+**Indication**
+⟨vs, Deliver | src, m⟩
+⟨vs, View | V⟩
+⟨vs, Block⟩
+
+### Properties
+
+Properties of Group Membership and Reliable Broadcast (and Uniform Reliable Broadcast for Uniform View Synchrony)
+
+**View Synchrony**
+A message is vsDelivered in the view where it is vsBroadcast
+
+### TRB-Based Algorithm
+
+Using
+- Group Membership
+- Terminating Reliable Broadcast
+- Best Effort Broadcast
+
+```
+upon event ⟨ Init ⟩ do 
+  view := (0, Π); 
+  nextView := ⊥; 
+  pending := [];
+  delivered := ∅;
+  trbDone := ∅; 
+  flushing := false;
+  blocked := false;
+
+upon event ⟨ vs, Broadcast | m ⟩ 
+and ( blocked = false ) do 
+  delivered := delivered ∪ {m}; 
+  trigger ⟨ vs, Deliver | self, m ⟩; 
+  trigger ⟨ beb, Broadcast | [Data, view.id, m] ⟩;
+
+upon event ⟨ beb, Deliver | src, [Data, vid, m] ⟩ do
+  if (view.id = vid) 
+  and (m ∉ delivered) 
+  and (blocked = false) then
+    delivered := delivered ∪ {m};
+    trigger ⟨ vs, Deliver | src, m ⟩;
+
+upon event ⟨ memb, View | V ⟩ do 
+  append(pending, V);
+
+upon (pending ≠ []) and (flushing = false) do
+  nextView := popFirst(pending); 
+  flushing := true;
+  trigger ⟨ vs, Block ⟩;
+
+upon ⟨ vs, BlockOk ⟩ do 
+  blocked := true; 
+  trbDone := ∅; 
+  trigger ⟨ trb, Broadcast | self, (view.id, delivered) ⟩;
+
+upon ⟨ trb, Deliver | p, (vid, del) ⟩ do 
+  trbDone := trbDone ∪ {p}; 
+  forall m ∈ del and m ∉ delivered do 
+    delivered := delivered ∪ {m}; 
+    trigger ⟨ vs, Deliver | src, m ⟩;
+
+upon (trbDone = view.memb) 
+and (blocked = true) do 
+  view := nextView; 
+  flushing := false;
+  blocked := false; 
+  delivered := ∅; 
+  trigger <vs, View | view>;
+```
+
+### Consensus-Based View Synchrony
+
+Using
+- Uniform Consensus
+- Best Effort Broadcast
+- Perfect Failure Detector
+
+```
+upon event ⟨ Init ⟩ do 
+  view := (0, Π); 
+  correct := Π; 
+  flushing := false;
+  blocked := false; 
+  delivered := ∅;
+  dset := ∅;
+
+upon event ⟨ vs, Broadcast | m ⟩ and (blocked = false) do 
+  delivered := delivered ∪ {m}; 
+  trigger ⟨ vs, Deliver | self, m ⟩;
+  trigger ⟨ beb, Broadcast | [Data, view.id, m] ⟩;
+
+upon event ⟨ beb, Deliver | src, [Data, vid, m] ⟩
+  if (view.id = vid) 
+  and (m ∉ delivered) 
+  and (blocked = false) then
+    delivered := delivered ∪ {m}; 
+    trigger ⟨ vsDeliver, src, m ⟩;
+
+upon event ⟨ crash, p ⟩ do 
+  correct := correct \ {p}; 
+  if flushing = false then 
+    flushing := true; 
+    trigger ⟨ vs, Block ⟩;
+
+upon ⟨ vs, BlockOk ⟩ do 
+  blocked := true; 
+  trigger ⟨ beb, Broadcast | [DSET, view.id, delivered] ⟩;
+
+upon ⟨ beb, Deliver | src, [DSET, vid, del] ⟩ do 
+  dset:= dset ∪ (src, del); 
+  if forall p ∈ correct,
+  (p,mset) ∈ dset then 
+    trigger ⟨ uc, Propose | view.id + 1, correct, dset ⟩;
+
+upon ⟨ uc, Decided | id, memb, vsdset ⟩ do 
+  forall (p,mset) ∈ vsdset: p ∈ memb do 
+    forall (src,m) ∈ mset: m ∉ delivered do 
+      delivered := delivered ∪ {m};
+      trigger ⟨ vs, Deliver | src, m ⟩; 
+  view := (id, memb); 
+  flushing := false;
+  blocked := false; 
+  dset := ∅;
+  delivered := ∅; 
+  trigger  ⟨ vs, View | view ⟩;
+```
+
+### Uniform View Synchrony
+
+Using
+- Uniform Consensus
+- Best Effort Broadcast
+- Perfect Failure Detector
+
+```
+upon event ⟨ Init ⟩ do 
+  view := (0, S); 
+  correct := S; 
+  flushing := false;
+  blocked := false; 
+  udelivered := ∅;
+  delivered := ∅;
+  dset := ∅; 
+  for all m: ack(m) := ∅;
+
+upon event ⟨ vs, Broadcast | m ⟩ 
+and (blocked = false) do
+  delivered := delivered ∪ {m}; 
+  trigger ⟨ beb, Broadcast | [Data, view.id, m] ⟩;
+  
+upon event ⟨ beb, Deliver | src, [Data, vid, m] ⟩ do
+  if (view.id = vid) then 
+    ack(m) := ack(m) ∪ {src};
+  if m ∉ delivered then 
+    delivered := delivered ∪ {m};
+    trigger ⟨ beb, Broadcast | [Data, view.id, m] ⟩;
+
+upon event (view ≤ ack(m)) and (m ∉ udelivered) do 
+  udelivered := udelivered ∪ {m};
+  trigger ⟨ vsDeliver, src(m), m ⟩;
+
+upon event ⟨ crash, p ⟩ do 
+  correct := correct \ {p}; 
+  if flushing = false then 
+    flushing := true; 
+    trigger ⟨ vs, Block ⟩;
+
+upon ⟨ vs, BlockOk ⟩ do 
+  blocked := true; 
+  trigger ⟨ beb, Broadcast | [DSET, view.id, delivered] ⟩; 
+
+upon ⟨ beb, Deliver | src, [DSET, vid, del] ⟩ do 
+  dset:= dset ∪ {(src,del)}; 
+  if forall p ∈ correct: (p, mset) ∈ dset then 
+    trigger ⟨ uc, Propose | view.id + 1,
+correct, dset ⟩;
+
+upon ⟨ uc, Decided | id, memb, vsdset ⟩ do 
+  forall (p,mset) ∈ vs-dset: p ∈ memb do 
+    forall (src,m) ∈ mset: m ∈ udelivered do 
+      udelivered := udelivered ∪ {m}; 
+      trigger ⟨ vs, Deliver | src, m ⟩; 
+  view := (id, memb); 
+  flushing := false;
+  blocked := false; 
+  dset := ∅;
+  delivered := ∅;
+  udelivered := ∅; 
+  trigger ⟨ vs, View | view ⟩;
+```
+
+
+## Lattice Agreement
+
