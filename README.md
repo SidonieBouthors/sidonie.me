@@ -1,6 +1,6 @@
-# Sidonie.me V2
+# Sidonie.me
 
-This repository contains the source of the second version of my website.
+This repository contains the source code of my website.
 
 ## Content
 
@@ -30,8 +30,7 @@ To create the static website :
 ```bash
 npm run build 
 ```
+
 ## Deployment
 
-[<img alt="Deployed with FTP Deploy Action" src="https://img.shields.io/badge/Deployed With-FTP DEPLOY ACTION-%3CCOLOR%3E?style=for-the-badge&color=0077b6">](https://github.com/SamKirkland/FTP-Deploy-Action)
-
-This website is deployed automatically when a push to main occurs.
+On push to main, the website is built and a Docker image is pushed to the GitHub Container Registry ready to be deployed.
