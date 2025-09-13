@@ -1,0 +1,412 @@
+---
+title: Formal Verification Cheatsheet
+description: A quick cheatsheet on Formal Verification. Written as part of my notes for the CS-550 Course @ EPFL
+date: 2024-10-10
+tags: [epfl, formal-verification]
+published: true
+---
+
+# Formal Verification Cheatsheet
+
+<Callout type="note">
+  This document is a quick cheatsheet on Formal Verification. It is not meant to be a comprehensive guide, but rather a quick reference, based on my notes from the EPFL's [CS-550 Course](https://edu.epfl.ch/coursebook/en/formal-verification-CS-550) on Formal Verification.
+</Callout>
+
+## Relations
+
+**Homogeneous Relation** set of pairs $r \subseteq S \times S$ 
+
+**Relation Composition** $r_1 \circ r_2 = \{(x, z) \mid \exists y. (x, y) \in r_1 \land$ $(y, z) \in r_2 \}$
+
+**Diagonal Relation** $\Delta_S = \{(x, x) \mid x \in S \}$
+For a relation $r$, $r^0 = \Delta_S$, $r^n = r \circ r^{n-1}$.
+
+**Transitive Closure** $\bigcup_{i=1}^\infty r^i$ the smallest relation that contains $r$ and is transitive
+**Reflexive Closure** $r \cup \Delta_S$ 
+
+**Image** of set $T$ under relation $r$ is $r[T] = \{y \mid \exists x \in T : (x, y) \in r \}$
+
+A relation $r$ is _ if
+**Transitive** 
+$\forall x, y, z. (x, y) \in r \land (y, z) \in r$ $\implies (x, z) \in r$
+**Reflexive** 
+$\forall x. (x, x) \in r$
+**Symmetric** 
+$\forall x, y. (x, y) \in r \iff (y, x) \in r$
+**Antisymmetric** 
+$\forall x, y. (x, y) \in r \land (y, x) \in r$ $\implies x = y$
+
+**Relations Properties**
+- $(p1 ⊆ p2) → (p1 ◦ p) ⊆ (p2 ◦ p)$
+- $(p1 ⊆ p2) → (p ◦ p1) ⊆ (p ◦ p2)$
+- $(p1 ⊆ p2)∧(q1 ⊆ q2) →$ $(p1 ∪q1) ⊆ (p2 ∪q2)$
+- $(p1 ∪p2) ◦ q = (p1 ◦ q)∪(p2 ◦ q)$
+
+## Transition System
+$(S, I, r, A)$ where:
+• $S$ the states of the system
+• $I \subseteq S$ the initial states of the system
+• $A$ the set of signals
+• $r \subseteq S \times A \times S$ is the transition relation. $(s, a, s') \in r$ means that with signal $a$, the system can step from $s$ to $s'$.
+If $r : S \times A \to S$, the system is called deterministic.
+We often introduce $E \subseteq S$ the set of error states, and its complement $G \subseteq S$ the set of good states.
+
+**Trace**
+Finite or infinite sequence $s_0, a_0, s_1, \dots$ with $s_0 \in I$, with steps given in $r$, so $\forall i \geq 0, (s_i, a_i, s_{i+1}) \in r$. If a trace is finite, we assume it ends with a state $s_n$, and $n$ is called the length of the trace. 
+$\text{Trace}(M)$ is the set of traces of a system. 
+$\text{Reach}(M)$ is the set of states for which there exists a trace that ends in that state. 
+**Invariant** $P$ is a set (often, a set which respects a property) of states such that $\text{Reach}(M) \subseteq P$
+**Inductive invariant** $\text{Ind}$ is a set of states such that $I \subseteq \text{Ind}$ and $s \in \text{Ind} \land (s, a, s') \in r \implies s' \in \text{Ind}$
+
+## First Order Logic
+
+First-order = we cannot quantify over functions, only over variables. 
+
+**Signature**
+A first-order signature / language $\mathcal{L}$ specifies: 
+- Countable set of functions (functions can take any number of arguments)
+- Countable set of predicate symbols (functions which return a truth value)
+
+The syntax of a first-order formula on a signature is: 
+$F \Coloneqq P(t, t, \dots, t) \mid \forall x.F \mid \exists x.F \mid \top \mid \bot \mid$
+	$\neg F \mid F \land F \mid F \lor F \mid F \implies F \mid F \iff F$
+$t \Coloneqq x \mid f(t, \dots, t)$ 
+
+**Atomic formula** case $P(t, \dots, t)$
+**Literal** an atomic formula or its negation
+**Clause** disjunction of literals
+**Arity** $\text{ar}(f)$ of a function is the number of arguments it takes. Constants are arity-0 functions. 
+**Interpretation** or **model** of a signature is a structure that gives values to each function, constant, and predicate, and a set on which to work (concrete version of the signature)
+**Free variables** of a formula are the set of all undefined variables (i.e., $\forall x.F$ and $\exists x.F$ do not return $x$)
+**Assignment** $[\![ F ]\!]_e$ of a formula is the act of replacing free variables with values
+
+A formula $F_1$ (with a chosen interpretation) is 
+- **Satisfiable** if there is an assignment of its free variables that makes it true (in general, if there exists an interpretation)
+- **Valid** (tautology) if it is true for any assignment (in general, for any interpretation)
+- **Equisatisfiable** with $F_2$ if $F_1$ is satisfiable when $F_2$ is satisfiable and vice versa. Does not imply equivalent (e.g. $x$ and $\neg x$)
+- **Equivalent** with $F_2$ when $[\![ F_1 ]\!]_e = [\![ F_2 ]\!]_e$ for any assignment $e$
+
+**Negation Normal Form** an equivalent formula where $\lnot$ is only applied on atomic formulas / variables and there are no $\implies$ or $\iff$
+**Prenex Normal Form** a form where all quantifiers are in the prefix
+**Skolem Normal Form** is prenex normal form with only $\forall$ quantifiers and no $\exists$. Skolemization is a process that creates an equisatisfiable formula is skolem normal form (not equivalent) by replacing every existentially quantified variable with a term $f(x_1, \dots, x_n)$ where $f$ is a new function symbol and $x_i$ are universally quantified variables in scope
+**Conjunctive Normal Form** a conjunction of clauses with no quantifiers. Can be represented as a set of sets of clauses.
+
+**Tseytin Transformation**
+Produces a CNF (with linear size increase rather than exponential) equisatisfiable to $F$ by introducing a new variable for each subformula, then conjunct the substitution of $F$ and all subformula substitutions. An example output is $x_3 \land (x_3 \leftrightarrow x_1 \land x_2) \land$ $(x_2 \leftrightarrow p \lor q) \land (x_1 \leftrightarrow \lnot s)$, where we then transform each substitution to CNF.
+
+## Proofs
+
+**Inference rule**
+$\frac{F_1 \; \dots \; F_n}{G}$ is sound if $(F_1 ∧\dots ∧ F_n ) \to G$. 
+$F_i$ are premises and $G$ is the conclusion. If there are no premises, the step is an axiom
+
+**Instantiation rule**
+$\frac{C}{C[\bar x := \bar t]}$ where we substitute some variables of C by some terms. Renaming and ground instantiation (replacing with only ground terms) are special cases
+
+**Proof system** set of inference steps over a set of formulas. $(ℱ, \text{Infer})$ where $\text{Infer} ⊆ ℱ^∗ × ℱ$
+
+**Proof** sequence of inference steps where each premise is axiom or a conclusion of a previous step
+
+**Syntactic conclusion** $𝐴 ⊢ 𝐹$ means $F$ is derivable from assumptions $A$, meaning there exists a proof that concludes with $F$ 
+
+**Semantic conclusion** $𝐴 ⊧ 𝐶$ means $C$ is a semantic conclusion of $A$, meaning we have $⟦𝐴⟧𝑒 = 1 ⇒ ⟦𝐶⟧𝑒 = 1$ for all interpretations / assignments
+
+**Soundness** $𝐴 ⊢ 𝐶 \implies 𝐴 ⊧ 𝐹$
+
+**Completeness** $𝐴 ⊧ 𝐶 \implies 𝐴 ⊢ 𝐹$
+
+**Case analysis rule**
+$(𝐹 , 𝐺) ⊢ 𝐹 [𝑥 ≔ 0] ∨ 𝐺[𝑥 ≔ 1]$
+
+**Clausal resolution rule**
+$(𝐶_1 ∪ {𝑥}, 𝐶_2 ∪ {¬𝑥}) ⊢ (𝐶_1 ∪ 𝐶_2)$
+
+**SAT Solver**
+Takes as input a set of clauses (CNF form)
+To check satisﬁability, convert to equisatisﬁable set of clauses in polynomial time using Tseytin’s transformation.
+To check validity of a formula, take negation, check satisﬁability, then negate the answer
+
+**DPLL Algorithm**
+Complete, backtracking-based search algorithm for deciding satisfiability of propositional logic formulas.
+
+**Resolution Proof**
+Write numbered clauses. Each clause is either:
+- an axiom (assumption)
+- the result of applying an inference rule to two other clauses. In this case we refer to the numbers of the premises and indicate any substitutions made as $y \rightsquigarrow x$
+If we can derive $\bot$ from the set of clauses, it is unsatisfiable. We can use this to build proofs by refutation (proving the negation of a formula is unsatisfiable shows the formula is valid)
+
+## Term Models
+
+**Substructure** $(D' , α')$, given a structure (interpretation) $(D, α)$, where:
+-  $D' ⊆ D$
+-  for elements in $D'$, $α'$ defines the relations and functions in the same way, so $α'(R) = α(R) ∩ (D')^n$ for $n = ar (R)$, and $α'(f )(x_1 , \dots, x_n ) = α(f )(x_1 , \dots, x_n )$ for $n = ar(f)$
+-  $(D', α')$ is a valid interpretation, in particular, it maps function symbols of arity $n$ to total functions on $(D')^n → D'$
+A domain $D'$ defines a substructure iff it is closed under the interpretation of all symbols $f$, meaning $\alpha(f)$ applied to any elements of $D'$ is in $D'$
+Universal formulas remain true in substructures
+
+**Smallest substructure**
+We take $𝐷_0 = ∅$, $D_{i+1} =$ $\bigcup_{f ∈ \mathcal{L}_F} \{ 𝛼(f)(𝑥_1 , \dots, 𝑥_𝑛 ) \mid$ $𝑥_1 , \dots, 𝑥_𝑛 ∈ D_i \}$
+Finding the smallest $i$ such that $D_{i+1} = D_i$ we get the smallest substructure. 
+$D^* = \bigcup_{i \geq 0} D_i$ is the domain of the smallest substructure. It is always countable, non-empty if the language has at least one constant symbol, and finite if $\mathcal{L}$ has no function symbols besides constants.
+
+**Countable Model**
+A set of first-order formulas has a model $\iff$ it has a countable model
+
+**Ground Terms** $GT_{\mathcal{L}}$
+Least set containing all constant symbols of $\mathcal{L}$ and $f(t_1, \dots, t_n) \in \text{GT}$ for all functions $f$ of arity $n$ in $\mathcal{L}$ (and $t_i \in \text{GT}$)
+Formally if we have $GT^0 = ∅$ and $GT^{i+1} = \{f (t_1 , \dots, t_n ) \mid$ $f ∈ \mathcal{L} \; \land$ $t_1 , \dots, t_n ∈ GT^i\}$
+Then the ground terms are $GT = \bigcup_{i \geq 0} GT^i$
+
+In general, the least substructure is $D^∗ = \{[\![t]\!]^α \mid t \in GT_{\mathcal{L}}\}$ 
+
+**Herbrand Model**
+Define a substructure $(GT_{\mathcal{L}} , α_H )$. We add a fresh constant to $\mathcal{L}$ if it has none, then use the domain of ground terms. We define $\alpha_H$ with :
+$α_H (f )(t_1 , \dots, t_n ) = f (t_1 , \dots, t_n )$
+$α_H (R) = \{(t_1 , \dots, t_n ) \mid$ $([\![t_1]\!]^α , \dots, [\![t_n]\!]^α ) ∈ α(R)\}$
+
+Let $(D, α)$ be a model of a set $S$ of universal first-order formulas in the language $\mathcal{L}$ containing at least one constant. Then $(GT_{\mathcal{L}} , α_H )$ is also a model of these formulas.
+
+**Herbrand Atoms (Ground Instances)**
+$HA = \{R(t_1 , \dots, t_n ) \mid ar(R) = n, t_i ∈ GT_{\mathcal{L}} \}$ for each relation symbol $R$
+Then $S'$ is a set of propositional formulas over the countable set HA.
+$S'$ has a model $\iff$  each finite subset of $S'$ has a model (compactness)
+A finite subset has a model $\iff$ propositional resolution does not derive empty clause
+
+A set of FOL formulas is unsatisfiable $\iff$ for its skolemization there is a finite subset of ground instances on which resolution derives empty clause
+
+## Imperative Programs to Formulas
+
+**Hoare Triple**
+Given $P, Q \subseteq S$ and $r \subseteq S \times S$
+$\{P\} \; r \; \{Q\} \iff$ $\forall s, s' \in S. (s \in P) \land ((s, s') \in r) \to (s' \in Q)$
+(Note this notation does not mean singleton sets)
+
+**Strongest Postcondition**
+$sp(P, r) = \{ s' \mid \exists s . s \in P\land (s, s') \in r\}$
+
+**Weakest precondition**
+$wp(r, Q) = \{ s \mid \forall s' . (s, s') \in r \to s' \in Q\}$
+$wp(r, Q) = S \setminus sp(S \setminus Q, r^{-1})$
+
+**Hoare Triple Equivalences**
+$\{P \}\; r\; \{Q \}$ 
+$\iff$ $P ⊆ wp (r , Q )$ 
+$\iff$ $sp (P , r ) ⊆ Q$
+
+**Loop-Free Programs as Relations**
+We define a simple imperative program with formulas $F$, $t$ terms, a fixed number of mutable variables $V = \{x_1, \dots, x_n\}$ and imperative statements
+We have $R(c)$ the corresponding formula
+$c$ $\longrightarrow R(c)$ mappings:
+- $(x = t)$ $\longrightarrow$ $x'= t \land \bigwedge_{v \in V \setminus \{x\}} v' = v$
+- $c1 ; c2$ $\longrightarrow$ $\exists \bar z. R(c_1)[\bar x ' := \bar z] \land R(c_2)[\bar x := \bar z]$
+- if($*$) then $c_1$ else $c_2$ $\longrightarrow$ $R(c_1) \lor R(c_2)$ 
+- assume($F$) $\longrightarrow$ $F \land \bigwedge_{v \in V} v' = v$
+- havoc($x$) $\longrightarrow$  $\bigwedge_{v \in V \setminus \{x\}} v' = v$
+- if (𝐹 ) then $𝑐_1$ else $𝑐_2$ $\longrightarrow$ $(𝐹 ∧ 𝑅(𝑐_1 )) ∨ (¬𝐹 ∧ 𝑅(𝑐_2 )$
+
+We also have $\rho(c)$ the corresponding relation, with $\rho(c) = \{(\bar x, \bar x') \mid R(c)\}$ 
+$c \longrightarrow \rho(c)$ mappings:
+- $(x_i = t)$ $\longrightarrow$ $\{(\bar x, \bar x') \mid x'_i = t\}$ 
+- $c1 ; c2$ $\longrightarrow$ $\rho(c_1) \circ \rho(c_2)$ 
+- if($*$) $c_1$ else $c_2$ $\longrightarrow$ $\rho(c_1) \cup \rho(c_2)$ 
+- assume($F$) $\longrightarrow$ $\Delta_{S(F)}$ where $S(F) = \{\bar x \mid F\}$ and $\Delta_A$ is the diagonal relation
+
+**Shorthands**
+if ($∗$) $c_1$ else $c_2$ $\longrightarrow$ $c_1 ▯ c_2$
+assume($F$) $\longrightarrow$ $[F]$
+
+## Quantifier Elimination for Presburger Arithmetic
+Start with innermost $\exists x$ and go outwards
+Isolate the variable $x$ in the expressions, with the same factor in every expression (the LCM of all the original factors)
+Replace every $Kx$, where $K$ is the factor, by $x'$ and add the condition $K | x'$
+Obtain the form 
+	$$\bigwedge_{i=1}^L a_i < x \land \bigwedge_{j=1}^U x < b_j \land \bigwedge_{i=1}^D K_i | (x + t_i)$$
+Remove existential quantifier and reduce.
+
+*Case with upper and lower bounds, no divisibility constraint*: $\max_i a_i + 1 \leq \min_j b_j - 1 = \bigwedge_{ij} a_i + 1 < b_j$
+Each lower bounds should be smaller than each upper bounds, with space of 1 (if consecutive, there is no value for $x$ in between)
+We can also write: $\bigvee_{k=1}^L F(a_k + 1)$
+Try values just above each lower bound. We want to test $F$ with the smallest value above $\max a_i + 1$
+
+*Case with divisibility constraints*: $\bigvee_{k=1}^L \bigvee_{i=1}^N F(a_k + i)$
+Try values such that for each lower bound we try at least one value of the right divisibility. $N$ is the LCM of all divisors $K_i$.
+
+*Case with only one bound*: $\bigvee_{i=1}^N F_2(i)$
+$F_2$ contains only the divisibility constraints of $F$. Since we have only one bound, satisfying divisibility is enough (we can then shift to satisfy the bound, so we know a satisfying $x$ will exist). $N$ is the LCM of all divisors $K_i$.
+
+## Lattice
+
+**Partial Order**
+Binary relation on $X \times X$ that is reflexive, antisymmetric and transitive 
+
+**Extreme Elements in Partial Orders**
+Given a partial order $(A,≤)$ and a set $S ⊆ A$, we call an element $a ∈ A$
+- **upper bound** of $S$ if for all $a' ∈ S$ we have $a' ≤ a$
+- **lower bound** of $S$ if for all $a' ∈ S$ we have $a ≤ a'$
+- **minimal element** of $S$ if $a ∈ S$ and there is no $a' ∈ S$ such that $a' < a$
+- **maximal element** of $S$ if $a ∈ S$ and there is no $a' ∈ S$ such that $a < a'$
+- **greatest element** of $S$ if $a ∈ S$ and for all $a' ∈ S$ we have $a' ≤ a$
+- **least element** of $S$ if $a ∈ S$ and for all $a' ∈ S$ we have $a ≤ a'$
+- **least upper bound** (lub, supremum, join, $⊔$) of $S$ if $a$ is the least element in the set of all upper bounds of $S$
+- **greatest lower bound** (glb, infimum, meet, $⊓$) of $S$ if $a$ is the greatest element in the set of all lower bounds of $S$
+Taking $S = A$ we obtain minimal, maximal, greatest, least elements for the entire partial order.
+
+**Lattice**
+Partial order in which every pair of elements has a lub and a glb (join and meet). It follows that every non-empty finite set has a lub and glb
+
+**Complete Lattice**
+For every set $S$ (including empty set and infinite sets) there exist $⊔S$ and $⊓S$
+
+**Semilattice**
+Similar to a lattice but with either a lub for each pair, or a glb for each pair (not necessarily both). If a semilattice is **complete** then it is a complete lattice:  $\forall S$, $⊓S$ exists $\iff$ $\forall S$, $⊔S$ exists
+
+**Homomorphism**
+A structure-preserving map between two algebraic structures of the same type. It preserves operations and order. Prove by showing $f(x \cdot y) = f(x) \cdot f(y)$ for every operator $\cdot$ defined (e.g. $⊔$ or $⊓$)
+
+**Isomorphism**
+Bijective homomorphism (who's inverse is also a homomorphism). Prove by showing it is a homomorphism and it is a bijection.
+
+**Fixpoint**
+Given a set $A$ and a function $G : A \to A$ we say that $x \in A$ is a fixed point of $f$ if $G(x) = x$
+
+**Least and Greatest Fixpoint**
+Let $(A, ≤)$ be a partial order, let $G : A → A$ be a monotonic function on $(A, ≤)$, and let the set of its fixpoints be $S = \{x | G(x) = x\}$
+If the least element of $S$ exists, it is called the least fixpoint, if the greatest element of $S$ exists, it is called the greatest fixpoint
+
+**Prefixpoint and Postfixpoint**
+Let $(A, ⊑)$ be a complete lattice and $G : A → A$ a monotonic function. 
+Post $= \{x | G(x) ⊑ x\}$ the set of postfix points of G ($⊤$ is a postfix point) 
+Pre $= \{x | x ⊑ G(x)\}$  the set of prefix points of G 
+Fix $= \{x | G(x) = x\}$ the set of fixed points of G. Note that Fix $⊆$ Post.
+
+**Tarski Fixed Point Theorem**
+Let $a = ⊓$Post (greatest lower bound). Then $a$ is the least element of Fix (dually, $⊔$Pre is the largest element of Fix).
+Let $(L, ≤)$ be a complete lattice and let $f: L → L$ be a monotonic function (with respect to $≤$). Then the set of fixed points of $f$ in $L$ forms a complete lattice under $≤$. This implies that there exists at least one fixed point of $f$.
+
+**Omega Continuity**
+A function $G$ is $ω$-continuous if for every chain $x_0 ⊑ x_1 ⊑ \dots ⊑ x_n ⊑ \dots$ such that $\bigsqcup_{i≥0} x_i$ exists, we have that $\bigsqcup_{i≥0} G(x_i)$ exists and $$G(\bigsqcup_{i≥0} x_i) = \bigsqcup_{i≥0} G(x_i)$$
+For an $ω$-continuous function $G$, the value $a_∗ = \bigsqcup_{n≥0} G^n (⊥)$ is the least fixpoint of $G$ ($\bot$ is the least element)
+Suppose that $s'$ is such that $G(s') ⊑ s'$, then $a_∗ ⊑ s'$ 
+
+**Transition System**
+Given a transition system $M = (S, Init,r, A)$, with $\bar r = {(s,s') | (s, a,s') ∈ r}$, consider the function $G : 2^S → 2^S$ defined by $G(X) = Init ∪ \bar r[X]$ 
+Then $G$ is monotonic and $ω$-continuous. Its least fixed point is the set of reachable states of $M$
+
+**Galois connection**
+Defined by two monotonic functions $α : C → A$ and $γ : A → C$ between partial orders $≤$ on $C$ and $⊑$ on $A$, such that $∀c, a . \; α(c) ⊑ a \iff c ≤ γ(a)$ (intuitively, $c$ is approximated by $a$)
+Equivalently, $\forall c, a . \; c ≤ γ(α(c))$ and $α(γ(a)) ⊑ a$ 
+
+**Chain**
+A chain of length $n$ is a sequence $s0, s1,  \dots,sn$ such that $s0 \sqsubset s1 \sqsubset s2 \sqsubset \dots \sqsubset sn$ (where $x \sqsubset y$ means, as usual, $x \sqsubseteq y ∧ x \neq y$)
+
+**Finite Height**
+A partial order has a finite height $n$ if it has a chain of length $n$ and every chain is of length at most $n$. A finite lattice is of finite height.
+Usually : $\text{H}(L \times V) = \max(\text{H}(L), \text{H}(V))$ and $\text{H}(L^V)= \text{H}(L) \cdot |V|$
+
+**Lattice of Conjunctions of Predicates and Concretization**
+Abstract domain $A$ is $2^P$, every element $a∈A$ is a subset of all available predicates $P = \{P_0, P_1, \dots, P_n\}$ (logical conditions on program variables). $A$ is a lattice (Lattice of Conjunctions)
+The concretization $\gamma(a)$ maps $a∈A$ to the set of concrete program states $s$ that satisfy all predicates in $a$ : $\gamma(a) = \{s \mid s \models \bigwedge_{P \in a} P \}$
+- $s ⊨ F$ means formula $F$ is true for variables given by the program state $s$ ($s$ is a specific assignment of values to program variables)
+- $a_1​⊆a_2​$ means $a_2$​ implies $a_1$ ($a_2$ is a stronger conjunction)
+- If $a_1 \subseteq a_2$​, then $\gamma(a_1) \supseteq \gamma(a_2)$, meaning more predicates in $a_2$​ result in fewer valid states.
+
+$(\alpha, \gamma)$ is a Galois connection if $∀P ∈ a. ∀s ∈ c. s ⊨ P$ which we can also write $c ⊨ a$. It is not a Galois insertion ($α(γ(a)) \neq a$) because $\gamma$ is not injective (different $a$ give the same concretization) 
+$sp(S,r)$ is the set of states that could result after executing command $r$ starting from program states $S$. Very expensive, $S$ may even be infinite.
+$sp^{\#}(a,r)$ provides a safe overapproximation: $sp(γ(a),r)⊆γ(sp^{\#}(a,r))$. We compute it by checking, for all $P'$ in $P$, if the conjunction of all predicates in $a$ and all reassignments made by $r$ implies $P'$. Our result is the set of all $P'$ for which this is true.
+$sp^{\#}(a,r) =$ $\{P' ∈ P \; | \; \forall x, y, x' y' . ( \bigvee_{P \in a}  P(x, y))$ $\land R(x, y, x' , y' ) → P' (x' , y' )\}$ 
+Where $R(x, y, x' , y' )$ is the meaning of $r$
+
+## Recursion
+
+**Expressions**
+$E(r) : C \to C$ with $C = {r \mid r ⊆ S\times S}$  is an expression built from relation $r$ and some additional relations $b_1, \dots,b_n$, using $∪$ and $\circ$. Expressions map relations to relations.
+
+**Monotonicity of Expressions**
+$E$ is monotonic function on $C$: 
+$r1 ⊆ r2$ $→$ $E(r1) ⊆ E(r2)$
+
+**Union-Distributivity**
+$E(\bigcup_{i∈I}r_i) ⊇ \bigcup_{i∈I}(E(r_i))$ always holds
+$E(\bigcup_{i∈I} ri) = \bigcup_{i∈I}E(ri)$ does not generally hold, but does if 
+- $E(r)$ is given by an expression containing $r$ at most once
+- $E(r)$ contains $r$ any number of times, but $r_i$ with $i ∈ I$ is a directed family of relations: for each $i$,$j$ there exists $k$ such that $r_i ∪r_j ⊆ r_k$, and $I$ is possibly uncountably infinite
+- $E$ is $\omega$-monotonic. Hence, its least fixpoint is $\bigcup_{k≥0} E^k(\emptyset)$ 
+
+**Local Variable Translation**
+$R_V (P)$ is formula for program $P$ in the scope that has the set of variables $V$
+$R_V (\{\text{var} \; y; P\}) = ∃y,y'.R_{V ∪\{y\}} (P)$
+
+$R_V (\text{havoc}(x)) \leftrightarrow R_V (\{\text{var} \; y; x = y\})$
+
+The order of distinct havocs does not matter
+
+**Programs and Specs Relations**
+We can write both programs and specs as formulas (and therefore relations). The program relation should be a subset of the specification relation. The specification may be written as a non-deterministic program
+
+**Writing Specs Using Havoc and Assume**
+Global variables $V = {x_1,\dots,x_n}$
+Specification $F(x_1,\dots,x_n,x_1',\dots,x_n')$ becomes 
+var $y_1,\dots,y_n$ ; $y1 = x1$ ; $\dots$ ; $y_n = x_n$ ; 
+   havoc($x_1,\dots,x_n$); assume($F(y_1,\dots,y_n,x_1,\dots,x_n)$)
+   
+**Program Refinement and Equivalence**
+*Refinement* $P_1 \sqsubseteq P_2$ 
+$\iff$ $R(P_1) → R(P_2)$ is valid 
+$\iff$ $ρ(P_1) ⊆ ρ(P_2)$
+*Equivalence* $P_1 ≡ P_2$ 
+$\iff$ $P_1 \sqsubseteq P_2 ∧ P_2 \sqsubseteq P_1$ 
+$\iff$ $ρ(P_1) = ρ(P_2)$
+
+**Monotonicity with Refinement**
+- $P_1 \sqsubseteq P_2$ $\implies$ $(P_1;P) \sqsubseteq (P_2;P)$
+  $(p1 ⊆ p2) \implies (p1 \circ p) ⊆ (p2 \circ p)$
+- $P_1 \sqsubseteq P_2$ $\implies$ $(P;P1) \sqsubseteq (P;P2)$
+  $(p1 ⊆ p2)$ $\implies$ $(p \circ p1) ⊆ (p \circ p2)$
+- $(P_1 \sqsubseteq P_2) \land (Q_1 \sqsubseteq Q_2)$ $\implies$ (if ($∗$)$P_1$ else $Q_1$) $\sqsubseteq$ (if ($∗$)$P_2$ else $Q_2$) 
+  $(p1 ⊆ p2)∧(q1 ⊆ q2)$ $\implies$ $(p1 ∪q1) ⊆ (p2 ∪q2)$
+
+**Meaning of Recursion**
+A recursive program is a recursive definition of a relation $E(r) = r$
+The intended meaning is $s = \bigcup_{i≥0} E(\emptyset)$, which satisfies $E(s) = s$ and is the least among all relations $r$ such that $E(r) ⊆ r$ (therefore, also the least among $r$ for which $E(r) = r$)
+
+We choose *least* fixpoint, so if the execution cannot terminate on a state $x$, then there is no $x'$ such that $(x,x') ∈ s$. 
+
+**Limitations of "relations on states" Model**
+Let $q$ be a program that never terminates and $c$ one that always does: 
+- $ρ(q) = \emptyset$ and $ρ(c ▯ q) = ρ(c)∪ \emptyset = ρ(c)$ : program that sometimes does not terminate has the same meaning as $c$
+- $ρ(q) = ρ(∆_\emptyset)$ (assume(false)) : absence of results due to path conditions and infinite loop are represented in the same way
+
+**Proof with Spec**
+To prove that recursive procedure with body $E$ satisfies specification $r$, show 
+- $E(r) ⊆ r$
+- Because procedure meaning $s$ is least, conclude $s ⊆ r$
+
+**Formula for Checking Spec**
+We must prove $E(q) ⊆ q$ where $q$ is the relation representing the specification
+Note that $\{x \mid F(x)\} \subseteq \{y \mid G(y)\} \iff (F(z) \to G(z))$ so we can simply prove that the formula of $E(q)$ implies the formula of $q$ 
+
+Proving $f ⊆ q$ by $E(q) ⊆ q$ is always sound, whether or not function $f$ terminates: the meaning of $f$ talks only about properties of terminating executions (relations can be partial)
+
+**Mutual Recursion**
+For mutually recursive procedures $r_1 = E_1(r_1,r_2)$ and $r_2 = E_2(r_1,r_2)$
+Define $\bar E(r_1,r_2) = (E_1(r_1,r_2),E_2(r_1,r_2))$ and $\bar r = (r_1,r_2)$
+Semantics of procedures is the least solution of $\bar E(\bar r) = \bar r$ 
+
+Induction-like principle: To prove that mutually recursive relations satisfy two contracts, prove those contracts for the relation body definitions in which recursive calls are replaced by those contracts (càd le truc en réponse)
+
+**Replacing Calls by Contracts**
+```
+def r1 = { call to r2 }
+ensuring(y > old(y)) 
+def r2 = { call to r1 }
+ensuring(y >= old(y))
+```
+$\longrightarrow$
+```
+def r1 = { save current variables x,y in val x0,y0; 
+havoc(x,y); assume(y >= y0) } 
+ensuring(y > old(y))
+def r2 = { save x,y in val; 
+havoc(x,y); assume(y > y0) } 
+ensuring(y >= old(y))
+```
