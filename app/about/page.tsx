@@ -62,35 +62,29 @@ export default function About() {
         sizes={sizes}
       >
         {sortedSnippets.map((snippet: AboutSnippet) => {
-          var WrappedLogo = snippet.link ? (
-            snippet.icon ? (
+          let logo = snippet.icon ? (
+            <ExportedImage
+              className="about-snippet-icon"
+              src={snippet.icon.src}
+              alt={snippet.title ? snippet.title : ""}
+              width={snippet.icon.width}
+              height={snippet.icon.height}
+            />
+          ) : (
+            <Fragment />
+          );
+          var wrappedLogo =
+            snippet.link && snippet.icon ? (
               <Link
                 href={snippet.link!}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <ExportedImage
-                  className="about-snippet-icon"
-                  src={snippet.icon!.src}
-                  alt={snippet.title ? snippet.title : ""}
-                  width={snippet.icon!.width}
-                  height={snippet.icon!.height}
-                />
+                {logo}
               </Link>
             ) : (
-              <Fragment />
-            )
-          ) : snippet.icon ? (
-            <ExportedImage
-              className="about-snippet-icon"
-              src={snippet.icon!.src}
-              alt={snippet.title ? snippet.title : ""}
-              width={snippet.icon!.width}
-              height={snippet.icon!.height}
-            />
-          ) : (
-            <Fragment />
-          );
+              logo
+            );
           return (
             <div
               className={
@@ -104,7 +98,7 @@ export default function About() {
               }}
               key={snippet.slug}
             >
-              {WrappedLogo}
+              {wrappedLogo}
               <MDXContent code={snippet.body} />
             </div>
           );
