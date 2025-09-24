@@ -3,7 +3,7 @@ import { build } from "velite";
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  output: "export",
+  output: "standalone",
   images: {
     loader: "custom",
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
