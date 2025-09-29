@@ -11,7 +11,7 @@
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
     "date-fns": "^3.6.0",
-    "next": "14.2.3",
+    "next": "^14.2.33",
     "react": "^18",
     "react-dom": "^18",
     "react-grid-layout": "^1.4.4",
@@ -32,6 +32,6 @@
     "eslint-config-next": "14.2.3",
     "sass": "^1.77.4",
     "typescript": "^5",
-    "velite": "^0.1.0-rc.3"
+    "velite": "^0.3.0"
   }
 }
