@@ -1,11 +1,11 @@
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import InfoBox from "@/components/InfoBox";
-import ExportedImage from "next-image-export-optimizer";
 import { Post, posts, Recipe, recipes } from "@content";
 import Card from "@/components/Card";
 import CardGrid from "@/components/CardGrid";
 import ArticleBlock from "@/components/ArticleBlock";
 import { dateSort } from "@/utils/utils";
+import Image from "next/image";
 
 export default function Home() {
   const featuredRecipes = recipes
@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <>
       <div className="home-hero">
-        <ExportedImage
+        <Image
           className="home-hero-image"
           src="/home-hero.jpg"
           alt="Hero image"

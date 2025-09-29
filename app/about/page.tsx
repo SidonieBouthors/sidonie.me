@@ -5,8 +5,8 @@ import CardGrid from "@components/CardGrid";
 import { MDXContent } from "@components/MDXContent";
 import Link from "next/link";
 import { Fragment } from "react";
-import ExportedImage from "next-image-export-optimizer";
 import { prioritySort } from "@/utils/utils";
+import Image from "next/image";
 
 export const metadata = {
   title: "About",
@@ -63,7 +63,7 @@ export default function About() {
       >
         {sortedSnippets.map((snippet: AboutSnippet) => {
           let logo = snippet.icon ? (
-            <ExportedImage
+            <Image
               className="about-snippet-icon"
               src={snippet.icon.src}
               alt={snippet.title ? snippet.title : ""}

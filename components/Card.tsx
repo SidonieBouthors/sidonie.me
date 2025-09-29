@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import ExportedImage from "next-image-export-optimizer";
+import Image from "next/image";
 
 interface CardProps {
   slug: string;
@@ -11,7 +11,7 @@ interface CardProps {
 export default function Card({ slug, title, imageUrl }: CardProps) {
   return (
     <figure className="rec-card">
-      <ExportedImage 
+      <Image 
       src={imageUrl} 
       width={500}
       height={500}

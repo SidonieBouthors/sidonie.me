@@ -4,8 +4,7 @@ import { MDXContent } from "@components/MDXContent";
 import RecipeInfo from "@components/RecipeInfo";
 import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
-
-import ExportedImage from "next-image-export-optimizer";
+import Image from "next/image";
 
 export async function generateMetadata({ params }: RecipeProps) {
   const foundRecipe = recipes.find(
@@ -52,7 +51,7 @@ export default async function RecipePage({ params }: RecipeProps) {
           totalTime={recipe.totalTime}
         ></RecipeInfo>
         <div className="recipe-image-container">
-        <ExportedImage
+        <Image
           className="recipe-image"
           src={recipe.contentImage?.src ?? ""}
           alt={recipe.name}
