@@ -25,8 +25,9 @@
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
       "@content": [".velite"],
-      "@utils/*": ["utils/*"],
-    }
+      "@utils/*": ["utils/*"]
+    },
+    "target": "ES2017"
   },
   "include": [
     "./types/**/*.ts",
