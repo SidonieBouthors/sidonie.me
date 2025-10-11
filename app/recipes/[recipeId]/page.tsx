@@ -6,7 +6,8 @@ import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-export async function generateMetadata({ params }: RecipeProps) {
+export async function generateMetadata(props: RecipeProps) {
+  const params = await props.params;
   const foundRecipe = recipes.find(
     (recipe: Recipe) => recipe.extractedSlug === params.recipeId
   );
@@ -18,12 +19,13 @@ export async function generateMetadata({ params }: RecipeProps) {
 }
 
 interface RecipeProps {
-  params: {
+  params: Promise<{
     recipeId: string;
-  };
+  }>;
 }
 
-export default async function RecipePage({ params }: RecipeProps) {
+export default async function RecipePage(props: RecipeProps) {
+  const params = await props.params;
   const recipe = recipes.find(
     (recipe: Recipe) => recipe.extractedSlug === params.recipeId
   );
@@ -51,12 +53,12 @@ export default async function RecipePage({ params }: RecipeProps) {
           totalTime={recipe.totalTime}
         ></RecipeInfo>
         <div className="recipe-image-container">
-        <Image
-          className="recipe-image"
-          src={recipe.contentImage?.src ?? ""}
-          alt={recipe.name}
-          fill={true}
-        />
+          <Image
+            className="recipe-image"
+            src={recipe.contentImage?.src ?? ""}
+            alt={recipe.name}
+            fill={true}
+          />
         </div>
       </div>
       <MDXContent code={recipe.body} />

@@ -6,7 +6,8 @@ import Breadcrumb from "@components/Breadcrumb";
 import TocCollapse from "@components/TocCollapse";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: PostProps) {
+export async function generateMetadata(props: PostProps) {
+  const params = await props.params;
   const foundPost = posts.find(
     (post: Post) => post.extractedSlug === params.postSlug.join("/")
   );
@@ -18,12 +19,13 @@ export async function generateMetadata({ params }: PostProps) {
 }
 
 interface PostProps {
-  params: {
+  params: Promise<{
     postSlug: string[];
-  };
+  }>;
 }
 
-export default async function PostPage({ params }: PostProps) {
+export default async function PostPage(props: PostProps) {
+  const params = await props.params;
   const slug = params?.postSlug?.join("/");
   const post = posts.find((post: Post) => post.extractedSlug === slug);
 
