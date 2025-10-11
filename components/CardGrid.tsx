@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -41,48 +41,22 @@ export default function CardGrid({
   var [rowHeight, setRowHeight] = useState(0);
   var [numCols, setNumCols] = useState(0);
 
-  const gridRef = useRef(null);
-  useEffect(() => {
-    const current = gridRef.current as any | null;
-    const width = current?.elementRef.current.offsetWidth;
-    if (!width) {
-      return;
-    }
-    const cols = findColNum(width);
-    onWidthChange(width, margin, cols, containerPadding);
-  });
-
-  const divRef = useRef(null);
-  useEffect(() => {
-    const observer = new ResizeObserver((entries) => {
-      const width = entries[0].contentRect.width;
-      if (!width) {
-        return;
-      }
-      const cols = findColNum(width);
-      onWidthChange(width, margin, cols, containerPadding);
-    });
-    if (divRef.current) {
-      observer.observe(divRef.current);
-    }
-    return () => {
-      divRef.current && observer.unobserve(divRef.current);
-    };
-  }, [numCols]);
-
   /**
    * Finds the number of columns based on the container width
    * @param width
    */
-  function findColNum(width: number) {
-    for (let i = 0; i < gridFormat.length; i++) {
-      var [breakpointName, breakPointSize, col] = gridFormat[i];
-      if (width > breakPointSize) {
-        return col;
+  const findColNum = useCallback(
+    (width: number) => {
+      for (let i = 0; i < gridFormat.length; i++) {
+        var [, breakPointSize, col] = gridFormat[i];
+        if (width > breakPointSize) {
+          return col;
+        }
       }
-    }
-    return gridFormat[gridFormat.length - 1][2];
-  }
+      return gridFormat[gridFormat.length - 1][2];
+    },
+    [gridFormat]
+  );
 
   /**
    * Calculates the row height based on
@@ -113,6 +87,38 @@ export default function CardGrid({
     setRowHeight(h);
     setNumCols(cols);
   }
+
+  const gridRef = useRef(null);
+  useEffect(() => {
+    const current = gridRef.current as any | null;
+    const width = current?.elementRef.current.offsetWidth;
+    if (!width) {
+      return;
+    }
+    const cols = findColNum(width);
+    onWidthChange(width, margin, cols, containerPadding);
+  });
+
+  const divRef = useRef(null);
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0].contentRect.width;
+      if (!width) {
+        return;
+      }
+      const cols = findColNum(width);
+      onWidthChange(width, margin, cols, containerPadding);
+    });
+
+    const currentDiv = divRef.current;
+
+    if (currentDiv) {
+      observer.observe(currentDiv);
+    }
+    return () => {
+      currentDiv && observer.unobserve(currentDiv);
+    };
+  }, [containerPadding, findColNum, margin, numCols]);
 
   /**
    * Generates the layout for each breakpoint
