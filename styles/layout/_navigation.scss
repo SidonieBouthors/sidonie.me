@@ -1,3 +1,5 @@
+@use "../abstracts" as *;
+
 // Navigation Bar
 
 .logo {
@@ -40,7 +42,7 @@
     align-items: center;
 
     li {
-      font-family: Satoshi-Bold;
+      font-weight: $font-weight-bold;
       font-size: 1.5rem;
       display: inline;
       padding: 0 1em;
@@ -105,7 +107,7 @@
       padding: 0;
 
       li {
-        font-family: Satoshi-Bold;
+        font-weight: $font-weight-bold;
         font-size: 1.5rem;
         padding: 1em;
         display: flex;

@@ -27,7 +27,7 @@
     p {
       margin: .5em 1em;
       text-align: center;
-      font-family: $font-bold;
+      font-weight: $font-weight-bold;
       font-size: 1rem;
 
       @media (min-width: 60rem) {
@@ -38,7 +38,7 @@
     .rec-button {
       display: inline-block;
       font-size: 0.8rem;
-      font-family: $font-bold;
+      font-weight: $font-weight-bold;
       text-decoration: none;
       text-transform: uppercase;
       border-width: 2px;

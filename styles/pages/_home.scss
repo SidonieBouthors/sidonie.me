@@ -23,7 +23,7 @@
   }
 
   h1 {
-    font-family: $font-black;
+    font-weight: $font-weight-black;
     font-size: 3rem;
     padding: 0 1.5rem;
     margin: 0;
@@ -33,7 +33,7 @@
 
   .subtitle {
     text-align: center;
-    font-family: $font-bold;
+    font-weight: $font-weight-bold;
     font-size: 2rem;
     color: map.get($dark-theme-map, "secondary-text-color");
   }

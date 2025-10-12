@@ -10,7 +10,7 @@ details {
     background-color: var(--collapsible-summary-bg);
     border-radius: $border-radius;
     cursor: pointer;
-    font-family: $font-bold;
+    font-weight: $font-weight-bold;
     font-size: 0.9rem;
 
     text-transform: uppercase;
@@ -28,7 +28,7 @@ details {
     h6 {
       padding-left: 0.5em;
       display: inline;
-      font-family: $font-bold;
+      font-weight: $font-weight-bold;
       font-size: 0.9rem;
       .subheading-anchor {
         pointer-events: none;

@@ -1,3 +1,5 @@
+@use "../abstracts" as *;
+
 .info-box {
   margin: 2em 0;
   padding: 1.5em;
@@ -9,7 +11,7 @@
   .info-box-title {
     color: var(--dark-highlight);
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -1.5em);

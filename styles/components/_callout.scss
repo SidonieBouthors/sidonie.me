@@ -15,7 +15,7 @@
   }
   &::before {
     content: var(--callout-content);
-    font-family: $font-bold;
+    font-weight: $font-weight-bold;
     font-size: 0.8em;
     text-transform: uppercase;
   }

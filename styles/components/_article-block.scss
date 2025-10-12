@@ -16,7 +16,7 @@
   }
 
   .article-block-title {
-    font-family: $font-bold;
+    font-weight: $font-weight-bold;
     color: var(--text-color);
     margin: 0;
   }
@@ -29,7 +29,7 @@
   .art-date {
     display: flex;
     align-items: center;
-    font-family: $font-medium;
+    font-weight: $font-weight-medium;
     font-size: 0.9em;
     margin-top: 0.8em;
 

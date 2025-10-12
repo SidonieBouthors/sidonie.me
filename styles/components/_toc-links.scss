@@ -32,7 +32,7 @@
     &::before {
       content: "On this page";
       display: inline;
-      font-family: $font-medium;
+      font-weight: $font-weight-medium;
       font-size: 1.2rem;
       color: var(--toc-title);
     }
@@ -41,7 +41,7 @@
   border-left: 1px solid var(--border-color);
   font-size: 1rem;
   color: var(--secondary-text-color);
-  font-family: $font-medium;
+  font-weight: $font-weight-medium;
 
   a {
     color: inherit;
@@ -73,7 +73,7 @@
 
 .toc-label {
   display: block;
-  font-family: $font-medium;
+  font-weight: $font-weight-medium;
   font-size: 1rem;
   color: var(--secondary-text-color);
 
