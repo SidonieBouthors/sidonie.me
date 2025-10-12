@@ -35,6 +35,7 @@ export default function Home() {
           alt="Hero image"
           fill={true}
           priority={true}
+          fetchPriority="high"
         />
         <h1>Welcome to my website!</h1>
         <div className="subtitle">Recipes, projects & more</div>
