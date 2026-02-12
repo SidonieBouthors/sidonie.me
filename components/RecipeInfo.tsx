@@ -10,7 +10,6 @@ interface RecipeInfoProps {
 }
 
 function formatTime(time: number): string | undefined {
-  const millisPerMinute: number = 60000;
   const hours = Math.floor(time / 60);
   const minutes = time % 60;
   if (hours === 0) {

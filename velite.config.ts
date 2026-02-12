@@ -2,11 +2,7 @@ import { defineConfig, defineCollection, s } from "velite";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeToc, {
-  HeadingNode,
-  HtmlElementNode,
-  TextNode,
-} from "@jsdevtools/rehype-toc";
+import rehypeToc from "@jsdevtools/rehype-toc";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkMath from "remark-math";
 import rehypeMathJaxSvg from "rehype-mathjax";

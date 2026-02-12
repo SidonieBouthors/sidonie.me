@@ -13,7 +13,6 @@ export default function Breadcrumb({ slug, title }: BreadcrumbProps) {
         {slug
           .map((str) => {
             ref += "/" + str;
-            console.log(str);
             return (
               <li key={ref}>
                 <Link href={ref}>
@@ -23,7 +22,7 @@ export default function Breadcrumb({ slug, title }: BreadcrumbProps) {
             );
           })
           .slice(0, slug.length - 1)
-          .concat(<li>{title}</li>)}
+          .concat(<li key="title">{title}</li>)}
       </ol>
     </nav>
   );

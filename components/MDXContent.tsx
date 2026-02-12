@@ -4,7 +4,6 @@ import Callout from "@components/Callout";
 import Collapse from "@components/Collapse";
 import Instructions from "@components/Instructions";
 import Ingredients from "@components/Ingredients";
-import { MutableRefObject, Ref, RefAttributes, RefObject } from "react";
 
 const useMDXComponent = (code: string) => {
   const fn = new Function(code);

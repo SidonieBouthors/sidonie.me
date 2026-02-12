@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { Component } from "react";
+import React from "react";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TelegramIcon from "./icons/TelegramIcon";
 import MailIcon from "./icons/MailIcon";
@@ -32,7 +32,7 @@ export default function Footer() {
             Hope you found what you were looking for! <br />
             Don{"'"}t hesitate to reach out for any enquiry.
           </p>
-          <p>ⓒ Sidonie Bouthors 2024. All rights reserved</p>
+          <p>ⓒ Sidonie Bouthors {new Date().getFullYear()}. All rights reserved</p>
         </div>
 
         <div className="footer-col">

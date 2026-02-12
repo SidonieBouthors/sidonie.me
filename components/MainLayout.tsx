@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
-import Navigation from "@components/Navigation";
-import Footer from "@components/Footer";
 import { ibmPlexMono, satoshi } from "@/app/fonts";
+import Footer from "@components/Footer";
+import Navigation from "@components/Navigation";
+import { useState } from "react";
 
 export default function MainLayout({
   children,

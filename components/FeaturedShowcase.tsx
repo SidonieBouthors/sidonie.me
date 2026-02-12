@@ -1,5 +1,3 @@
-import Card from "./Card";
-import CardGrid from "./CardGrid";
 
 export default function FeaturedShowcase({
   title,

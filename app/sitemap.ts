@@ -31,14 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const recipePages: MetadataRoute.Sitemap = recipes.map((recipe) => ({
-    url: `${baseUrl}/recipes/${recipe.slug}`,
+    url: `${baseUrl}/recipes/${recipe.extractedSlug}`,
     lastModified: new Date(recipe.date),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
 
   const sharePages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/share/${post.slug}`,
+    url: `${baseUrl}/share/${post.extractedSlug}`,
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
     priority: 0.7,

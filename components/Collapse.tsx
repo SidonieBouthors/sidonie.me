@@ -3,7 +3,7 @@ interface CollapseProps {
   children: React.ReactNode;
 }
 
-export default function Callout({
+export default function Collapse({
   summary,
   children,
   ...props

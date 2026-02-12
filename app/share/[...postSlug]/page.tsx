@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import LastUpdated from "@components/LastUpdated";
 import Breadcrumb from "@components/Breadcrumb";
 import TocCollapse from "@components/TocCollapse";
-import { Metadata } from "next";
 
 export async function generateMetadata(props: PostProps) {
   const params = await props.params;
