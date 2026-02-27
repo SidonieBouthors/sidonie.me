@@ -40,10 +40,17 @@ export default function About() {
             student at EPFL in Switzerland.
             <br />
             On this website, I bring together two of my passions: cooking and
-            programming. So, whether you{"'"}re here to whip up a delicious
-            meal, dive into coding adventures, or simply connect with a fellow
-            enthusiast, I hope you find something that sparks your curiosity and
-            brings a smile to your face.
+            computer science. Whether you could use a helpful tutorial, want to
+            cook up a delicious meal, or simply want to see what I{"'"}m up to,
+            I hope you find something that sparks your curiosity.
+            <br/>
+            You can also have a look at what I{"'"}m doing on <Link
+              href="https://github.com/SidonieBouthors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </Link>!
             <br />
             <br />
             Thank you for visiting!
