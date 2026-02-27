@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev:content": "velite --watch",
+    "build:content": "velite --clean",
+    "dev:next": "next dev",
+    "build:next": "next build",
+    "dev": "run-p dev:*",
+    "build": "run-s build:*",
     "start": "next start",
     "lint": "next lint"
   },
@@ -32,6 +36,7 @@
     "eslint": "^9.37.0",
     "eslint-config-next": "^15.5.4",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "npm-run-all2": "^8.0.4",
     "sass": "^1.77.4",
     "typescript": "^5.9.3",
     "velite": "^0.3.0"
