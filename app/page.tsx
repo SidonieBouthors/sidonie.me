@@ -6,6 +6,13 @@ import CardGrid from "@/components/CardGrid";
 import ArticleBlock from "@/components/ArticleBlock";
 import { dateSort } from "@/utils/utils";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  openGraph: {
+    url: "https://sidonie.me",
+  },
+};
 
 export default function Home() {
   const featuredRecipes = recipes

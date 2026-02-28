@@ -7,10 +7,14 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { prioritySort } from "@/utils/utils";
 import Image from "next/image";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Sidonie Bouthors",
+  description: "Learn more about Sidonie Bouthors - Computer Science student at EPFL, passionate about cooking and programming",
+  openGraph: {
+    url: "https://sidonie.me/about",
+  },
 };
 
 export default function About() {

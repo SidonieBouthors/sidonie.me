@@ -5,16 +5,40 @@ import RecipeInfo from "@components/RecipeInfo";
 import { recipes, Recipe } from "@content";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { Metadata } from "next";
 
-export async function generateMetadata(props: RecipeProps) {
+export async function generateMetadata(props: RecipeProps): Promise<Metadata> {
   const params = await props.params;
   const foundRecipe = recipes.find(
     (recipe: Recipe) => recipe.extractedSlug === params.recipeId
   );
 
+  if (!foundRecipe) {
+    return {};
+  }
+
+  const recipeUrl = `https://sidonie.me/recipes/${foundRecipe.extractedSlug}`;
+  const recipeImage = foundRecipe.contentImage?.src || foundRecipe.coverImage.src;
+  const fullImageUrl = recipeImage.startsWith('http') 
+    ? recipeImage 
+    : `https://sidonie.me${recipeImage}`;
+
   return {
-    title: foundRecipe ? foundRecipe.name : "",
-    description: foundRecipe ? foundRecipe.description : "",
+    title: foundRecipe.name,
+    description: foundRecipe.description || `${foundRecipe.name} - A delicious recipe by Sidonie Bouthors`,
+    openGraph: {
+      url: recipeUrl,
+      type: "article",
+      publishedTime: foundRecipe.date,
+      images: [
+        {
+          url: fullImageUrl,
+          width: 1200,
+          height: 630,
+          alt: foundRecipe.name,
+        },
+      ],
+    },
   };
 }
 

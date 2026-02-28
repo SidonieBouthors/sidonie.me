@@ -6,7 +6,10 @@ import Tag from "@components/Tag";
 
 export const metadata: Metadata = {
   title: "Share",
-  description: "Tutorials, projects & more",
+  description: "Tutorials, projects & random things I wanted to share",
+  openGraph: {
+    url: "https://sidonie.me/share",
+  },
 };
 
 export default function Share() {

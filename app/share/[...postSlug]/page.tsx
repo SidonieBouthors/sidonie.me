@@ -4,16 +4,28 @@ import { notFound } from "next/navigation";
 import LastUpdated from "@components/LastUpdated";
 import Breadcrumb from "@components/Breadcrumb";
 import TocCollapse from "@components/TocCollapse";
+import { Metadata } from "next";
 
-export async function generateMetadata(props: PostProps) {
+export async function generateMetadata(props: PostProps): Promise<Metadata> {
   const params = await props.params;
   const foundPost = posts.find(
     (post: Post) => post.extractedSlug === params.postSlug.join("/")
   );
 
+  if (!foundPost) {
+    return {};
+  }
+
+  const postUrl = `https://sidonie.me/share/${foundPost.extractedSlug}`;
+  
   return {
-    title: foundPost ? foundPost.title : "",
-    description: foundPost ? foundPost.description : "",
+    title: foundPost.title,
+    description: foundPost.description || `${foundPost.title} - Shared by Sidonie Bouthors`,
+    openGraph: {
+      url: postUrl,
+      type: "article",
+      publishedTime: foundPost.date,
+    },
   };
 }
 

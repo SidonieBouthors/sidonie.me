@@ -6,7 +6,10 @@ import { dateSort } from "@utils/utils";
 
 export const metadata: Metadata = {
   title: "Recipes",
-  description: "My collection of recipes",
+  description: "My collection of vegetarian recipes of all kinds, created by me over the years",
+  openGraph: {
+    url: "https://sidonie.me/recipes",
+  },
 };
 
 export default async function Recipes() {

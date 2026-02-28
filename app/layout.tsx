@@ -11,16 +11,44 @@ export const viewport: Viewport = {
   initialScale: 1.0,
 };
 
+const siteUrl = "https://sidonie.me";
+const siteName = "Sidonie's Website";
+const siteDescription = "Sidonie Bouthors' personal website - Recipes, tutorials, projects & more";
+const defaultImage = `${siteUrl}/share-image.jpg`;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     template: "%s | Sidonie's Website",
-    default: "Sidonie's Website",
+    default: siteName,
   },
-  description: "Sidonie Bouthors' personal website",
+  description: siteDescription,
   authors: [{ name: "Sidonie Bouthors" }],
   icons: {
     icon: favicon.src,
     shortcut: favicon.src,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: siteName,
+    title: siteName,
+    description: siteDescription,
+    images: [
+      {
+        url: defaultImage,
+        width: 1200,
+        height: 630,
+        alt: "Sidonie's Website",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description: siteDescription,
+    images: [defaultImage],
   },
 };
 
