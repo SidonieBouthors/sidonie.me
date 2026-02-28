@@ -14,7 +14,6 @@ export const viewport: Viewport = {
 const siteUrl = "https://sidonie.me";
 const siteName = "Sidonie's Website";
 const siteDescription = "Sidonie Bouthors' personal website - Recipes, tutorials, projects & more";
-const defaultImage = `${siteUrl}/share-image.jpg`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -35,20 +34,11 @@ export const metadata: Metadata = {
     siteName: siteName,
     title: siteName,
     description: siteDescription,
-    images: [
-      {
-        url: defaultImage,
-        width: 1200,
-        height: 630,
-        alt: "Sidonie's Website",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteName,
     description: siteDescription,
-    images: [defaultImage],
   },
 };
 
