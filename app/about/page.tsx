@@ -11,7 +11,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Sidonie Bouthors - Computer Science student at EPFL, passionate about cooking and programming",
+  description:
+    "Learn more about Sidonie Bouthors - Computer Science student at EPFL, passionate about cooking and programming",
   openGraph: {
     url: "https://sidonie.me/about",
   },
@@ -47,14 +48,24 @@ export default function About() {
             computer science. Whether you could use a helpful tutorial, want to
             cook up a delicious meal, or simply want to see what I{"'"}m up to,
             I hope you find something that sparks your curiosity.
-            <br/>
-            You can also have a look at what I{"'"}m doing on <Link
+            <br />
+            You can also have a look at what I{"'"}m doing on{" "}
+            <Link
               href="https://github.com/SidonieBouthors"
               target="_blank"
               rel="noopener noreferrer"
             >
               GitHub
-            </Link>!
+            </Link>
+            , or check out my{" "}
+            <Link
+              href={"./SidonieBouthorsCV2026.pdf"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CV
+            </Link>
+            .
             <br />
             <br />
             Thank you for visiting!
